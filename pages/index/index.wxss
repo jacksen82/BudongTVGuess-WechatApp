@@ -1,0 +1,87 @@
+/** index.wxss **/
+
+.container {
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 181px;
+  background: #ec4078;
+  background: linear-gradient(135deg, #ec4078 25%, #fe4f86 0, #fe4f86 50%, #ec4078 0, #ec4078 75%, #fe4f86 0);
+  background-size: 30px 30px;
+}
+.container:before {
+  display: block;
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(#ec4078, rgba(236,64,120,.5));
+}
+.container .logo {
+  display: block;
+  width: 160px;
+  margin: 64px auto 0px auto;
+}
+.container .logo  em {
+  display: block;
+  position: relative;
+  width: 132px;
+  height: 96px;
+  padding: 12px;
+  border: 2px solid #000201;
+  border-radius: 12px;
+  background: #fe4f86;
+  z-index:12;
+}
+.container .logo em:before {
+  display: block;
+  position: relative;
+  content: "";
+  height: 92px;
+  border: 2px solid #000201;
+  border-radius: 9px;
+  background: #ffffff;
+  z-index:11;
+}
+.container .logo var {
+  display: block;
+  position: relative;
+  width: 64px;
+  height: 3px;
+  border: 2px solid #000201;
+  background: #ffffff;
+  transform: rotate(32deg);
+  z-index: 9;
+}
+.container .logo var:before {
+  display: block;
+  position: relative;
+  content: "";
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #000201;
+  border-radius: 50%;
+  background: #ffffff;
+}
+.container .logo var.right {
+  width: 96px;
+  margin-left: 64px;
+  transform: rotate(132deg);
+}
+
+.controls {
+  display: block;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 128px;
+  padding: 28px 25px 25px 25px;
+  background: #2e549f;
+}

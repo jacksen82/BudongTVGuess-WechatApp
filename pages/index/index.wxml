@@ -1,0 +1,14 @@
+<!--index.wxml-->
+
+<view class="container">
+  <span class="logo"><var class="left"></var><var class="right"></var><em></em></span>
+</view>
+<view class="controls">
+  <button class="start" bindtap="start" hover-class="active">
+    <em>开 始 游 戏</em>
+  </button>
+  <span class="help">
+    <button class="link left" hover-class="active"><em>分享</em></button>
+    <button class="link right" hover-class="active"><em>帮助</em></button>
+  </span>
+</view>

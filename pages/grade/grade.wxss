@@ -1,0 +1,45 @@
+/** grade.wxss **/
+
+.container {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 161px;
+}
+.container .grades {
+  display: block;
+  position: absolute;
+  top: 64px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  text-align: center;
+  padding: 0px 16px;
+}
+.container .grades .item {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  padding: 3px;
+  margin: 7px;
+  border-radius: 7px;
+  background:#c10343;
+}
+.container .grades .item em {
+  display: block;
+  overflow: hidden;
+  height: 35px;
+  text-align: center;
+  line-height: 36px;
+  border-bottom: 3px solid #ffdce8;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.controls {
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 108px;
+  padding: 28px 25px 25px 25px;
+}

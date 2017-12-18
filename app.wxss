@@ -1,0 +1,142 @@
+/** app.wxss **/
+
+.container {
+  display: block;
+  position: fixed;
+  background: #ec4078;
+  background: linear-gradient(135deg, #ec4078 25%, #fe4f86 0, #fe4f86 50%, #ec4078 0, #ec4078 75%, #fe4f86 0);
+  background-size: 30px 30px;
+}
+.container:before {
+  display: block;
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(#ec4078, rgba(236,64,120,.5));
+}
+.container .title {
+  display: block;
+  position: absolute;
+  top:0px;
+  left: 0px;
+  right: 0px;
+  height: 64px;
+  padding: 0px 16px;
+}
+.container .title .coins {
+  float: left;
+  display: block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0px 15px 0px 12px;
+  border:2px solid #dc2a64;
+  border-radius: 22px;
+  background: #a52d54;
+}
+.container .title .coins .icon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin: 2px 4px 4px 4px;
+}
+.container .title .coins .text {
+  display: inline-block;
+  height: 28px;
+  color: #fff000;
+  font-weight: bold;
+  line-height: 28px;
+  text-shadow: -1px -1px 0px #575757;
+}
+.container .title .share {
+  float: right;
+  display: block;
+  height: 36px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 36px;
+  padding: 0px 15px;
+  border:2px solid #dc2a64;
+  border-radius: 22px;
+  background: #a52d54;
+}
+
+.controls {
+  display: block;
+  position: fixed;
+  background: #2e549f;
+}
+.controls .start {
+  display: block;
+  overflow: hidden;
+  padding: 0px;
+  border: 5px solid #1e3664;
+  border-top-width: 1px;
+  border-radius: 34px;
+  background: #1e3664;
+}
+.controls .start em {
+  display:block;
+  height: 56px;
+  color: #ffffff;
+  font-size: 24px;
+  text-align: center;
+  line-height: 56px;
+  padding: 0px;
+  border-bottom:5px solid #dc2a64;
+  border-radius: 34px;
+  background: linear-gradient(135deg, #ec4078 25%, #fe4f86 0, #fe4f86 50%, #ec4078 0, #ec4078 75%, #fe4f86 0);
+  background-size: 30px 30px;
+  text-shadow: -2px -2px 0px #dc2a64;
+}
+.controls .start.active em {
+  border-top: 5px solid #1e3664;
+  border-bottom: 0px;
+}
+.controls .help {
+  display: block;
+  height: 36px;
+  padding-top:24px;
+}
+.controls .help .link {
+  display: block;
+  overflow: hidden;
+  padding: 0px;
+  border: 3px solid #1e3664;
+  border-top-width: 0px;
+  border-radius: 24px;
+  background: #1e3664;
+}
+.controls .help .link em {
+  display: block;
+  height: 36px;
+  color: #2e549f;
+  font-size:18px;
+  line-height: 36px;
+  padding:0px 16px;
+  border-bottom: 3px solid #c0d0ed;
+  border-radius: 24px;
+  background: #edf3ff;
+  text-shadow: 1px 1px 0px #ffffff;
+}
+.controls .help .link.active em {
+  border-top: 3px solid #1e3664;
+  border-bottom: 0px;
+}
+.controls .help .link.left {
+  float: left;
+}
+.controls .help .link.right {
+  float: right;
+}
+.controls .tips {
+  display: block;
+  height: 44px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 44px;
+  text-align: center;
+}

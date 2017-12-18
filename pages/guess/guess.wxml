@@ -1,0 +1,33 @@
+<!--guess.wxml-->
+
+<view class="container">
+  <view class="title">
+    <view class="coins"><image src="../../images/icon_coins.png" class="icon" /> <em class="text">3</em></view>
+    <view class="share">分享</view>
+  </view>
+  <view class="player">
+    <button class="skip">
+      <em>
+        跳过
+        <small> - 30</small>
+      </em>
+    </button>
+    <button class="tip">
+      <em>
+        提示
+        <small> - 60</small>
+      </em>
+    </button>
+    <view class="audio">
+      
+    </view>
+  </view>
+</view>
+<view class="controls">  
+  <view class="answer">
+
+  </view>
+  <view class="options">
+    <button class="item" hover-class="active" wx:for="{{[1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]}}" wx:key="item"><em>{{item}}</em></button>
+  </view>
+</view>
