@@ -16,7 +16,7 @@
         </span>
       </view>
     </view>
-    <text class="title" title="听音乐，猜电视">slogon</text>
+    <text class="title">听音乐，猜电视</text>
   </view>
   <view class="controls">
     <button class="pressbutton" bindtap="start" hover-class="active">

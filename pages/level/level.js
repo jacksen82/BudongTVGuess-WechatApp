@@ -5,13 +5,19 @@ const api = require("../../utils/api.js");
 
 Page({
   data: {
-    levelIndex: 0
+    clientInfo: null,
+    levelIndex: 0,
+    levelItems: null
   },
   onLoad: function () {
 
+    var self = this;
+
+    this.clientInfo = app.globalData.clientInfo || {};
+    
     api.level.all({}, function(data){
 
-      console.log(data);
+      self.setData({ levelItems: data.data || [] });
     });
   },
   coutinue: function(){

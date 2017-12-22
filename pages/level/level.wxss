@@ -6,25 +6,21 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  height: 36px;
   padding: 17px 16px;
 }
-.toolbar .link {
-  height: 35px;
-  font-size:15px;
-  line-height: 35px;
+.toolbar .linkfloat.right {
+  float: right;
 }
-.toolbar .link var {
-  font-size: 12px;
-}
+
 .level {
   display: block;
   position: absolute;
   top: 70px;
-  left: 15px;
-  right: 15px;
+  left: 17px;
+  right: 17px;
   bottom: 120px;
-  background: #cfefd0;
+  border-radius: 12px;
+  background: rgba(0,0,0,.1);
 }
 .level .arrow {
   display: block;
@@ -95,6 +91,17 @@
   right: 0px;
   bottom: 0px;
   height: 80px;
-  font-size:14px;
-  padding: 20px;
+  color: #ffffff;
+  font-size: 11pt;
+  line-height:24px;
+  padding: 10px 20px;
+}
+.tips em {
+  display: block;
+  color: #fccada;
+  font-weight: bold;
+}
+.tips dfn {
+  display: block;
+  color: #fccada;
 }

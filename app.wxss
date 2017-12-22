@@ -109,6 +109,7 @@ page {
 .pressbutton.active span {
   border-bottom: 0px;
 }
+
 .linkbutton {
   display: block;
   overflow: hidden;
@@ -130,6 +131,49 @@ page {
 }
 .linkbutton.active span {
   border-bottom: 0px;
+}
+
+.linkfloat {
+  display: block;
+  overflow: hidden;
+  padding: 0px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.1);
+}
+.linkfloat span {
+  display: block;
+  height: 36px;
+  color: #db2863;
+  font-size: 11pt;
+  line-height: 35px;
+  padding: 0px;
+  border-radius: 18px;
+}
+.linkfloat span em {
+  float: left; 
+  display: block;
+  height: 32px;
+  color: #ec4078;
+  font-size: 11pt;
+  line-height: 32px;
+  padding: 0px 12px;
+  margin: 2px;
+  border-radius: 16px;
+  background: #fad759;
+}
+.linkfloat span var {
+  float: left; 
+  display: block;
+  color: #ffffff;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 0px 12px 0px 9px;
+}
+.linkfloat.active {
+  background: rgba(0,0,0,.3);
+}
+.linkfloat.active span em {
+  background: #fad759;
 }
 
 .backline {

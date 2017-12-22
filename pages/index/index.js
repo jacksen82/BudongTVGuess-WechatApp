@@ -55,7 +55,6 @@ Page({
         })
       }
     }
-    console.log(res);
   },
   start: function(){
   
@@ -105,6 +104,7 @@ Page({
           data: data.sessionCode
         });
         app.globalData.clientInfo = data;
+        wx.navigateTo({ url: "../level/level" });
       });
     };
 
@@ -133,6 +133,7 @@ Page({
       }, function (data) {
 
         app.globalData.clientInfo = data;
+        wx.navigateTo({ url: "../level/level" });
       });
     };
 
