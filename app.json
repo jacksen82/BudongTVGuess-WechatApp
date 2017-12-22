@@ -1,16 +1,17 @@
 {
   "pages":[
-    "pages/guess/guess",
     "pages/index/index",
-    "pages/grade/grade",
+    "pages/level/level",
+    "pages/guess/guess",
     "pages/guess/guess/success",
     "pages/guess/guess/error",
     "pages/logs/logs"
   ],
   "window":{
     "backgroundColor":"#ec4078",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ec4078",
-    "navigationBarTitleText": "剧难猜",
-    "navigationBarTextStyle":"white"
+    "navigationBarTitleText": "Wechat",
+    "navigationBarTextStyle": "white"
   }
 }

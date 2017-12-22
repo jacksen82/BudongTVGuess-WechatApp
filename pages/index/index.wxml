@@ -1,14 +1,30 @@
 <!--index.wxml-->
-
-<view class="container">
-  <span class="logo"><var class="left"></var><var class="right"></var><em></em></span>
-</view>
-<view class="controls">
-  <button class="start" bindtap="start" hover-class="active">
-    <em>开 始 游 戏</em>
-  </button>
-  <span class="help">
-    <button class="link left" hover-class="active"><em>分享</em></button>
-    <button class="link right" hover-class="active"><em>帮助</em></button>
-  </span>
+<view class="page">
+  <view class="cover">
+    <view class="logo">
+      <view class="tvbox">
+        <span class="arrow">
+          <var class="item left"></var>
+          <var class="item right"></var>
+        </span>
+        <span class="box">
+          <span class="circle">
+            <dfn class="item"></dfn>
+            <dfn class="item"></dfn>
+          </span>
+          <span class="inner"></span>
+        </span>
+      </view>
+    </view>
+    <text class="title" title="听音乐，猜电视">slogon</text>
+  </view>
+  <view class="controls">
+    <button class="pressbutton" bindtap="start" hover-class="active">
+      <span><em> Start Game </em></span>
+    </button>
+    <view class="actions">
+      <button class="linkbutton left" hover-class="active" open-type="share"><span>Share</span></button>
+      <button class="linkbutton right" hover-class="active"><span>Rank</span></button>
+    </view>
+  </view>
 </view>

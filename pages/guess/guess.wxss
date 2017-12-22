@@ -1,85 +1,87 @@
 /** guess.wxss **/
 
-.container {
+.toolbar {
+  display: block;
+  position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 240px;
+  height: 36px;
+  padding: 17px 16px;
 }
-.container .player {
-  display: block;
-  position: absolute;
-  top: 64px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+.toolbar .link {
+  height: 35px;
+  font-size:15px;
+  line-height: 35px;
 }
-.container .player .skip {
-  float: left; 
-  display: block;
-  width: 44px;
-  height: 44px;
-  color: #ffffff;
-  margin: 0px 15px;
-  background: #1e3664;
-}
-.container .player .tip {
-  float: right; 
-  display: block;
-  width: 44px;
-  height: 44px;
-  color: #ffffff;
-  margin: 0px 15px;
-  background: #1e3664;
-}
-.container .player .audio {
-  display: block;
-  height: 44px;
-  margin: 0px 74px;
-  background: #ff00cc;
+.toolbar .link var {
+  font-size: 12px;
 }
 
+.player {
+  display: block;
+  position: absolute;
+  top: 70px;
+  left: 0px;
+  right: 0px;
+  bottom: 240px;
+  background:#ffcc00;
+}
+.player .link {
+  display: block;
+  width: 48px;
+  height: 48px;
+  font-size:12px;
+}
+.player .help {
+  display: block;
+  position: absolute;
+  left: 0px;
+  width: 48px;
+  font-size:12px;
+  background:#ffcc00;
+}
+.player .share {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 48px;
+  font-size:12px;
+}
+.player .audio {
+  display: block;
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  font-size:12px;
+  background:#ffcc00;
+}
 .controls {
+  display: block;
+  position: absolute;
   left: 0px;
   right: 0px;
   bottom: 0px;
   height: 240px;
-  padding: 0px;
+  background: #359098;
 }
 .controls .answer {
   display: block;
-  height: 80px;
+  height: 60px;
+  background:#769098;
+}
+.controls .answer .item {
+  float:left;
+  display: block;
+  width:40px;
+  height:40px;
 }
 .controls .options {
   display: block;
-  width: 304px;
-  height: 148px;
-  padding: 4px 3px 1px 3px;
-  margin: 0px auto;
 }
 .controls .options .item {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  padding: 2px;
-  margin: 3px;
-  margin-top: 1px;
-  margin-bottom: 0px;
-  border-radius: 7px;
-  background:#1e3664;
-}
-.controls .options .item em {
+  float:left;
   display: block;
-  overflow: hidden;
-  height: 25px;
-  font-size: 14px;
-  text-align: center;
-  line-height: 25px;
-  border-bottom: 3px solid #c0d0ed;
-  border-radius: 6px;
-  background: #ffffff;
-}
-.controls .options .item.active em {
-  border-top: 3px solid #1e3664;
-  border-bottom: 0px;
+  width:40px;
+  height:40px;
 }

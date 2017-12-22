@@ -1,0 +1,100 @@
+/** level.wxss **/
+
+.toolbar {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 36px;
+  padding: 17px 16px;
+}
+.toolbar .link {
+  height: 35px;
+  font-size:15px;
+  line-height: 35px;
+}
+.toolbar .link var {
+  font-size: 12px;
+}
+.level {
+  display: block;
+  position: absolute;
+  top: 70px;
+  left: 15px;
+  right: 15px;
+  bottom: 120px;
+  background: #cfefd0;
+}
+.level .arrow {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  margin-top:-24px;
+  background: #cd0fce;
+}
+.level .arrow.fleft {
+  left: 0px;
+}
+.level .arrow.fright {
+  right: 0px;
+}
+.level .card {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 48px;
+  right: 48px;
+  bottom: 0px;
+  background: #ffffff;
+}
+.level .card .thumb {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 110px;
+  background: #ffccff;
+}
+.level .card .thumb image {
+  display: block;
+  width: 160px;
+  height: 150px;
+  margin: 25px auto 0px auto;
+}
+.level .card .title {
+  display: block;
+  position: absolute; 
+  left: 0px;
+  right: 0px;
+  bottom: 50px;
+  height: 50px;
+  text-align: center;
+  background: #cd0fce;
+}
+.level .card .button {
+  display: block;
+  position: absolute; 
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 50px;
+  font-size: 14px;
+  background: #cfefd0;
+}
+.level .card .button var {
+  font-size: 12px;
+}
+.tips {
+  display: block;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 80px;
+  font-size:14px;
+  padding: 20px;
+}

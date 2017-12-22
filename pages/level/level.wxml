@@ -1,0 +1,22 @@
+<!--level.wxml-->
+
+<view class="toolbar">
+  <button class="link fright" hover-class="active"><span><em>Coins</em><var>980</var></span></button>
+</view>
+<view class="level">
+  <view class="card" wx:for="{{levelItems}}" wx:key="item" wx:if="{{levelIndex == index}}">
+    <view class="thumb"><image src="{{item.thumbUrl}}" /></view>
+    <view class="title">{{item.title}}</view>
+    <button class="button" bindtap="unlock" wx:if="{{item.locked}}">
+      <span>Unlock <var>Coins:{{item.coins}}</var></span>
+    </button>
+    <button class="button" bindtap="coutinue" wx:if="{{!item.locked}}">
+      <span>Coutinue <var>{{item.doneCount}}/{{item.totalCount}}</var></span>
+    </button>
+  </view>
+  <button class="arrow fleft" bindtap="prev" wx:if="{{levelIndex>0}}">left</button>
+  <button class="arrow fright" bindtap="next" wx:if="{{levelIndex<levelItems.length-1}}">right</button>
+</view>
+<view class="tips">
+  说明：xxxxxxxxxxxxxxxxxxx
+</view>
