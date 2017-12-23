@@ -13,9 +13,13 @@ Page({
   },
   onShow: function(){
 
-    wx.showShareMenu({
-      withShareTicket: true
-    });
+    // wx.showShareMenu({
+    //   withShareTicket: true
+    // });
+    setTimeout(function(){
+
+      wx.navigateTo({ url: "../level/level" });
+    }, 500);
   },
   onShareAppMessage: function(res){
 
@@ -27,6 +31,7 @@ Page({
         "shareTicketIV": (res || {}).iv || ""
       }, function(data){
 
+        console.log(data);
       });
     };
 
@@ -104,7 +109,6 @@ Page({
           data: data.sessionCode
         });
         app.globalData.clientInfo = data;
-        wx.navigateTo({ url: "../level/level" });
       });
     };
 
@@ -133,7 +137,6 @@ Page({
       }, function (data) {
 
         app.globalData.clientInfo = data;
-        wx.navigateTo({ url: "../level/level" });
       });
     };
 
@@ -142,7 +145,7 @@ Page({
       
       wx.login({
         success: loginSuccess,
-        fail: function (res) { }
+        fail: getUserInfoFail
       });
     };
 

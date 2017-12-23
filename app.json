@@ -11,7 +11,8 @@
     "backgroundColor":"#ec4078",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ec4078",
-    "navigationBarTitleText": "Wechat",
-    "navigationBarTextStyle": "white"
+    "navigationBarTitleText": "步咚猜剧",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": false
   }
 }

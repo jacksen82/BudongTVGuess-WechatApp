@@ -99,6 +99,22 @@ const api = {
           }
         }
       });
+    },
+    unlock: function(data, success){
+
+      success && success({
+        
+      });
+    }
+  },
+  program: {
+    next: function (data, success) {
+
+      success && success({
+        id: 222,
+        title: "新白娘子传奇",
+        chars: "新白娘子传奇渴望封神榜西游记家有仙妻包青天粉红女郎孽债莲花争霸水"
+      });
     }
   }
 };

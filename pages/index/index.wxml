@@ -20,11 +20,11 @@
   </view>
   <view class="controls">
     <button class="pressbutton" bindtap="start" hover-class="active">
-      <span><em> Start Game </em></span>
+      <span><em> 开 始 游 戏 </em></span>
     </button>
     <view class="actions">
-      <button class="linkbutton left" hover-class="active" open-type="share"><span>Share</span></button>
-      <button class="linkbutton right" hover-class="active"><span>Rank</span></button>
+      <button class="linkbutton left" hover-class="active" open-type="share"><span>分享</span></button>
+      <button class="linkbutton right" hover-class="active"><span>排行榜</span></button>
     </view>
   </view>
 </view>

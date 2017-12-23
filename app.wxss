@@ -6,7 +6,7 @@ page {
     rgba(0,0,0,.0) 25%, rgba(0,0,0,.01) 0, 
     rgba(0,0,0,.01) 50%, rgba(0,0,0,.0) 0, 
     rgba(0,0,0,.0) 75%, rgba(0,0,0,.01) 0
-  );
+  );  
 }
 .tvbox {
   display:block;
@@ -90,18 +90,12 @@ page {
 .pressbutton span {
   display: block;
   height: 48px;
-  font-size: 13pt;
+  color: #db2863;
+  font-size: 15pt;
   line-height: 48px;
   border-bottom: 5px solid #e1b929;
   border-radius: 10px;
-  background: #ffffff;
-  background-color: #fad759;
-  background-size: 48px 48px;
-  background-image: linear-gradient(135deg, 
-    rgba(0,0,0,.0) 25%, rgba(0,0,0,.05) 0, 
-    rgba(0,0,0,.05) 50%, rgba(0,0,0,.0) 0, 
-    rgba(0,0,0,.0) 75%, rgba(0,0,0,.05) 0
-  );
+  background: #fad759;
 }
 .pressbutton.active {
   padding: 5px;
@@ -120,6 +114,7 @@ page {
 .linkbutton span {
   display: block;
   height: 36px;
+  color: #db2863;
   font-size: 11pt;
   line-height: 36px;
   border-bottom: 3px solid #f2c3d4;
@@ -138,7 +133,7 @@ page {
   overflow: hidden;
   padding: 0px;
   border-radius: 18px;
-  background: rgba(0,0,0,.1);
+  background: rgba(0,0,0,.15);
 }
 .linkfloat span {
   display: block;
@@ -170,7 +165,7 @@ page {
   padding: 0px 12px 0px 9px;
 }
 .linkfloat.active {
-  background: rgba(0,0,0,.3);
+  background: rgba(0,0,0,.2);
 }
 .linkfloat.active span em {
   background: #fad759;

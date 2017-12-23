@@ -2,7 +2,7 @@
 
 .toolbar {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -14,94 +14,131 @@
 
 .level {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 70px;
   left: 17px;
   right: 17px;
   bottom: 120px;
   border-radius: 12px;
-  background: rgba(0,0,0,.1);
+  background: rgba(0,0,0,.15);
 }
 .level .arrow {
   display: block;
   position: absolute;
   top: 50%;
-  width: 48px;
-  height: 48px;
-  margin-top:-24px;
-  background: #cd0fce;
+  padding: 0px 6px;
+  margin-top:-21px;
+  background: transparent;
 }
-.level .arrow.fleft {
-  left: 0px;
+.level .arrow span {
+  padding-top: 1px;
 }
-.level .arrow.fright {
-  right: 0px;
+.level .arrow span em {
+  display: block;
+  width: 0px;
+  height: 0px;
+  border: 9px solid transparent;
 }
-.level .card {
+.level .arrow.left {
+  left: 3px;
+}
+.level .arrow.left span em {
+  margin: 9px 18px 0px 3px;
+  border-right: 9px solid #db2863;
+}
+.level .arrow.right {
+  right: 3px;
+}
+.level .arrow.right span em {
+  margin: 9px 3px 0px 18px;
+  border-left: 9px solid #db2863;
+}
+.level .arrow.active span {
+  border-top: 3px solid #f2c3d4;
+  border-bottom-width: 0px;
+}
+.level .item {
   display: block;
   position: absolute;
-  top: 0px;
-  left: 48px;
-  right: 48px;
-  bottom: 0px;
-  background: #ffffff;
+  top: 15px;
+  left: 54px;
+  right: 54px;
+  bottom: 15px;
+  border-radius: 12px;
+  background: #ec4078;
 }
-.level .card .thumb {
+.level .item .thumb {
   display: block;
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 110px;
-  background: #ffccff;
 }
-.level .card .thumb image {
+.level .item .thumb image {
   display: block;
-  width: 160px;
-  height: 150px;
-  margin: 25px auto 0px auto;
+  width: 47vw;
+  height: 47vw;
+  margin: 15px auto 0px auto;
+  border-radius: 12px;
 }
-.level .card .title {
+.level .item .title {
   display: block;
   position: absolute; 
   left: 0px;
   right: 0px;
-  bottom: 50px;
-  height: 50px;
+  bottom: 62px;
+  height: 48px;
+  color: #ffffff;
   text-align: center;
-  background: #cd0fce;
+  line-height: 48px;
 }
-.level .card .button {
-  display: block;
-  position: absolute; 
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  height: 50px;
-  font-size: 14px;
-  background: #cfefd0;
-}
-.level .card .button var {
-  font-size: 12px;
-}
-.tips {
+.level .item .action {
   display: block;
   position: absolute;
   left: 0px;
   right: 0px;
+  bottom: 12px;
+  text-align: center;
+  padding: 0px 15px;
+}
+.level .item .action .linkbutton {
+  margin:0px auto;
+}
+.level .item .action .linkbutton span {
+  color: #db2863;
+  font-size: 13pt;
+}
+.level .item .action .linkbutton span var {
+  display: inline-block;
+  height: 24px;
+  color: #ffffff;
+  font-size: 9pt;
+  line-height: 24px;
+  vertical-align: middle;
+  padding: 0px 9px;
+  margin: 4px 0px;
+  border-radius: 12px;
+  background: #ec4078;
+}
+
+.tips {
+  display: block;
+  position: fixed;
+  left: 0px;
+  right: 0px;
   bottom: 0px;
   height: 80px;
-  color: #ffffff;
-  font-size: 11pt;
+  font-size: 10pt;
   line-height:24px;
   padding: 10px 20px;
 }
 .tips em {
   display: block;
-  color: #fccada;
+  color: rgba(0,0,0,.5);
   font-weight: bold;
 }
 .tips dfn {
   display: block;
-  color: #fccada;
+  color: rgba(0,0,0,.5);
 }

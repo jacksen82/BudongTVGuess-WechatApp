@@ -1,34 +1,37 @@
 <!--guess.wxml-->
 
 <view class="toolbar">
-  <button class="link fright" hover-class="active"><span><em>Coins</em><var>980</var></span></button>
+  <button class="linkfloat right" hover-class="active">
+    <span><em>金币</em><var>{{clientInfo.coins || 0}}</var></span>
+  </button>
 </view>
 
 <view class="player">
-  <view class="help">
-    <button class="link skip">
-      tip <var>-30</var>
+  <view class="leftside">
+    <button class="linkbutton skip" hover-class='active'>
+      <span>跳过 <var>-30</var></span>
     </button>
-    <button class="link tip">
-      tip <var>-50</var>
-    </button>
-  </view>
-  <view class="share">
-    <button class="link share">
-      share <var>+100</var>
+    <button class="linkbutton tip" hover-class='active'>
+      <span>提示 <var>-50</var></span>
     </button>
   </view>
-  <view class="audio">
+  <view class="rightside">
+    <button class="linkbutton share" hover-class='active'>
+      <span>
+        <dfn>分享</dfn>
+        <dfn>到群</dfn>
+        <var>+100</var></span>
+    </button>
+  </view>
+  <view class="mp3tvbox">
     <view class="tvbox">
-      <button class="">play</button>
+      play
     </view>
   </view>
 </view>
-<view class="controls">  
-  <view class="answer">
-    <button class="item" hover-class="active" wx:for="{{programInfo.answerItems}}" wx:key="item"><em></em></button>
-  </view>
-  <view class="options">
-    <button class="item" hover-class="active" wx:for="{{programInfo.optionItems}}" wx:key="item" data-item="{{item}}" bindtap="chioce"><em>{{item}}</em></button>
-  </view>
+<view class="answer">
+  <button class="item" hover-class="active" wx:for="{{programInfo.titleItems}}" wx:key="item" data-item="{{item}}"><em></em></button>
+</view>
+<view class="options">
+  <button class="item" hover-class="active" wx:for="{{programInfo.charItems}}" wx:key="item" data-item="{{item}}" bindtap="chioce"><em>{{item}}</em></button>
 </view>

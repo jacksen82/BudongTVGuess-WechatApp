@@ -7,18 +7,27 @@
 </view>
 
 <view class="level">
-  <view class="card" wx:for="{{levelItems}}" wx:key="item" wx:if="{{levelIndex == index}}">
-    <view class="thumb"><image src="{{item.coverUrl}}" /></view>
+  <view wx:for="{{levelItems}}" wx:key="item" wx:if="{{levelIndex == index}}" class="item">
+    <view class="thumb">
+      <image wx:if="{{!item.locked}}" src="{{item.coverUrl}}" />
+      <image wx:if="{{item.locked}}" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514012038188&di=87fe565f65c10a2ca199f97c3100864f&imgtype=0&src=http%3A%2F%2Fimage.tupian114.com%2F20140416%2F11310763.png.238.jpg" />
+    </view>
     <view class="title">{{item.title}}</view>
-    <button class="linkbutton" bindtap="unlock" wx:if="{{item.locked}}">
-      <span>Unlock <var>Coins:{{item.coins}}</var></span>
-    </button>
-    <button class="button" bindtap="coutinue" wx:if="{{!item.locked}}">
-      <span>Coutinue <var>{{item.doneCount}}/{{item.totalCount}}</var></span>
-    </button>
+    <view class="action">
+      <button class="linkbutton" hover-class="active" bindtap="unlock" wx:if="{{item.locked}}">
+        <span> 解锁 <var>{{item.coins}} 金币</var></span>
+      </button>
+      <button class="linkbutton" hover-class="active" bindtap="coutinue" wx:if="{{!item.locked}}">
+        <span> 继续 <var>{{item.answerCount || 0}}/{{item.programCount || 36}}</var></span>
+      </button>
+    </view>
   </view>
-  <button class="arrow fleft" bindtap="prev" wx:if="{{levelIndex>=0}}">left</button>
-  <button class="arrow fright" bindtap="next" wx:if="{{levelIndex<=levelItems.length-1}}">right</button>
+  <button class="linkbutton arrow left" hover-class="active" bindtap="prev" wx:if="{{levelIndex>0}}">
+    <span><em></em></span>
+  </button>
+  <button class="linkbutton arrow right" hover-class="active" bindtap="next" wx:if="{{levelIndex<levelItems.length-1}}">
+    <span><em></em></span>
+  </button>
 </view>
 
 <view class="tips">
