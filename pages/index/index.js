@@ -16,10 +16,6 @@ Page({
     // wx.showShareMenu({
     //   withShareTicket: true
     // });
-    setTimeout(function(){
-
-      wx.navigateTo({ url: "../level/level" });
-    }, 500);
   },
   onShareAppMessage: function(res){
 
@@ -108,6 +104,7 @@ Page({
           key: "sessionCode",
           data: data.sessionCode
         });
+        wx.navigateTo({ url: "../level/level" });
         app.globalData.clientInfo = data;
       });
     };
@@ -136,6 +133,7 @@ Page({
         "shareTicketIV": app.globalData.launchInfo.shareTicketIV || ""
       }, function (data) {
 
+        wx.navigateTo({ url: "../level/level" });
         app.globalData.clientInfo = data;
       });
     };

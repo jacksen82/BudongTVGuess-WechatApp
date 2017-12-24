@@ -113,7 +113,8 @@ const api = {
       success && success({
         id: 222,
         title: "新白娘子传奇",
-        chars: "新白娘子传奇渴望封神榜西游记家有仙妻包青天粉红女郎孽债莲花争霸水"
+        chars: "新白娘子传奇渴望封神榜西游记家有仙妻包青天粉红女郎孽债莲花争霸水",
+        mp3Url: "http://zhangmenshiting.qianqian.com/data2/music/aafe004ff910d14c330408952aefe23a/542051034/542051034.mp3?xcode=fd3a27cec285b2f9b4504f1dc3711450"
       });
     }
   }

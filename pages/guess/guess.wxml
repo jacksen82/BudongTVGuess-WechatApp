@@ -25,7 +25,24 @@
   </view>
   <view class="mp3tvbox">
     <view class="tvbox">
-      play
+      <span class="arrow">
+        <var class="item left"></var>
+        <var class="item right"></var>
+      </span>
+      <span class="box">
+        <span class="circle">
+          <dfn class="item"></dfn>
+          <dfn class="item"></dfn>
+        </span>
+        <span class="inner">
+          <button class="linkbutton" hover-class="active" bindtap="audioplay">
+            <span>
+              <var wx:if="{{!playing}}"></var>
+              <dfn wx:if="{{playing}}"></dfn>
+            </span>
+          </button>
+        </span>
+      </span>
     </view>
   </view>
 </view>
@@ -33,5 +50,5 @@
   <button class="item" hover-class="active" wx:for="{{programInfo.titleItems}}" wx:key="item" data-item="{{item}}"><em></em></button>
 </view>
 <view class="options">
-  <button class="item" hover-class="active" wx:for="{{programInfo.charItems}}" wx:key="item" data-item="{{item}}" bindtap="chioce"><em>{{item}}</em></button>
+  <button class="item" hover-class="active" wx:for="{{programInfo.charItems}}" wx:key="item" data-index="{{index}}" bindtap="chioce" animation="{{index==programCharIndex ? animation: null}}"><em>{{item.text}}</em></button>
 </view>
