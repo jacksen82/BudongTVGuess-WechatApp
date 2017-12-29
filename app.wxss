@@ -103,6 +103,11 @@ page {
 .pressbutton.active span {
   border-bottom: 0px;
 }
+.pressbutton.loading span {
+  color: #bbbbbb;
+  border-bottom: 5px solid #dfdfdf;
+  background: #dfdfdf;
+}
 
 .linkbutton {
   display: block;

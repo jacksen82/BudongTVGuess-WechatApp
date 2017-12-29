@@ -1,34 +1,106 @@
+//  日期时间格式化
 const formatTime = date => {
 
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  var formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+  };
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
 }
 
-const formatNumber = n => {
+//  解密参数
+const decodeParams = function(options){
 
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
+  options = options || {};
+  for (let key in options) {
+    options[key] = decodeURIComponent(options[key]);
+  }
+  return options;
+};
 
+//  序列化参数
 const serialize = function(data){
 
   data = data || {};
-
   var querys = [];
-
   for (let key in data){
-    querys.push(key + "=" + encodeURIComponent(data[key]));
+    querys.push(key + '=' + encodeURIComponent(data[key]));
   }
-  return querys.join("&");
+  return querys.join('&');
 }
+
+//  异步请求方法
+const request = function(url, data, success, fail){
+
+  wx.request({
+    url: 'https://shenxu.name/tvguess/api' + url,
+    header: { 'content-type': 'application/json' },
+    data: data,
+    success: function (data) {
+      data = data.data || {};
+      if (data.code == 0) {
+        success && success(data.data || {});
+      } else {
+        showToast(data.message || "请求失败");
+      }
+    },
+    fail: function (res) {
+      if (fail){
+        fail && fail.bind(this)();
+      } else {
+        showToast(res);
+      }
+    }
+  });
+};
+
+//  弹出浮动提示
+const showToast = function (title) {
+
+  wx.showToast({
+    title: title,
+  });
+};
+
+//  设置页面参数
+const setData = function(page, key, value, delay){
+
+  setTimeout(function(){
+
+    var data = {};
+    data[key] = value;
+    page.setData(data);
+  }, delay || 0);
+};
+
+//  设置页面标题
+const setTitle = function (title) {
+
+  wx.setNavigationBarTitle({
+    title: title || ''
+  });
+};
+
+//  跳转链接至
+const setNavigate = function (url) {
+
+  wx.navigateTo({ url: url });
+};
 
 module.exports = {
   formatTime: formatTime,
-  serialize: serialize
+  decodeParams: decodeParams,
+  serialize: serialize,
+  request: request,
+  showToast: showToast,
+  setData: setData,
+  setTitle: setTitle,
+  setNavigate: setNavigate
 }

@@ -1,85 +1,86 @@
 //  guess.js
 
 const app = getApp();
-const api = require("../../utils/api.js");
+const util = require('../../utils/util.js');
+const bus = require('../../utils/bus.js');
+const api = require('../../services/api.js');
+const words = require('./parts/words.js');;
 
 Page({
   data: {
-    playing: false,
-    levelInfo: 0,
-    clientInfo: null,
-    programInfo: null,
-    programCharIndex: -1,
-    animation: null
+    titleIndex: 0,
+    titleWords: [],
+    allWords: []
   },
   onLoad: function (options) {
 
-    options = options || {};
+    var _this = this;
 
-    var self = this;
-    var blink = wx.createAnimation({
-      duration: 360,
-      timingFunction: "ease"
+    _this.level = util.decodeParams(options);
+    _this.setData({
+      clientCoins: bus.client.coins || 0
     });
-    blink.scale(2, 2).step();
-    blink.scale(1, 1).step();
-    for ( let key in options ){
-      options[key] = decodeURIComponent(options[key]);
-    }
-    this.setData({
-      levelInfo: options || {},
-      clientInfo: app.globalData.clientInfo || {}
+    api.subject.next({
+      levelId: _this.level.id || 0
+    }, function (data) {
+      _this.setData({
+        titleWords: api.subject.titleWords(data.title || ''),
+        allWords: api.subject.allWords(data.words || '')
+      });
+      _this.selectComponent('#player').ready(data.audioUrl, options.coverUrl);
     });
-    wx.setNavigationBarTitle({
-      title: options.title || '答题竞猜'
-    });
-    wx.onBackgroundAudioPlay(function() {
+  },
+  onShareAppMessage: function (res) {
 
-      self.setData({ playing: true });
+    var _this = this;
+
+    return api.wechat.share('这么多年才发现，原来这段音乐是这个电视剧的', '', res, function (data) {
+      _this.selectComponent('#toast').show('+100', 'add');
     });
-    wx.onBackgroundAudioStop(function () {
+  },
+  titleChoice: function(event){
 
-      self.setData({ playing: false });
-    });
-    api.program.next({
-      levelId: options.id || 0
-    }, function(data){
+    var _this = this, index = event.currentTarget.dataset['index'];
 
-      data.charItems = [];
+    if (this.data.titleWords[index].index > -1){
+      words.resetTitleWord(
+        index,
+        this.data.titleWords,
+        this.data.allWords,
+        function (titleIndex, titleWords, allWords) {
 
-      let index = 0;
-      let chars = (data.chars || []).split("");
-      while (chars.length > 0){
-        index = Math.round(Math.random() * (chars.length - 1));
-        data.charItems.push({
-          "text":chars[index],
-          "animation":null
+          _this.setData({
+            titleIndex: titleIndex,
+            titleWords: titleWords,
+            allWords: allWords
+          });
+          console.log('还字成功');
         });
-        chars.splice(index,1);
-      }
-      data.titleItems = (data.title || "").split("");
-      self.setData({
-        programInfo: data,
-        animation: blink.export()
-      });
-    });
-  },
-  audioplay: function(){
-
-    if (this.data.playing){
-      wx.stopBackgroundAudio();
-    } else {
-      wx.playBackgroundAudio({
-        dataUrl: this.data.programInfo.mp3Url || "http://www.languangav.com/soft/media/vocal.mp3",
-        title: '步咚猜剧',
-        coverImgUrl: this.data.levelInfo.coverUrl || "http://imgsrc.baidu.com/imgad/pic/item/48540923dd54564e31b8271db9de9c82d1584f31.jpg"
-      });
     }
   },
-  chioce: function(event){
+  allChoice: function(event){
 
-    this.setData({
-      programCharIndex: event.currentTarget.dataset["index"]
-    });
+    var _this = this, index = event.currentTarget.dataset['index'];
+
+    if (this.data.titleIndex >= this.data.titleWords.length){
+      //  完成之后再判断正确，错误
+      console.log('答完了');
+    } else {
+      //  显示动画
+      words.setTitleWord(
+        this.data.titleIndex, 
+        this.data.titleWords, 
+        index, 
+        this.data.allWords, 
+        function(titleIndex, titleWords, allWords){
+
+          _this.setData({
+            titleIndex: titleIndex,
+            titleWords: titleWords,
+            allWords: allWords
+          });
+          console.log('填字成功');
+        });
+    }
   }
 })

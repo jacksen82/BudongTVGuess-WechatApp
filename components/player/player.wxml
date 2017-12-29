@@ -1,0 +1,22 @@
+<view class="player">
+  <view class="tvbox">
+    <span class="arrow">
+      <var class="item left"></var>
+      <var class="item right"></var>
+    </span>
+    <span class="box">
+      <span class="circle">
+        <dfn class="item"></dfn>
+        <dfn class="item"></dfn>
+      </span>
+      <span class="inner">
+        <button class="button" hover-class="active" bindtap="press">
+          <span>
+            <var wx:if="{{!playing}}"></var>
+            <dfn wx:if="{{playing}}"></dfn>
+          </span>
+        </button>
+      </span>
+    </span>
+  </view>
+</view>

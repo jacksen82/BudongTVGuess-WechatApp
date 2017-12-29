@@ -2,11 +2,11 @@
 
 <view class="toolbar">
   <button class="linkfloat right" hover-class="active">
-    <span><em>金币</em><var>{{clientInfo.coins || 0}}</var></span>
+    <span><em>金币</em><var>{{clientCoins}}</var></span>
   </button>
 </view>
 
-<view class="player">
+<view class="audio">
   <view class="leftside">
     <button class="linkbutton skip" hover-class='active'>
       <span>跳过 <var>-30</var></span>
@@ -16,7 +16,7 @@
     </button>
   </view>
   <view class="rightside">
-    <button class="linkbutton share" hover-class='active'>
+    <button class="linkbutton share" hover-class='active' open-type="share">
       <span>
         <dfn>分享</dfn>
         <dfn>到群</dfn>
@@ -24,31 +24,16 @@
     </button>
   </view>
   <view class="mp3tvbox">
-    <view class="tvbox">
-      <span class="arrow">
-        <var class="item left"></var>
-        <var class="item right"></var>
-      </span>
-      <span class="box">
-        <span class="circle">
-          <dfn class="item"></dfn>
-          <dfn class="item"></dfn>
-        </span>
-        <span class="inner">
-          <button class="linkbutton" hover-class="active" bindtap="audioplay">
-            <span>
-              <var wx:if="{{!playing}}"></var>
-              <dfn wx:if="{{playing}}"></dfn>
-            </span>
-          </button>
-        </span>
-      </span>
-    </view>
+    <mc-player id="player"></mc-player>
   </view>
 </view>
-<view class="answer">
-  <button class="item" hover-class="active" wx:for="{{programInfo.titleItems}}" wx:key="item" data-item="{{item}}"><em></em></button>
+
+<view class="titlewords">
+  <button class="item" hover-class="active" wx:for="{{titleWords}}" wx:key="item" data-index="{{index}}"  bindtap="titleChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
 </view>
-<view class="options">
-  <button class="item" hover-class="active" wx:for="{{programInfo.charItems}}" wx:key="item" data-index="{{index}}" bindtap="chioce" animation="{{index==programCharIndex ? animation: null}}"><em>{{item.text}}</em></button>
+
+<view class="allwords">
+  <button class="item" hover-class="active" wx:for="{{allWords}}" wx:key="item" data-index="{{index}}" bindtap="allChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
 </view>
+
+<mc-toast id="toast"></mc-toast>

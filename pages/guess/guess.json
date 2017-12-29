@@ -1,5 +1,6 @@
 {
-  "window": {
-    "navigationBarTitleText": "答题竞猜"
+  "usingComponents": {
+    "mc-toast": "../../components/toast/toast",
+    "mc-player": "../../components/player/player"
   }
 }

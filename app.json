@@ -3,8 +3,6 @@
     "pages/index/index",
     "pages/level/level",
     "pages/guess/guess",
-    "pages/guess/guess/success",
-    "pages/guess/guess/error",
     "pages/logs/logs"
   ],
   "window":{

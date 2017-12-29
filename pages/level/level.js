@@ -1,50 +1,53 @@
 //  level.js
 
 const app = getApp();
-const util = require("../../utils/util.js");
-const api = require("../../utils/api.js");
+const util = require('../../utils/util.js');
+const bus = require('../../utils/bus.js');
+const api = require('../../services/api.js');
 
 Page({
   data: {
-    clientInfo: null,
+    clientCoins: 0,
     levelIndex: 0,
-    levelItems: null,
-    levelCurrent: null
+    levelItems: [bus.level.none]
   },
   onLoad: function () {
 
-    var self = this;
-    this.setData({
-      clientInfo: app.globalData.clientInfo || {}
-    });
-    wx.setNavigationBarTitle({
-      title: '选择关卡'
-    });
+    var _this = this;
+    
     api.level.all({}, function(data){
-
-      self.setData({ 
-        levelItems: data.data || [],
-        levelCurrent: data.data && data.data.length ? (data.data[0] || {}) : {}
+      _this.setData({
+        clientCoins: bus.client.coins || 0,
+        levelItems: data.data || []
       });
-      wx.navigateTo({ url: "../guess/guess?" + util.serialize(self.data.levelCurrent) });
+      util.setNavigate('../guess/guess?' + util.serialize(data.data[0]));
     });
   },
   coutinue: function(){
 
-    wx.navigateTo({ url: "../guess/guess?" + util.serialize(this.data.levelCurrent) });
+    var index = this.data.levelIndex || 0;
+    var levelInfo = (index < this.data.levelItems.length ? (this.data.levelItems[index] || {}) : {});
+
+    util.setNavigate('../guess/guess?' + util.serialize(levelInfo));
   },
   unlock: function () {
 
-    wx.showToast({
-      title: '解锁成功',
-    })
+    var _this = this;
+    var index = this.data.levelIndex || 0;
+    var levelInfo = (index < this.data.levelItems.length ? (this.data.levelItems[index] || {}) : {});
+
+    api.level.unlock({
+      levelId: levelInfo.id || 0
+    }, function(data){
+      console.log(data);
+      _this.selectComponent('#toast').show(data.coins, 'minus');
+    });
   },
   prev: function(){
 
     if (this.data.levelIndex > 0){
       this.setData({
-        levelIndex: this.data.levelIndex - 1,
-        levelCurrent: this.data.levelItems[this.data.levelIndex - 1]
+        levelIndex: this.data.levelIndex - 1
       });
     }
   },
@@ -52,8 +55,7 @@ Page({
 
     if (this.data.levelIndex < this.data.levelItems.length - 1) {
       this.setData({
-        levelIndex: this.data.levelIndex + 1,
-        levelCurrent: this.data.levelItems[this.data.levelIndex + 1]
+        levelIndex: this.data.levelIndex + 1
       });
     }
   }

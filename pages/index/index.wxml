@@ -19,8 +19,8 @@
     <text class="title">听音乐，猜电视</text>
   </view>
   <view class="controls">
-    <button class="pressbutton" bindtap="start" hover-class="active">
-      <span><em> 开 始 游 戏 </em></span>
+    <button class="pressbutton {{startLoading ? 'loading' : ''}}" bindtap="start" hover-class="active">
+      <span><em> {{startText}} </em></span>
     </button>
     <view class="actions">
       <button class="linkbutton left" hover-class="active" open-type="share"><span>分享</span></button>
@@ -28,3 +28,4 @@
     </view>
   </view>
 </view>
+<mc-toast id="toast"></mc-toast>

@@ -2,22 +2,23 @@
 
 <view class="toolbar">
   <button class="linkfloat right" hover-class="active">
-    <span><em>金币</em><var>{{clientInfo.coins || 0}}</var></span>
+    <span><em>金币</em><var>{{clientCoins}}</var></span>
   </button>
 </view>
 
 <view class="level">
   <view wx:for="{{levelItems}}" wx:key="item" wx:if="{{levelIndex == index}}" class="item">
     <view class="thumb">
-      <image wx:if="{{!item.locked}}" src="{{item.coverUrl}}" />
-      <image wx:if="{{item.locked}}" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514012038188&di=87fe565f65c10a2ca199f97c3100864f&imgtype=0&src=http%3A%2F%2Fimage.tupian114.com%2F20140416%2F11310763.png.238.jpg" />
+      <image wx:if="{{item.loading}}" src="http://image.tupian114.com/20140416/11310763.png.238.jpg" />
+      <image wx:if="{{!item.loading && !item.locked}}" src="{{item.coverUrl}}" />
+      <image wx:if="{{!item.loading && item.locked}}" src="http://image.tupian114.com/20140416/11310763.png.238.jpg" />
     </view>
     <view class="title">{{item.title}}</view>
     <view class="action">
-      <button class="linkbutton" hover-class="active" bindtap="unlock" wx:if="{{item.locked}}">
+      <button class="linkbutton" hover-class="active" bindtap="unlock" wx:if="{{!item.loading && item.locked}}">
         <span> 解锁 <var>{{item.coins}} 金币</var></span>
       </button>
-      <button class="linkbutton" hover-class="active" bindtap="coutinue" wx:if="{{!item.locked}}">
+      <button class="linkbutton" hover-class="active" bindtap="coutinue" wx:if="{{!item.loading && !item.locked}}">
         <span> 继续 <var>{{item.answerCount || 0}}/{{item.programCount || 36}}</var></span>
       </button>
     </view>
@@ -34,3 +35,5 @@
   <em>游戏说明：</em>
   <dfn>根据听到的音乐来猜出电视节目的名称，答对继续下一题，打错结束</dfn>
 </view>
+
+<mc-toast id="toast"></mc-toast>
