@@ -2,30 +2,16 @@
 <view class="page">
   <view class="cover">
     <view class="logo">
-      <view class="tvbox">
-        <span class="arrow">
-          <var class="item left"></var>
-          <var class="item right"></var>
-        </span>
-        <span class="box">
-          <span class="circle">
-            <dfn class="item"></dfn>
-            <dfn class="item"></dfn>
-          </span>
-          <span class="inner"></span>
-        </span>
-      </view>
+      <mc-television id="television">
+        <view class="screen" style="line-height:{{lineHeight}}px">猜</view>
+      </mc-television>
     </view>
     <text class="title">听音乐，猜电视</text>
   </view>
   <view class="controls">
-    <button class="pressbutton {{startLoading ? 'loading' : ''}}" bindtap="start" hover-class="active">
-      <span><em> {{startText}} </em></span>
+    <button class="start {{isLoading ? 'loading' : ''}}" hover-class="active" bindtap="onStart">
+      <span><em> {{isLoading ? '正在启动..' : '开始游戏'}} </em></span>
     </button>
-    <view class="actions">
-      <button class="linkbutton left" hover-class="active" open-type="share"><span>分享</span></button>
-      <button class="linkbutton right" hover-class="active"><span>排行榜</span></button>
-    </view>
   </view>
 </view>
 <mc-toast id="toast"></mc-toast>

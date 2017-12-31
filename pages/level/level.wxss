@@ -1,144 +1,154 @@
 /** level.wxss **/
 
 .toolbar {
-  display: block;
-  position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
-  padding: 17px 16px;
-}
-.toolbar .linkfloat.right {
-  float: right;
+  height: 40px;
+  padding: 15px;
 }
 
-.level {
+/* 关卡选单 */
+.cardlist {
   display: block;
   position: fixed;
   top: 70px;
-  left: 17px;
-  right: 17px;
+  left: 0px;
+  right: 0px;
   bottom: 120px;
   border-radius: 12px;
-  background: rgba(0,0,0,.15);
+  /**background: rgba(0,0,0,.15);**/
 }
-.level .arrow {
+/* 关卡选单箭头 */
+.cardlist .arrow {
   display: block;
+  overflow: hidden;
   position: absolute;
   top: 50%;
-  padding: 0px 6px;
-  margin-top:-21px;
+  padding: 0px;
+  margin: -21px 10px 0px 10px;
+  border-radius: 12px;
   background: transparent;
 }
-.level .arrow span {
+.cardlist .arrow span {
+  display: block;
+  width: 40px;
+  height: 36px;
+  color: #db2863;
+  font-size: 11pt;
+  line-height: 36px;
   padding-top: 1px;
+  border-bottom: 3px solid #f2c3d4;
+  border-radius: 10px;
+  background: #fdecf2;
 }
-.level .arrow span em {
+.cardlist .arrow span em {
   display: block;
   width: 0px;
   height: 0px;
   border: 9px solid transparent;
 }
-.level .arrow.left {
+.cardlist .arrow.left {
   left: 3px;
 }
-.level .arrow.left span em {
+.cardlist .arrow.left span em {
   margin: 9px 18px 0px 3px;
   border-right: 9px solid #db2863;
 }
-.level .arrow.right {
+.cardlist .arrow.right {
   right: 3px;
 }
-.level .arrow.right span em {
+.cardlist .arrow.right span em {
   margin: 9px 3px 0px 18px;
   border-left: 9px solid #db2863;
 }
-.level .arrow.active span {
+.cardlist .arrow.active span {
   border-top: 3px solid #f2c3d4;
-  border-bottom-width: 0px;
+  border-bottom: 0px;
 }
-.level .item {
+/* 关卡选单卡片 */
+.cardlist .item {
   display: block;
   position: absolute;
-  top: 15px;
-  left: 54px;
-  right: 54px;
-  bottom: 15px;
+  top: 0px;
+  left: 60px;
+  right: 60px;
+  bottom: 0px;
   border-radius: 12px;
-  background: #ec4078;
+  background: rgba(0,0,0,.1);
 }
-.level .item .thumb {
+.cardlist .item .info {
   display: block;
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 110px;
 }
-.level .item .thumb image {
+.cardlist .item .info .thumb {
   display: block;
-  width: 47vw;
-  height: 47vw;
-  margin: 15px auto 0px auto;
-  border-radius: 12px;
+  margin: 20px auto 0px auto;
+  border-radius: 5px;
 }
-.level .item .title {
+.cardlist .item .info .title {
   display: block;
-  position: absolute; 
-  left: 0px;
-  right: 0px;
-  bottom: 62px;
-  height: 48px;
   color: #ffffff;
+  font-size: 11pt;
   text-align: center;
-  line-height: 48px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
-.level .item .action {
+.cardlist .item .info .hint {
   display: block;
+  color: rgba(255,255,255,.5);
+  font-size: 10pt;
+  text-align: center;
+}
+.cardlist .item .info .coins {
+  display: block;
+  color: rgba(255,255,255,.5);
+  font-size: 10pt;
+  text-align: center;
+}
+.cardlist .item .button {
+  display: block;
+  overflow: hidden;
   position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 12px;
-  text-align: center;
-  padding: 0px 15px;
-}
-.level .item .action .linkbutton {
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  padding: 0px 3px 3px 3px;
   margin:0px auto;
-}
-.level .item .action .linkbutton span {
-  color: #db2863;
-  font-size: 13pt;
-}
-.level .item .action .linkbutton span var {
-  display: inline-block;
-  height: 24px;
-  color: #ffffff;
-  font-size: 9pt;
-  line-height: 24px;
-  vertical-align: middle;
-  padding: 0px 9px;
-  margin: 4px 0px;
   border-radius: 12px;
-  background: #ec4078;
+  background: #db2863;
+}
+.cardlist .item .button span {
+  display: block;
+  height: 40px;
+  color: #db2863;
+  font-size: 11pt;
+  line-height: 40px;
+  border-bottom: 3px solid #f2c3d4;
+  border-radius: 10px;
+  background: #fdecf2;
+}
+.cardlist .item .button.active {
+  padding: 3px;
+}
+.cardlist .item .button.active span {
+  border-bottom: 0px;
 }
 
 .tips {
   display: block;
   position: fixed;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  height: 80px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  height: 48px;
+  color: rgba(255,255,255,.5);
   font-size: 10pt;
   line-height:24px;
-  padding: 10px 20px;
-}
-.tips em {
-  display: block;
-  color: rgba(0,0,0,.5);
-  font-weight: bold;
-}
-.tips dfn {
-  display: block;
-  color: rgba(0,0,0,.5);
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: rgba(0,0,0,.1);
 }

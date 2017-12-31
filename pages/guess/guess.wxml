@@ -1,26 +1,26 @@
 <!--guess.wxml-->
 
 <view class="toolbar">
-  <button class="linkfloat right" hover-class="active">
-    <span><em>金币</em><var>{{clientCoins}}</var></span>
+  <button class="button float left" hover-class="active" bindtap="onCoins">
+    <span><em>咚豆</em><var>{{coins}}</var></span>
+  </button>
+  <button class="button right">
+    <span><var>{{timeText}}</var></span>
   </button>
 </view>
 
-<view class="audio">
+<view class="audiobar">
   <view class="leftside">
-    <button class="linkbutton skip" hover-class='active'>
+    <button class="button skip" hover-class="active" bindtap="onSkip">
       <span>跳过 <var>-30</var></span>
     </button>
-    <button class="linkbutton tip" hover-class='active'>
+    <button class="button tip" hover-class="active" bindtap="onTip">
       <span>提示 <var>-50</var></span>
     </button>
   </view>
   <view class="rightside">
-    <button class="linkbutton share" hover-class='active' open-type="share">
-      <span>
-        <dfn>分享</dfn>
-        <dfn>到群</dfn>
-        <var>+100</var></span>
+    <button class="button share" hover-class="active" open-type="share">
+      <span>分享</span>
     </button>
   </view>
   <view class="mp3tvbox">
@@ -29,11 +29,13 @@
 </view>
 
 <view class="titlewords">
-  <button class="item" hover-class="active" wx:for="{{titleWords}}" wx:key="item" data-index="{{index}}"  bindtap="titleChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
+  <button class="item" hover-class="active" wx:for="{{titleWords}}" wx:key="item" data-index="{{index}}"  bindtap="onTitleChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
 </view>
 
 <view class="allwords">
-  <button class="item" hover-class="active" wx:for="{{allWords}}" wx:key="item" data-index="{{index}}" bindtap="allChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
+  <button class="item" hover-class="active" wx:for="{{allWords}}" wx:key="item" data-index="{{index}}" bindtap="onAllChoice" animation="{{item.animate}}"><em>{{item.text}}</em></button>
 </view>
 
+<mc-result id="result" bind_continue="onContinue" bindreload="onReload"></mc-result>
+<mc-coins id="coins"></mc-coins>
 <mc-toast id="toast"></mc-toast>

@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "mc-toast": "../../components/toast/toast",
-    "mc-player": "../../components/player/player"
+    "mc-coins": "../../components/coins/coins",
+    "mc-player": "../../components/player/player",
+    "mc-result": "../../components/result/result"
   }
 }

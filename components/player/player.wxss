@@ -1,83 +1,11 @@
-
-.player .tvbox {
-  display:block;
-  width: 42vw;
-  margin: 0px auto;
+.screen {
+  height: 100%;
+  padding-top: 1px;
+  background-size: 30px 30px;
+  background: -webkit-linear-gradient(180deg, yellowgreen 0,yellowgreen 25%, cornflowerblue 25%,cornflowerblue 50%,gold 50%,gold 75%,orangered 75%,orangered 100%);
+  text-shadow: 0px 0px 6px rgba(0,0,0,.5);
 }
-.player .tvbox .arrow {
-  display: block;
-  overflow: hidden;
-  height: 12vw;
-  padding: 0px 6%;
-}
-.player .tvbox .arrow .item {
-  display: block;
-  height: 4px;
-  margin-top: 25%;
-  border: 2px solid #000201;
-  border-radius:4px;
-  background:#fdecf2;
-}
-.player .tvbox .arrow .item:before {
-  display: block;
-  content: "";
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  margin-left: -5px;
-  border: 2px solid #000201;
-  border-radius: 50%;
-  background:#fdecf2;
-}
-.player .tvbox .arrow .item.left {
-  float:left;
-  width: 36%;
-  transform: rotate(45deg);
-}
-.player .tvbox .arrow .item.right {
-  float:right;
-  width: 48%;
-  transform: rotate(135deg);
-}
-.player .tvbox .box {
-  display:block;
-  padding: 7px 0px 7px 7px;
-  margin: 0px auto;
-  border: 3px solid #000201;
-  border-radius:16px;
-  background:#fe4f86;
-}
-.player .tvbox .inner {
-  display: block;
-  height: 24vw;
-  margin-right: 10vw;
-  border: 2px solid #000201;
-  border-radius:12px;
-  background:#fdecf2;
-  background-size: 100% 100%;
-  background-image: linear-gradient(90deg, 
-    #cc0000 25%, #ccff00 0, 
-    #ccff00 50%, #cc00ff 0, 
-    #cc00ff 75%, #00ccff 0, 
-    #00ccff 100%, #cc0000 0
-  ); 
-}
-.player .tvbox .circle {
-  float: right;
-  display: block;
-  width: 6vw;
-  padding: 0px 2vw;
-}
-.player .tvbox .circle .item {
-  display: block;
-  width: 4vw;
-  height: 4vw;
-  margin: 0px auto 5px auto;
-  border: 2px solid #000201;
-  border-radius: 50%;
-  background:#fdecf2;
-}
-.player .tvbox .button {
+.screen .button {
   display: block;
   overflow: hidden;
   width: 17vw;
@@ -86,7 +14,7 @@
   border-radius: 50%;
   background: #db2863;
 }
-.player .tvbox .button span {
+.screen .button span {
   display: block;
   height: 14vw;
   color: #db2863;
@@ -97,7 +25,7 @@
   border-radius: 50%;
   background: #fdecf2;
 }
-.player .tvbox .button span var {
+.screen .button span var {
   display: inline-block;
   width: 0px;
   height: 0px;
@@ -105,13 +33,13 @@
   border: 4vw solid transparent;
   border-left: 4vw solid #ec4078;
 }
-.player .tvbox .button span dfn {
+.screen .button span dfn {
   display: inline-block;
   width: 6vw;
   height: 6vw;
   margin: 4.5vw 0px 0vw 0px;
 }
-.player .tvbox .button span dfn:before {
+.screen .button span dfn:before {
   float: left;
   display: block;
   content: "";
@@ -119,7 +47,7 @@
   height: 6vw;
   background:#ec4078;
 }
-.player .tvbox .button span dfn:after {
+.screen .button span dfn:after {
   float: right;
   display: block;
   content: "";
@@ -127,9 +55,9 @@
   height: 6vw;
   background:#ec4078;
 }
-.player .tvbox .button.active {
+.screen .button.active {
   padding: 5px;
 }
-.player .tvbox .button.active span {
+.screen .button.active span {
   border-bottom: 0px;
 }

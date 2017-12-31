@@ -1,146 +1,20 @@
 /** app.wxss **/
 page {
   background-color: #ec4078;
-  background-size: 48px 48px;
-  background-image: linear-gradient(135deg, 
-    rgba(0,0,0,.0) 25%, rgba(0,0,0,.01) 0, 
-    rgba(0,0,0,.01) 50%, rgba(0,0,0,.0) 0, 
-    rgba(0,0,0,.0) 75%, rgba(0,0,0,.01) 0
-  );  
-}
-.tvbox {
-  display:block;
-  width: 48vw;
-  margin: 0px auto;
-}
-.tvbox .arrow {
-  display: block;
-  overflow: hidden;
-  height: 15vw;
-  padding: 0px 6%;
-}
-.tvbox .arrow .item {
-  display: block;
-  height: 4px;
-  margin-top: 25%;
-  border: 2px solid #000201;
-  border-radius:4px;
-  background:#fdecf2;
-}
-.tvbox .arrow .item:before {
-  display: block;
-  content: "";
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  margin-left: -5px;
-  border: 2px solid #000201;
-  border-radius: 50%;
-  background:#fdecf2;
-}
-.tvbox .arrow .item.left {
-  float:left;
-  width: 36%;
-  transform: rotate(45deg);
-}
-.tvbox .arrow .item.right {
-  float:right;
-  width: 48%;
-  transform: rotate(135deg);
-}
-.tvbox .box {
-  display:block;
-  padding: 12px 0px 12px 12px;
-  margin: 0px auto;
-  border: 3px solid #000201;
-  border-radius:16px;
-  background:#fe4f86;
-}
-.tvbox .inner {
-  display: block;
-  height: 25vw;
-  margin-right: 10vw;
-  border: 2px solid #000201;
-  border-radius:12px;
-  background:#fdecf2;
-}
-.tvbox .circle {
-  float: right;
-  display: block;
-  width: 6vw;
-  padding: 0px 2vw;
-}
-.tvbox .circle .item {
-  display: block;
-  width: 4vw;
-  height: 4vw;
-  margin: 0px auto 5px auto;
-  border: 2px solid #000201;
-  border-radius: 50%;
-  background:#fdecf2;
 }
 
-.pressbutton {
+.toolbar {
   display: block;
-  overflow: hidden;
-  padding: 0px 5px 5px 5px;
-  border-radius: 12px;
-  background: #db2863;
+  position: fixed;
 }
-.pressbutton span {
-  display: block;
-  height: 48px;
-  color: #db2863;
-  font-size: 15pt;
-  line-height: 48px;
-  border-bottom: 5px solid #e1b929;
-  border-radius: 10px;
-  background: #fad759;
-}
-.pressbutton.active {
-  padding: 5px;
-}
-.pressbutton.active span {
-  border-bottom: 0px;
-}
-.pressbutton.loading span {
-  color: #bbbbbb;
-  border-bottom: 5px solid #dfdfdf;
-  background: #dfdfdf;
-}
-
-.linkbutton {
-  display: block;
-  overflow: hidden;
-  padding: 0px 3px 3px 3px;
-  border-radius: 12px;
-  background: #db2863;
-}
-.linkbutton span {
-  display: block;
-  height: 36px;
-  color: #db2863;
-  font-size: 11pt;
-  line-height: 36px;
-  border-bottom: 3px solid #f2c3d4;
-  border-radius: 10px;
-  background: #fdecf2;
-}
-.linkbutton.active {
-  padding: 3px;
-}
-.linkbutton.active span {
-  border-bottom: 0px;
-}
-
-.linkfloat {
+.toolbar .button {
   display: block;
   overflow: hidden;
   padding: 0px;
   border-radius: 18px;
   background: rgba(0,0,0,.15);
 }
-.linkfloat span {
+.toolbar .button span {
   display: block;
   height: 36px;
   color: #db2863;
@@ -149,7 +23,7 @@ page {
   padding: 0px;
   border-radius: 18px;
 }
-.linkfloat span em {
+.toolbar .button span em {
   float: left; 
   display: block;
   height: 32px;
@@ -161,26 +35,39 @@ page {
   border-radius: 16px;
   background: #fad759;
 }
-.linkfloat span var {
+.toolbar .button span image {
+  float: left; 
+  display: block;
+  width:32px;
+  height: 32px;
+  padding: 0px;
+  margin: 2px;
+  border-radius: 16px;
+}
+.toolbar .button span var {
   float: left; 
   display: block;
   color: #ffffff;
-  font-size: 12pt;
+  font-size: 10pt;
   font-weight: bold;
   padding: 0px 12px 0px 9px;
 }
-.linkfloat.active {
+.toolbar .button span dfn {
+  float: left; 
+  display: block;
+  color: #ffffff;
+  font-size: 10pt;
+  padding: 0px 12px 0px 9px;
+}
+.toolbar .button.left {
+  float: left;
+}
+.toolbar .button.right {
+  float: right;
+}
+.toolbar .button.active {
   background: rgba(0,0,0,.2);
 }
-.linkfloat.active span em {
+.toolbar .button.active span em {
   background: #fad759;
-}
-
-.backline {
-  background-image: linear-gradient(135deg, 
-    #ec4078 25%, rgba(0,0,0,.01) 0, 
-    rgba(0,0,0,.01) 50%, #ec4078 0, 
-    #ec4078 75%, rgba(0,0,0,.01) 0
-  );
-  background-size: 48px 48px;
 }

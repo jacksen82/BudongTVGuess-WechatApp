@@ -1,18 +1,13 @@
 /** guess.wxss **/
 
 .toolbar {
-  display: block;
-  position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
   padding: 17px 16px;
 }
-.toolbar .linkfloat.right {
-  float: right;
-}
 
-.audio {
+.audiobar {
   display: block;
   position: fixed;
   top: 72px;
@@ -20,25 +15,27 @@
   right: 0px;
   bottom: 76vw;
 }
-.audio .leftside {
+.audiobar .button {
   display: block;
-  position: absolute;
-  top:50%;
-  left: 0px;
-  width: 56px;
-  height: 160px;
-  padding: 0px 7px;
-  margin-top: -80px;
-}
-.audio .leftside .linkbutton {
+  overflow: hidden;
+  padding: 0px 3px 3px 3px;
   margin: 5px 0px;
+  border-radius: 12px;
+  background: #db2863;
 }
-.audio .leftside .linkbutton span {
+.audiobar .button span {
+  display: block;
   height: auto;
+  color: #db2863;
+  font-size: 11pt;
   line-height: 24px;
   padding-top: 5px;
+  padding-bottom: 1px;
+  border-bottom: 3px solid #f2c3d4;
+  border-radius: 10px;
+  background: #fdecf2;
 }
-.audio .leftside .linkbutton span var {
+.audiobar .button span var {
   display: block;
   height: 20px;
   color: #ffffff;
@@ -48,47 +45,42 @@
   border-radius: 10px;
   background: #ec4078;
 }
-.audio .leftside .linkbutton span {
-  padding-bottom: 1px;
+.audiobar .button.active {
+  padding: 3px;
 }
-.audio .rightside {
+.audiobar .button.active span {
+  border-bottom: 0px;
+}
+.audiobar .leftside {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 64px;
+  height: 160px;
+  padding: 0px 12px;
+  margin-top: -80px;
+}
+.audiobar .rightside {
   display: block;
   position: absolute;
   top: 50%;
   right: 0px;
-  width: 56px;
-  height: 100px;
-  padding: 0px 7px;
-  margin-top: -50px;
+  width: 64px;
+  height: 80px;
+  padding: 0px 12px;
+  margin-top: -45px;
 }
-.audio .rightside .linkbutton span {
-  height: auto;
-  line-height: 24px;
-  padding-top: 7px;
+.audiobar .rightside .button span {
+  height: 48px;
+  line-height: 48px;
 }
-.audio .rightside .linkbutton span dfn {
-  display: block;
-  line-height: 20px;
-}
-.audio .rightside .linkbutton span var {
-  display: block;
-  height: 20px;
-  color: #ffffff;
-  font-size: 8pt;
-  line-height: 20px;
-  margin: 5px;
-  border-radius: 10px;
-  background: #ec4078;
-}
-.audio .rightside .linkbutton span {
-  padding-bottom: 1px;
-}
-.audio .mp3tvbox {
+.audiobar .mp3tvbox {
   display: block;
   position: absolute;
   top: 50%;
-  left: 80px;
-  right: 80px;
+  left: 90px;
+  right: 90px;
   height: 128px;
   margin-top: -96px;
 }

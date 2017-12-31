@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "mc-toast": "../../components/toast/toast"
+    "mc-toast": "../../components/toast/toast",
+    "mc-coins": "../../components/coins/coins"
   }
 }

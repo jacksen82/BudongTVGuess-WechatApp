@@ -11,8 +11,7 @@ Component({
     ready: function(audioUrl, coverUrl){
 
       var _this = this;
-    console.log(audioUrl);
-    console.log(coverUrl);
+
       wx.onBackgroundAudioPlay(function () {
         _this.setData({ playing: true });
       });
@@ -23,6 +22,7 @@ Component({
         audioUrl: audioUrl,
         coverUrl: coverUrl
       });
+      this.selectComponent('#television').show(.4);
     },
     press: function(){
 

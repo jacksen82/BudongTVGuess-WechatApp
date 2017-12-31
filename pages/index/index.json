@@ -3,6 +3,7 @@
     "navigationBarTitleText": "步咚猜剧"
   },
   "usingComponents": {
-    "mc-toast": "../../components/toast/toast"
+    "mc-toast": "../../components/toast/toast",
+    "mc-television": "../../components/television/television"
   }
 }

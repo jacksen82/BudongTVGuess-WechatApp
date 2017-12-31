@@ -5,13 +5,22 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 180px;
+  bottom: 200px;
 }
 .cover .logo {
   display: block;
   overflow: hidden;
   width: 100%;
   padding-top: 15vw;
+}
+.cover .screen {
+  height: 100%;
+  color:#ffffff;
+  font-size: 48px;
+  text-align: center;
+  background-size: 30px 30px;
+  background: -webkit-linear-gradient(180deg, yellowgreen 0,yellowgreen 25%, cornflowerblue 25%,cornflowerblue 50%,gold 50%,gold 75%,orangered 75%,orangered 100%);
+  text-shadow: 0px 0px 6px rgba(0,0,0,.5);
 }
 .cover .title {
   display: block;
@@ -28,20 +37,35 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  height: 140px;
-  padding: 40px 25px 0px 25px;
+  height: 150px;
+  padding: 0px 50px;
 }
-.controls .actions {
-  display:block;
-  height: 35px;
-  padding-top:20px;
+.controls .start {
+  display: block;
+  overflow: hidden;
+  padding: 0px 5px 5px 5px;
+  margin-top: 30px;
+  border-radius: 31px;
+  background: #db2863;
 }
-.controls .actions .linkbutton span {
-  padding: 0px 15px;
+.controls .start span {
+  display: block;
+  height: 56px;
+  color: #db2863;
+  font-size: 15pt;
+  line-height: 56px;
+  border-bottom: 5px solid #e1b929;
+  border-radius: 30px;
+  background: #fad759;
 }
-.controls .actions .linkbutton.left {
-  float: left;
+.controls .start.active {
+  padding: 5px;
 }
-.controls .actions .linkbutton.right {
-  float: right;
+.controls .start.active span {
+  border-bottom: 0px;
+}
+.controls .start.loading span {
+  color: #bbbbbb;
+  border-bottom: 5px solid #dfdfdf;
+  background: #dfdfdf;
 }

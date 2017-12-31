@@ -7,7 +7,10 @@ const api = require('../../services/api.js');
 
 Page({
   data: {
-    clientCoins: 0,
+    coins: 0,
+    avatarUrl: '',
+    thumbWidth: 0,
+    thumbHeight: 0,
     levelIndex: 0,
     levelItems: [bus.level.none]
   },
@@ -15,22 +18,43 @@ Page({
 
     var _this = this;
     
+    this.setData({
+      thumbWidth: Math.floor(bus.system.windowWidth - 160),
+      thumbHeight: Math.floor(bus.system.windowWidth - 160)
+    });
     api.level.all({}, function(data){
       _this.setData({
-        clientCoins: bus.client.coins || 0,
+        coins: bus.client.coins || 0,
+        avatarUrl: bus.client.avatarUrl,
         levelItems: data.data || []
       });
       util.setNavigate('../guess/guess?' + util.serialize(data.data[0]));
     });
   },
-  coutinue: function(){
+  onShareAppMessage: function (res) {
+
+    var _this = this;
+
+    this.selectComponent('#coins').close();
+    return api.wechat.share('coins', res, function (data) {
+      _this.selectComponent('#toast').show('+100', 'add');
+    });
+  },
+  onCoins: function(){
+
+    this.selectComponent('#coins').show(this.data.coins);
+  },
+  onRank: function(){
+
+  },
+  onCoutinue: function(){
 
     var index = this.data.levelIndex || 0;
     var levelInfo = (index < this.data.levelItems.length ? (this.data.levelItems[index] || {}) : {});
 
     util.setNavigate('../guess/guess?' + util.serialize(levelInfo));
   },
-  unlock: function () {
+  onUnlock: function () {
 
     var _this = this;
     var index = this.data.levelIndex || 0;
@@ -43,7 +67,7 @@ Page({
       _this.selectComponent('#toast').show(data.coins, 'minus');
     });
   },
-  prev: function(){
+  onGoPrev: function(){
 
     if (this.data.levelIndex > 0){
       this.setData({
@@ -51,7 +75,7 @@ Page({
       });
     }
   },
-  next: function(){
+  onGoNext: function(){
 
     if (this.data.levelIndex < this.data.levelItems.length - 1) {
       this.setData({

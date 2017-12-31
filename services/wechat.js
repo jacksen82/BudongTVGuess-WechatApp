@@ -99,11 +99,41 @@ const wechat = {
       }
     });
   },
-  share: function(title, image, res, success){
+  share: function(scene, res, success){
 
+    var scenes = {
+      coins: [
+        {
+          title: '听不出这些电视，你怎么敢说自己老了',
+          image: ''
+        },
+        {
+          title: '只要听到音乐，你就一定能猜出这是什么电视',
+          image: ''
+        }
+      ],
+      success: [
+        {
+          title: '看来我真是老了，这些电视我竟然都猜对了',
+          image: ''
+        },
+        {
+          title: '我还是太年轻，这些电视我根本都没看过',
+          image: ''
+        }
+      ]
+    };
+
+    var shareInfo = {
+      title: '听不出这些电视，你怎么敢说自己老了',
+      image: ''
+    };
+    if (scenes[scene] && scenes[scene].length){
+      shareInfo = scenes[scene][0] || shareInfo;
+    }
     return {
-      title: title || '步咚猜剧',
-      imageUrl: image || '',
+      title: shareInfo.title,
+      imageUrl: shareInfo.image,
       path: '/pages/index/index?fromClientId=' + (bus.client || {}).id || 0,
       success: function(_res){
         if (_res.shareTickets && _res.shareTickets.length) {

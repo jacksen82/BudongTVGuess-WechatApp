@@ -7,46 +7,29 @@ const api = require('../../services/api.js');
 
 Page({
   data: {
-    setting: false,
-    startLoading: true,
-    startText: '正在启动..'
+    isLoading: true,
+    lineHeight: 0
   },
   onLoad: function () {
 
-    var _this = this;
-    
-    api.wechat.authorize(function(data){
+    this.setData({ lineHeight: Math.floor(bus.system.windowWidth * .5 * .6 - 4) });
+    this.selectComponent('#television').show(.5);
+    this._authorize();
+  },
+  onStart: function(){
 
-      _this.setData({ 
-        startText: '开 始 游 戏',
-        startLoading: false
-      });
+    if (!this.data.isLoading){
+      util.setNavigate('../level/level');
+    }
+  },
+  _authorize: function(){
+
+    var _this = this;
+
+    api.wechat.authorize(function (data) {
+
+      util.setData(_this, 'isLoading', false);
       util.setNavigate('../level/level');
     });
-  },
-  onShow: function(){
-    
-    // wx.showShareMenu({
-    //   withShareTicket: true
-    // });
-  },
-  onShareAppMessage: function(res){
-
-    var _this = this;
-
-    if (!this.data.startLoading) {
-      return api.wechat.share('这么多年才发现，原来这段音乐是这个电视剧的', '', res, function(data){
-        _this.selectComponent('#toast').show('+100', 'add');
-      });
-    }
-    return {};
-  },
-  start: function(){
-
-    !this.data.startLoading && util.setNavigate('../level/level');
-  },
-  rank: function(){
-
-    !this.data.startLoading && util.setNavigate('../rank/rank');
   }
 })

@@ -2,6 +2,7 @@
 const data = {
 
 };
+
 //  弹出层动画
 const toast = {
   ready: function(){
@@ -33,12 +34,52 @@ const toast = {
   }
 };
 
+//  模态层动画
+const modal = {
+  ready: function () {
+
+    data.ready = wx.createAnimation({
+      duration: 0,
+      timingFunction: 'ease'
+    });
+    data.ready.opacity(0).step();
+    return data.ready.export();
+  },
+  fadeIn: function () {
+
+    data.fadeIn = wx.createAnimation({
+      duration: 360,
+      timingFunction: 'ease'
+    });
+    data.fadeIn.opacity(1).step();
+    return data.fadeIn.export();
+  },
+  fadeOut: function () {
+
+    data.fadeOut = wx.createAnimation({
+      duration: 360,
+      timingFunction: 'ease'
+    });
+    data.fadeOut.opacity(0).step();
+    return data.fadeOut.export();
+  }
+};
+
 //  文字选项动画
 const word = {
+  choiceNone: function () {
+
+    data.choiceNone = wx.createAnimation({
+      duration: 0,
+      timingFunction: 'ease'
+    });
+    data.choiceNone.backgroundColor('#ffffff').step();
+    return data.choiceNone.export();
+  },
   choiceIn: function (delay) {
 
     data.choiceIn = wx.createAnimation({
-      duration: 360,
+      duration: 240,
       timingFunction: 'ease',
       delay: delay
     });
@@ -49,12 +90,21 @@ const word = {
   choiceOut: function(){
 
     data.choiceOut = wx.createAnimation({
-      duration: 360,
+      duration: 240,
       timingFunction: 'ease'
     });
     data.choiceOut.scale(2, 2).step();
     data.choiceOut.backgroundColor('rgba(0,0,0,0.25)').scale(1, 1).step();
     return data.choiceOut.export();
+  },
+  entryNone: function () {
+
+    data.entryNone = wx.createAnimation({
+      duration: 0,
+      timingFunction: 'ease'
+    });
+    data.entryNone.backgroundColor('rgba(0,0,0,0.25)').step();
+    return data.entryNone.export();
   },
   entryIn: function(){
 
@@ -92,5 +142,6 @@ const word = {
 
 module.exports = {
   toast: toast,
+  modal: modal,
   word: word
 };
