@@ -10,7 +10,7 @@
     "backgroundColor":"#ec4078",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ec4078",
-    "navigationBarTitleText": "步咚猜剧",
+    "navigationBarTitleText": "猜电视",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false
   }

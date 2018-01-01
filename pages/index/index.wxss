@@ -16,7 +16,7 @@
 .cover .screen {
   height: 100%;
   color:#ffffff;
-  font-size: 48px;
+  font-size: 48pt;
   text-align: center;
   background-size: 30px 30px;
   background: -webkit-linear-gradient(180deg, yellowgreen 0,yellowgreen 25%, cornflowerblue 25%,cornflowerblue 50%,gold 50%,gold 75%,orangered 75%,orangered 100%);

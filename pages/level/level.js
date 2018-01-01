@@ -29,7 +29,7 @@ Page({
         levelItems: data.data || []
       });
       //  util.setNavigate('../guess/guess?' + util.serialize(data.data[0]));
-      util.setNavigate('../rank/rank?levelId=' + data.data[0].id);
+      //  util.setNavigate('../rank/rank?levelId=' + data.data[0].id);
     });
   },
   onShareAppMessage: function (res) {

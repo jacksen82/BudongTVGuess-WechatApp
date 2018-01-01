@@ -37,7 +37,7 @@ Page({
     api.wechat.authorize(function (data) {
 
       util.setData(_this, 'isLoading', false);
-      util.setNavigate('../level/level');
+      //  util.setNavigate('../level/level');
     });
   }
 })
