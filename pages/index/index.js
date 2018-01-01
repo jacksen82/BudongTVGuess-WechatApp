@@ -16,6 +16,14 @@ Page({
     this.selectComponent('#television').show(.5);
     this._authorize();
   },
+  onShareAppMessage: function (res) {
+
+    var _this = this;
+
+    return api.wechat.share('index', res, function (data) {
+      _this.selectComponent('#toast').show('+100', 'add');
+    });
+  },
   onStart: function(){
 
     if (!this.data.isLoading){

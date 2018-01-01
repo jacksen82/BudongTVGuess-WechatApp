@@ -4,7 +4,11 @@ const bus = require('../utils/bus.js');
 const subject = {
 
   next: function (data, success) {
-     util.request('/subject/next.ashx', Object.assign(data, { 'sessionCode': bus.client.sessionCode || '' }), success);
+     util.request('/subject/next.ashx', Object.assign(data, { 'sessionCode': bus.client.sessionCode || '' }), function(_data){
+
+       _data['isLast'] = true;
+       success(_data)
+     });
   }
 }
 module.exports = subject;

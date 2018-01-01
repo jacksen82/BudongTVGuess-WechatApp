@@ -17,6 +17,7 @@ Page({
     subjectTitle: '',
     subjectThumbUrl: '',
     subjectWords: '',
+    subjectLast: false,
     titleIndex: 0,
     titleWords: [],
     allWords: []
@@ -28,7 +29,6 @@ Page({
       levelInfo: util.decodeParams(options)
     });
     this._next();
-    this._clock();
   },
   onUnload: function(){
 
@@ -59,7 +59,7 @@ Page({
     var _this = this;
 
     this.selectComponent('#coins').close();
-    return api.wechat.share('coins', res, function (data) {
+    return api.wechat.share('guess', res, function (data) {
       _this.selectComponent('#toast').show('+100', 'add');
     });
   },
@@ -144,8 +144,12 @@ Page({
     }
     if (this.data.titleIndex >= this.data.titleWords.length) {
       this.timer && clearInterval(this.timer);
-      if (words.getTitleResult(this.data.titleWords)){
-        this.selectComponent('#result').show(true, this.data.subjectTitle, this.data.subjectThumbUrl);
+      if (words.getTitleResult(this.data.titleWords)) {
+        if (this.data.subjectLast){
+          util.setNavigate('../rank/rank?levelId=' + (this.data.levelInfo.id || 0));
+        } else {
+          this.selectComponent('#result').show(true, this.data.subjectTitle, this.data.subjectThumbUrl);
+        }
       } else {
         this.selectComponent('#result').show(false, this.data.subjectTitle, this.data.subjectThumbUrl);
       }
@@ -170,6 +174,7 @@ Page({
         subjectTitle: data.title,
         subjectThumbUrl: data.thumbUrl,
         subjectWords: data.words,
+        subjectLast: data.isLast,
         titleIndex: 0,
         titleWords: words.getTitleWord(data.title || ''),
         allWords: words.getAllWord(data.words || '')

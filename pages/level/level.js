@@ -28,7 +28,8 @@ Page({
         avatarUrl: bus.client.avatarUrl,
         levelItems: data.data || []
       });
-      util.setNavigate('../guess/guess?' + util.serialize(data.data[0]));
+      //  util.setNavigate('../guess/guess?' + util.serialize(data.data[0]));
+      util.setNavigate('../rank/rank?levelId=' + data.data[0].id);
     });
   },
   onShareAppMessage: function (res) {
@@ -36,7 +37,7 @@ Page({
     var _this = this;
 
     this.selectComponent('#coins').close();
-    return api.wechat.share('coins', res, function (data) {
+    return api.wechat.share('level', res, function (data) {
       _this.selectComponent('#toast').show('+100', 'add');
     });
   },
@@ -46,6 +47,10 @@ Page({
   },
   onRank: function(){
 
+    var index = this.data.levelIndex || 0;
+    var levelInfo = (index < this.data.levelItems.length ? (this.data.levelItems[index] || {}) : {});
+
+    util.setNavigate('../rank/rank?levelId=' + (levelInfo.id || 0));
   },
   onCoutinue: function(){
 

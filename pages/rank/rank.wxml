@@ -1,0 +1,20 @@
+<view class="result">
+  <em>闯关成功</em>
+  <dfn>答对了 <strong>23</strong> 个题目，用时 <strong>00:40:11</strong></dfn>
+</view>
+<view class="clientlist">
+  <view wx:for="{{friendItems}}" wx:key="item" class="item {{item.isSelf ? 'me' : ''}}">
+    <text class="time">{{item.time}}</text>
+    <text class="score">{{item.subjectCount}}</text>
+    <image src="{{item.avatarUrl}}" class="avatar" />
+    <text class="nick">{{item.nick}}</text>
+  </view>
+</view>
+<view class="controls">
+  <button class="button left" hover-class="active" open-type="share">
+    <span> 分 享 </span>
+  </button>
+  <button class="button right" hover-class="active" bindtap="onForward">
+    <span> 返 回 </span>
+  </button>
+</view>

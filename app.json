@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/level/level",
     "pages/guess/guess",
+    "pages/rank/rank",
     "pages/logs/logs"
   ],
   "window":{
