@@ -21,7 +21,7 @@ Page({
     var _this = this;
 
     return api.wechat.share('index', res, function (data) {
-      _this.selectComponent('#toast').show('+100', 'add');
+      _this.selectComponent('#toast').show(data.coins, 'add');
     });
   },
   onStart: function(){
@@ -37,7 +37,6 @@ Page({
     api.wechat.authorize(function (data) {
 
       util.setData(_this, 'isLoading', false);
-      //  util.setNavigate('../level/level');
     });
   }
 })

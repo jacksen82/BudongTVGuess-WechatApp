@@ -99,22 +99,25 @@ const wechat = {
       }
     });
   },
-  share: function(scene, res, success){
+  share: function(scene, res, success, data){
+
+    data = data || {};
 
     var scenes = {
       guess: {
-        title: '我正在玩儿【猜电视】，已经猜对了 道题，一起来挑战吧！',
-        image: ''
+        title: '我正在玩儿【猜电视】，闯关【' + data.title + '】，你敢来试试吗！',
+        image: 'https://shenxu.name/tvguess/statics/images/wechatapp_share.png'
       },
       rank: {
-        title: '我正在玩儿【猜电视】，闯关【】成功，你敢来试试吗！',
-        image: ''
+        title: '我正在玩儿【猜电视】，闯关【' + data.title + '】，你敢来试试吗！',
+        image: 'https://shenxu.name/tvguess/statics/images/wechatapp_share.png'
       }
     };
     var shareInfo = scenes[scene] || {
       title: '听不出这些电视，你怎么敢说自己老了',
-      image: ''
+      image: 'https://shenxu.name/tvguess/statics/images/wechatapp_share.png'
     };
+
     return {
       title: shareInfo.title,
       imageUrl: shareInfo.image,

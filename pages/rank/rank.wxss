@@ -30,6 +30,7 @@
 }
 .clientlist {
   display: block;
+  overflow: auto;
   position: fixed;
   top: 100px;
   left: 20px;
@@ -44,6 +45,17 @@
   margin-bottom: 1px;
   background: rgba(0,0,0,.1);
 }
+.clientlist .item .index {
+  float: left;
+  display: block;
+  width: 36px;
+  height: 36px;
+  color:#f2c3d4;
+  font-weight: bold;
+  text-align: center;
+  line-height: 36px;
+  background:rgba(0,0,0,.2);
+}
 .clientlist .item .avatar {
   float: left;
   display: block;
@@ -56,8 +68,8 @@
   color: #f2c3d4;
   font-size: 9pt;
   line-height: 36px;
-  padding-left: 7px;
-  margin: 0px 120px 0px 36px;
+  padding-left: 10px;
+  margin: 0px 120px 0px 72px;
 }
 .clientlist .item .score {
   float: right;
@@ -79,8 +91,12 @@
 .clientlist .item.me {
   background: transparent;
 }
+.clientlist .item.me .index {
+  color: #fad759;
+}
 .clientlist .item.me .nick {
   color: #fad759;
+  font-weight: bold;
 }
 .clientlist .item:last-child {
   border-bottom: 1px solid rgba(0,0,0,.1);

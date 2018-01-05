@@ -17,7 +17,6 @@
   right: 0px;
   bottom: 120px;
   border-radius: 12px;
-  /**background: rgba(0,0,0,.15);**/
 }
 /* 关卡选单箭头 */
 .cardlist .arrow {
@@ -83,6 +82,14 @@
   top: 0px;
   left: 0px;
   right: 0px;
+}
+.cardlist .item .info .cover {
+  display: block;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border-radius: 5px;
+  background:rgba(0,0,0,.2);
 }
 .cardlist .item .info .thumb {
   display: block;

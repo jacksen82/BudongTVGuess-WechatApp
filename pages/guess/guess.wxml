@@ -5,7 +5,7 @@
     <span><em>咚豆</em><var>{{coins}}</var></span>
   </button>
   <button class="button right">
-    <span><var>{{timeText}}</var></span>
+    <span><strong>{{timeText}}</strong></span>
   </button>
 </view>
 

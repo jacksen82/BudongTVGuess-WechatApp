@@ -18,17 +18,18 @@
   </button>
   <view wx:for="{{levelItems}}" wx:key="item" wx:if="{{levelIndex == index}}" class="item">
     <view class="info">
+      <image wx:if="{{!item.locked && item.subjectAnswerCount>=item.subjectCount}}" class="cover" style="width:{{thumbWidth}}px;height:{{thumbHeight}}px" src="{{thumbEncourage}}" />
       <image wx:if="{{!item.locked}}" class="thumb" style="width:{{thumbWidth}}px;height:{{thumbHeight}}px" src="{{item.coverUrl}}" />
-      <image wx:if="{{item.locked}}" class="thumb" style="width:{{thumbWidth}}px;height:{{thumbHeight}}px" src="http://image.tupian114.com/20140416/11310763.png.238.jpg" />
+      <image wx:if="{{item.locked}}" class="thumb" style="width:{{thumbWidth}}px;height:{{thumbHeight}}px" src="{{thumbLoaded}}" />
       <view class="title">{{item.title}}</view>
-      <view wx:if="{{!item.locked}}" class="hint">题目数量 {{item.subjectCount || 0}} 个</view>
+      <view wx:if="{{!item.locked}}" class="hint">题目 {{item.subjectAnswerCount || 0}} /  {{item.subjectCount || 0}} </view>
       <view wx:if="{{item.locked}}" class="coins">解锁需要 {{item.coins}} 个咚豆</view>
     </view>
     <button class="button" hover-class="active" bindtap="onUnlock" wx:if="{{!item.loading && item.locked}}">
       <span> 解锁关卡 </span>
     </button>
     <button class="button" hover-class="active" bindtap="onCoutinue" wx:if="{{!item.loading && !item.locked}}">
-      <span> 继续 </span>
+      <span> {{item.subjectAnswerCount>=item.subjectCount?'重玩一局':'继续'}} </span>
     </button>
   </view>
 </view>

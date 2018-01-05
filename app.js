@@ -4,7 +4,7 @@ const bus = require('./utils/bus.js');
 
 App({
   onLaunch: function (options) {
-
+    console.log(options);
     bus.launchClientId = options.query.fromClientId || 0;
     bus.launchScene = options.scene || 0;
 

@@ -62,7 +62,6 @@ const setTitleWord = function (titleIndex, titleWords, allIndex, allWords, callb
       allWords[i]['animate'] = null;
     }
   }
-
   titleWords[titleIndex]['text'] = allWords[allIndex].tip;
   titleWords[titleIndex]['index'] = allIndex;
   titleWords[titleIndex]['animate'] = animate.word.entryIn();

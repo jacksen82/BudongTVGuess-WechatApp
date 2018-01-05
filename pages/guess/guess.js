@@ -12,6 +12,7 @@ Page({
     timer: null,
     timeSecond: 0,
     timeText: '00:00',
+    tipCount: 0,
     levelInfo: null,
     subjectId: 0,
     subjectTitle: '',
@@ -33,20 +34,19 @@ Page({
   onUnload: function(){
 
     this.timer && clearInterval(this.timer);
+    this.selectComponent('#player').stop();
   },
   onContinue: function(){
 
-    this._next({
-      subjectId: this.data.subjectId,
-      subjectTime: this.data.timeSecond,
-      subjectResult: 1
-    });
+    this._next();
+    this.selectComponent('#player').stop();
     this.setData({
       timeSecond: 0
     });
   },
   onReload: function(){
 
+    this.selectComponent('#player').stop();
     this.setData({
       titleIndex: 0,
       titleWords: words.getTitleWord(this.data.subjectTitle),
@@ -59,46 +59,63 @@ Page({
     var _this = this;
 
     this.selectComponent('#coins').close();
+    this.selectComponent('#player').stop();
     return api.wechat.share('guess', res, function (data) {
-      _this.selectComponent('#toast').show('+100', 'add');
-    });
+      _this.selectComponent('#toast').show(data.coins, 'add');
+    }, this.data.levelInfo);
   },
   onCoins: function () {
 
+    this.selectComponent('#player').stop();
     this.selectComponent('#coins').show(this.data.coins);
   },
   onSkip: function(){
 
     var _this = this;
 
-    if (this.data.clientCoins > 150) {
-      api.subject.skip({
-        subjectId: this.data.subjectId
-      }, function (data) {
+    this.selectComponent('#player').stop();
+    if (this.data.subjectLast) {
+      util.showToast('没有题目了');
+    } else{
+      if (this.data.coins >= 30) {
+        api.subject.skip({
+          subjectId: this.data.subjectId
+        }, function (data) {
 
-        _this.setData({
-          timeSecond: 0,
-          subjectId: data.id,
-          titleWords: words.getTitleWord(data.title || ''),
-          allWords: words.getAllWord(data.words || '')
+          bus.client.coins = (bus.client.coins || 0) + (data.coins || -30);
+          _this._next();
+          _this.selectComponent('#toast').show(data.coins || -30, 'minus');
+          _this.setData({
+            coins: bus.client.coins,
+            timeSecond: 0
+          });
         });
-        _this.selectComponent('#player').ready(data.audioUrl, options.coverUrl);
-        _this.selectComponent('#toast').show('-30', 'minus');
-      });
-    } else {
-      util.showToast('咚豆不足');
+      } else {
+        util.showToast('咚豆不足');
+      }
     }
   },
   onTip: function () {
 
-    var _this = this;
-
-    if (this.data.clientCoins > 150){
+    var _this = this, titleTip = ((this.data.titleWords || [])[this.data.titleIndex] || {}).tip, allIndex = -1;
+  
+    if (this.data.coins >= 50){
       api.subject.tip({
         subjectId: this.data.subjectId
       }, function(data){
 
+        for (let i = 0; i < _this.data.allWords.length; i++) {
+          if (_this.data.allWords[i].tip == titleTip) {
+            allIndex = i;
+          }
+        }
+        bus.client.coins = (bus.client.coins || 0) + (data.coins || -30);
         _this.selectComponent('#toast').show('-50', 'minus');
+        _this.setData({
+          coins: bus.client.coins,
+          subjectTips: (_this.data.subjectTips || 0) + 1
+        });
+        _this._choice(allIndex);
       });
     } else {
       util.showToast('咚豆不足');
@@ -123,17 +140,40 @@ Page({
         });
     }
   },
-  onAllChoice: function(event){
+  onAllChoice: function (event) {
 
-    var _this = this, index = event.currentTarget.dataset['index'];
+    this._choice(event.currentTarget.dataset['index'] || 0);
+  },
+  //  启动计时器
+  _clock: function () {
 
-    if (this.data.titleIndex < this.data.titleWords.length){
+    var _this = this;
+
+    _this.timer = setInterval(function () {
+
+      _this.data.timeSecond = (_this.data.timeSecond || 0) + 1;
+      _this.setData({
+        timeSecond: _this.data.timeSecond,
+        timeText: util.formatSpan(_this.data.timeSecond)
+      });
+    }, 1000);
+  },
+  //  选中文字
+  _choice: function(index){
+
+    var _this = this;
+
+    console.log(index);
+    if (index < 0 || index >= this.data.allWords.length){
+      return ;
+    }
+    if (this.data.titleIndex < this.data.titleWords.length) {
       words.setTitleWord(
-        this.data.titleIndex, 
-        this.data.titleWords, 
-        index, 
-        this.data.allWords, 
-        function(titleIndex, titleWords, allWords){
+        this.data.titleIndex,
+        this.data.titleWords,
+        index,
+        this.data.allWords,
+        function (titleIndex, titleWords, allWords) {
 
           _this.setData({
             titleIndex: titleIndex,
@@ -144,29 +184,36 @@ Page({
     }
     if (this.data.titleIndex >= this.data.titleWords.length) {
       this.timer && clearInterval(this.timer);
-      if (words.getTitleResult(this.data.titleWords)) {
-        if (this.data.subjectLast){
-          util.setNavigate('../rank/rank?levelId=' + (this.data.levelInfo.id || 0));
-        } else {
-          this.selectComponent('#result').show(true, this.data.subjectTitle, this.data.subjectThumbUrl);
-        }
-      } else {
-        this.selectComponent('#result').show(false, this.data.subjectTitle, this.data.subjectThumbUrl);
-      }
+      this.data.subjectResult = words.getTitleResult(this.data.titleWords) ? 100: 101;
+      this.selectComponent('#player').stop();
+      api.subject.answer({
+        subjectId: this.data.subjectId || 0,
+        subjectResult: this.data.subjectResult || 0,
+        subjectTips: this.data.tipCount || 0,
+        subjectSeconds: this.data.timeSecond || 0
+      }, function(){
+
+        if (_this.data.subjectResult == 100) {
+            if (_this.data.subjectLast) {
+              util.setNavigate('../rank/rank?' + util.serialize(_this.data.levelInfo));
+            } else {
+              _this.selectComponent('#result').show(true, _this.data.subjectTitle, _this.data.subjectThumbUrl);
+            }
+          } else {
+            _this.selectComponent('#result').show(false, _this.data.subjectTitle, _this.data.subjectThumbUrl);
+          }
+      });
     }
   },
   //  获取下一题
-  _next: function(answer){
+  _next: function (answer) {
 
     answer = answer || {};
 
     var _this = this;
 
     api.subject.next({
-      levelId: this.data.levelInfo.id || 0,
-      subjectId: answer.subjectId || 0,  
-      subjectTime: answer.subjectTime || 0,
-      subjectResult: answer.subjectResult || 0
+      levelId: this.data.levelInfo.id || 0
     }, function (data) {
 
       _this.setData({
@@ -175,37 +222,13 @@ Page({
         subjectThumbUrl: data.thumbUrl,
         subjectWords: data.words,
         subjectLast: data.isLast,
+        subjectTips: 0,
         titleIndex: 0,
         titleWords: words.getTitleWord(data.title || ''),
         allWords: words.getAllWord(data.words || '')
       });
       _this.selectComponent('#player').ready(data.audioUrl, _this.data.levelInfo.coverUrl);
       _this._clock();
-    });
-  },
-  //  答对题目
-  _answer: function(){
-
-  },
-  //  启动计时器
-  _clock: function(){
-
-    var _this = this;
-
-    _this.timer = setInterval(function () {
-
-      _this._interval();
-    }, 1000);
-  },
-  _interval: function(){
-
-    var seconds = (this.data.timeSecond || 0) + 1;
-    var minute = Math.floor(seconds / 60);
-    var second = seconds % 60;
-
-    this.setData({
-      timeSecond: seconds,
-      timeText: (minute > 9 ? minute : '0' + minute) + ':' + (second > 9 ? second : '0' + second)
     });
   }
 })

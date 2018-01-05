@@ -7,52 +7,40 @@ const api = require('../../services/api.js');
 
 Page({
   data: {
-    friendItems: [
-      {
-        avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoKCDCechH5uxuWbUfdt7EMqbKXIU3ArrhXD2mKNzOQiaZzJlZ2SG8CE0GmCvnbos93rSic11RJoOEg/0',
-        nick: '申栩',
-        subjectCount: 31,
-        time: '01:24:30',
-        isSelf: false
-      },
-      {
-        avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoKCDCechH5uxuWbUfdt7EMqbKXIU3ArrhXD2mKNzOQiaZzJlZ2SG8CE0GmCvnbos93rSic11RJoOEg/0',
-        nick: '申兆淇',
-        subjectCount: 28,
-        time: '01:32:05',
-        isSelf: false
-      },
-      {
-        avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoKCDCechH5uxuWbUfdt7EMqbKXIU3ArrhXD2mKNzOQiaZzJlZ2SG8CE0GmCvnbos93rSic11RJoOEg/0',
-        nick: '申兆淇',
-        subjectCount: 28,
-        time: '01:32:05',
-        isSelf: false
-      },
-      {
-        avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoKCDCechH5uxuWbUfdt7EMqbKXIU3ArrhXD2mKNzOQiaZzJlZ2SG8CE0GmCvnbos93rSic11RJoOEg/0',
-        nick: '胡瓦爱',
-        subjectCount: 28,
-        time: '01:32:05',
-        isSelf: false
-      },
-      {
-        avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoKCDCechH5uxuWbUfdt7EMqbKXIU3ArrhXD2mKNzOQiaZzJlZ2SG8CE0GmCvnbos93rSic11RJoOEg/0',
-        nick: '沈双庆',
-        subjectCount: 28,
-        time: '01:32:05',
-        isSelf: true
-      }
-    ]
+    levelInfo: null,
+    clientItems: null
   },
-  onLoad: function () {
+  onLoad: function (options) {
 
+    var _this = this;
+
+    this.setData({
+      levelInfo: util.decodeParams(options)
+    });
+    api.level.rank({
+      levelId: options.id
+    }, function(data){
+
+      _this.setData({
+        levelTimespan: util.formatSpan(data.subjectSeconds),
+        levelEncourage: data.encourage,
+        clientItems: data.data || []
+      });
+      console.log(data);
+    });
   },
   onForward: function(){
 
-    console.log(getCurrentPages());
+    var delta = 0;
+    var pages = getCurrentPages();
+    for (let i = pages.length-1; i > -1; i--){
+      if (pages[i].route == 'pages/level/level'){
+        break;
+      }
+      delta += 1;
+    }
     wx.navigateBack({
-      delta: -2
+      delta: delta
     });
   },
   onShareAppMessage: function (res) {
@@ -60,7 +48,7 @@ Page({
     var _this = this;
 
     return api.wechat.share('rank', res, function (data) {
-      _this.selectComponent('#toast').show('+100', 'add');
-    });
+      _this.selectComponent('#toast').show(data.coins, 'add');
+    }, this.data.levelInfo);
   }
 })

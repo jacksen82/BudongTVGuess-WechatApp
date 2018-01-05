@@ -57,7 +57,15 @@ page {
   display: block;
   color: #ffffff;
   font-size: 10pt;
-  padding: 0px 12px 0px 9px;
+  padding: 0px 15px 0px 9px;
+}
+.toolbar .button span strong {
+  float: left; 
+  display: block;
+  color: #ffffff;
+  font-size: 10pt;
+  font-weight: normal;
+  padding: 0px 15px;
 }
 .toolbar .button.left {
   float: left;

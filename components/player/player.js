@@ -13,7 +13,9 @@ Component({
       var _this = this;
 
       wx.onBackgroundAudioPlay(function () {
+        
         _this.setData({ playing: true });
+        wx.hideLoading();
       });
       wx.onBackgroundAudioStop(function () {
         _this.setData({ playing: false });
@@ -29,12 +31,19 @@ Component({
       if (this.data.playing) {
         wx.stopBackgroundAudio();
       } else {
+        wx.showLoading({
+          title: '正在加载..',
+        });
         wx.playBackgroundAudio({
           title: '步咚猜剧',
           dataUrl: this.data.audioUrl,
           coverImgUrl: this.data.coverUrl
         });
       }
+    },
+    stop: function(){
+
+      wx.stopBackgroundAudio();
     }
   }
 })

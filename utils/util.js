@@ -1,3 +1,12 @@
+//  时间段格式化
+const formatSpan = seconds => {
+
+  var minute = Math.floor(seconds / 60);
+  var second = seconds % 60;
+
+  return (minute > 9 ? minute : '0' + minute) + ':' + (second > 9 ? second : '0' + second);
+};
+
 //  日期时间格式化
 const formatTime = date => {
 
@@ -13,7 +22,7 @@ const formatTime = date => {
   };
 
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
-}
+};
 
 //  解密参数
 const decodeParams = function(options){
@@ -37,13 +46,18 @@ const serialize = function(data){
 }
 
 //  异步请求方法
-const request = function(url, data, success, fail){
+const request = function(url, data, success, fail, loading){
 
+  loading == true && wx.showLoading({
+    title: '正在请求..',
+  });
   wx.request({
     url: 'https://shenxu.name/tvguess/api' + url,
     header: { 'content-type': 'application/json' },
     data: data,
     success: function (data) {
+
+      loading == true && wx.hideLoading();
       data = data.data || {};
       if (data.code == 0) {
         success && success(data.data || {});
@@ -52,6 +66,8 @@ const request = function(url, data, success, fail){
       }
     },
     fail: function (res) {
+      
+      loading == true && wx.hideLoading();
       if (fail){
         fail && fail.bind(this)();
       } else {
@@ -95,6 +111,7 @@ const setNavigate = function (url) {
 };
 
 module.exports = {
+  formatSpan: formatSpan,
   formatTime: formatTime,
   decodeParams: decodeParams,
   serialize: serialize,
