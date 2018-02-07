@@ -19,3 +19,6 @@
     <span> 返 回 </span>
   </button>
 </view>
+
+<mc-coins id="coins"></mc-coins>
+<mc-toast id="toast"></mc-toast>

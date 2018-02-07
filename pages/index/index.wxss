@@ -5,7 +5,7 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 200px;
+  bottom: 250px;
 }
 .cover .logo {
   display: block;
@@ -37,7 +37,7 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  height: 150px;
+  height: 200px;
   padding: 0px 50px;
 }
 .controls .start {
@@ -68,4 +68,35 @@
   color: #bbbbbb;
   border-bottom: 5px solid #dfdfdf;
   background: #dfdfdf;
+}
+.controls .link {
+  display: block;
+  color: rgba(255,255,255,.5);
+  font-size: 11pt;
+  line-height: 40px;
+  margin:25px auto 0px auto;
+  border-radius: 20px;
+  background: rgba(0,0,0,.1);
+}
+.controls .link.active {
+  background: rgba(0,0,0,.2);
+}
+.controls .banner {
+  display: block;
+  height: 48px;
+  padding: 5px;
+  margin: 25px auto 0px auto;
+  border-radius: 7px;
+  background:rgba(0,0,0,.1);
+}
+.controls .banner .image {
+  float: left;
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+.controls .banner .text {
+  display: block;
+  height: 48px;
+  margin-left: 56px;
 }

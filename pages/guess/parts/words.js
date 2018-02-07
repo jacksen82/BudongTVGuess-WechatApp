@@ -53,22 +53,24 @@ const setTitleWord = function (titleIndex, titleWords, allIndex, allWords, callb
   titleWords = titleWords || [];
   allWords = allWords || [];
 
-  for (let i = 0; i < allWords.length; i++) {
-    if (allIndex == i) {
-      allWords[i]['text'] = '';
-      allWords[i]['animate'] = animate.word.choiceOut();
-    } else {
-      allWords[i]['text'] = allWords[i]['text'];
-      allWords[i]['animate'] = null;
+  if (allWords[allIndex]['text'] != ''){
+    for (let i = 0; i < allWords.length; i++) {
+      if (allIndex == i) {
+        allWords[i]['text'] = '';
+        allWords[i]['animate'] = animate.word.choiceOut();
+      } else {
+        allWords[i]['text'] = allWords[i]['text'];
+        allWords[i]['animate'] = null;
+      }
     }
+    titleWords[titleIndex]['text'] = allWords[allIndex].tip;
+    titleWords[titleIndex]['index'] = allIndex;
+    titleWords[titleIndex]['animate'] = animate.word.entryIn();
+
+    titleIndex += 1;
+
+    callback && callback(titleIndex, titleWords, allWords);
   }
-  titleWords[titleIndex]['text'] = allWords[allIndex].tip;
-  titleWords[titleIndex]['index'] = allIndex;
-  titleWords[titleIndex]['animate'] = animate.word.entryIn();
-
-  titleIndex += 1;
-
-  callback && callback(titleIndex, titleWords, allWords);
 };
 
 //  格式化选项

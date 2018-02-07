@@ -12,6 +12,7 @@
     <button class="start {{isLoading ? 'loading' : ''}}" hover-class="active" bindtap="onStart">
       <span><em> {{isLoading ? '正在启动..' : '开始游戏'}} </em></span>
     </button>
+    <button class="link" hover-class="active" bindtap="onContact">关于猜电视</button>
   </view>
 </view>
 <mc-toast id="toast"></mc-toast>

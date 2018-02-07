@@ -12,22 +12,11 @@ Page({
   },
   onLoad: function (options) {
 
-    var _this = this;
-
     this.setData({
       levelInfo: util.decodeParams(options)
     });
-    api.level.rank({
-      levelId: options.id
-    }, function(data){
-
-      _this.setData({
-        levelTimespan: util.formatSpan(data.subjectSeconds),
-        levelEncourage: data.encourage,
-        clientItems: data.data || []
-      });
-      console.log(data);
-    });
+    this._setWX();
+    this._rank(options);
   },
   onForward: function(){
 
@@ -50,5 +39,29 @@ Page({
     return api.wechat.share('rank', res, function (data) {
       _this.selectComponent('#toast').show(data.coins, 'add');
     }, this.data.levelInfo);
+  },
+  _rank: function(options){
+
+    var _this = this;
+
+    api.level.rank({
+      levelId: options.id
+    }, function (data) {
+
+      _this.setData({
+        levelTimespan: util.formatSpan(data.subjectSeconds),
+        levelEncourage: data.encourage,
+        clientItems: data.data || []
+      });
+    });
+  },
+  _setWX: function () {
+
+    wx.setNavigationBarTitle({
+      title: '排行榜'
+    });
+    wx.showShareMenu({
+      withShareTicket: true
+    });
   }
 })

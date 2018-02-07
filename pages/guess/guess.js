@@ -6,7 +6,7 @@ const bus = require('../../utils/bus.js');
 const api = require('../../services/api.js');
 const words = require('./parts/words.js');;
 
-Page({
+Page({ 
   data: {
     coins: 0,
     timer: null,
@@ -29,7 +29,9 @@ Page({
       coins: bus.client.coins || 0,
       levelInfo: util.decodeParams(options)
     });
+    this._setWX();
     this._next();
+    this._count(0);
   },
   onUnload: function(){
 
@@ -39,10 +41,8 @@ Page({
   onContinue: function(){
 
     this._next();
+    this._count(1);
     this.selectComponent('#player').stop();
-    this.setData({
-      timeSecond: 0
-    });
   },
   onReload: function(){
 
@@ -61,6 +61,9 @@ Page({
     this.selectComponent('#coins').close();
     this.selectComponent('#player').stop();
     return api.wechat.share('guess', res, function (data) {
+
+      bus.client.coins = (bus.client.coins || 0) + (data.coins || 0);
+      _this.setData({ coins: bus.client.coins || 0 });
       _this.selectComponent('#toast').show(data.coins, 'add');
     }, this.data.levelInfo);
   },
@@ -84,10 +87,10 @@ Page({
 
           bus.client.coins = (bus.client.coins || 0) + (data.coins || -30);
           _this._next();
+          _this._count(1);
           _this.selectComponent('#toast').show(data.coins || -30, 'minus');
           _this.setData({
-            coins: bus.client.coins,
-            timeSecond: 0
+            coins: bus.client.coins
           });
         });
       } else {
@@ -144,6 +147,19 @@ Page({
 
     this._choice(event.currentTarget.dataset['index'] || 0);
   },
+  //  题目加 1
+  _count: function(num){
+
+    num = num || 0;
+    
+    this.data.levelInfo['subjectAnswerCount'] = (parseInt(this.data.levelInfo.subjectAnswerCount, 10) || 0) + num;
+    this.setData({
+      levelInfo: this.data.levelInfo
+    });
+    wx.setNavigationBarTitle({
+      title: '第 ' + (this.data.levelInfo.subjectAnswerCount || 0) + ' / ' + (this.data.levelInfo.subjectCount || 0) + ' 题'
+    });
+  },
   //  启动计时器
   _clock: function () {
 
@@ -163,7 +179,6 @@ Page({
 
     var _this = this;
 
-    console.log(index);
     if (index < 0 || index >= this.data.allWords.length){
       return ;
     }
@@ -206,9 +221,7 @@ Page({
     }
   },
   //  获取下一题
-  _next: function (answer) {
-
-    answer = answer || {};
+  _next: function () {
 
     var _this = this;
 
@@ -217,6 +230,7 @@ Page({
     }, function (data) {
 
       _this.setData({
+        timeSecond: 0,
         subjectId: data.id,
         subjectTitle: data.title,
         subjectThumbUrl: data.thumbUrl,
@@ -229,6 +243,12 @@ Page({
       });
       _this.selectComponent('#player').ready(data.audioUrl, _this.data.levelInfo.coverUrl);
       _this._clock();
+    });
+  },
+  _setWX: function () {
+
+    wx.showShareMenu({
+      withShareTicket: true
     });
   }
 })

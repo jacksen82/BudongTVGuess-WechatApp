@@ -3,16 +3,18 @@ const util = require('../utils/util.js');
 const bus = require('../utils/bus.js');
 const client = require('./client.js');
 const authorizeSetting = function (success) {
-  
+    
   if (bus.settinged){
     util.showToast('授权失败');
   } else {
     bus.settinged = true;
     wx.openSetting({
       success: function (res) {
+
         authorizeLogin(res.code, success);
       },
       fail: function () {
+
         util.showToast('授权失败');
       }
     });
@@ -23,6 +25,7 @@ const authorizeUserInfo = function(code, success){
   wx.getUserInfo({
     withCredentials: true,
     success: function(res){
+
       client.login({
         code: code || '',
         encryptedData: res.encryptedData || '',
@@ -32,6 +35,7 @@ const authorizeUserInfo = function(code, success){
         shareTicketData: bus.launchShareTicketData || '',
         shareTicketIV: bus.launchShareTicketIV || ''
       }, function (data) {
+
         wx.setStorage({
           key: 'sessionCode',
           data: data.sessionCode
@@ -41,12 +45,13 @@ const authorizeUserInfo = function(code, success){
       });
     },
     fail: function(res){
+
       authorizeSetting(success);
     }
   });
 };
 const authorizeTicket = function(res, success){
-
+  
   client.ticket({
     'sessionCode': res.data,
     'fromClientId': bus.launchClientId || 0,
@@ -54,8 +59,12 @@ const authorizeTicket = function(res, success){
     'shareTicketData': bus.launchShareTicketData || '',
     'shareTicketIV': bus.launchShareTicketIV || ''
   }, function (data) {
+    
     bus.client = data || {};
     success && success.bind(this)(data);
+  }, function(data){
+
+    authorizeLogin(success);
   });
 };
 const authorizeLogin = function(success){
@@ -84,17 +93,21 @@ const wechat = {
 
     wx.checkSession({ //  检查 session 是否已过期
       success: function (res) {
+
         wx.getStorage({ //  检查本地缓存是否有会话标识
           key: 'sessionCode',
           success: function(res){
+
             authorizeTicket(res, success);  //  获取验证票
           },
           fail: function(){
+
             authorizeLogin(success);  //  重新登录
           }
         });
       },
       fail: function () {
+
         authorizeLogin(success);  //  重新登录
       }
     });
@@ -123,18 +136,21 @@ const wechat = {
       imageUrl: shareInfo.image,
       path: '/pages/index/index?fromClientId=' + (bus.client || {}).id || 0,
       success: function(_res){
+        
         if (_res.shareTickets && _res.shareTickets.length) {
           wx.getShareInfo({
             shareTicket: _res.shareTickets[0],
-            success: function(){
-              shareSuccess(res, success);
+            success: function(__res){
+
+              shareSuccess(__res, success);
             }
           });
         } else {
-          shareSuccess({}, success);
+          shareSuccess({ }, success);
         }
       },
       fail: function (res) {
+
         util.showToast('分享失败');
       }
     }

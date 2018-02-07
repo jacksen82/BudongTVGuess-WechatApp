@@ -62,14 +62,17 @@ const request = function(url, data, success, fail, loading){
       if (data.code == 0) {
         success && success(data.data || {});
       } else {
-        showToast(data.message || "请求失败");
+        if (fail) {
+          fail && fail.bind(this)(data);
+        } else {
+          showToast(data.message || "请求失败");
+        }
       }
     },
     fail: function (res) {
-      
       loading == true && wx.hideLoading();
       if (fail){
-        fail && fail.bind(this)();
+        fail && fail.bind(this)(res);
       } else {
         showToast(res);
       }

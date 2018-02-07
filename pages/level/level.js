@@ -24,6 +24,7 @@ Page({
       thumbWidth: Math.floor(bus.system.windowWidth - 160),
       thumbHeight: Math.floor(bus.system.windowWidth - 160)
     });
+    this._setWX();
   },
   onShow: function(){
 
@@ -32,16 +33,21 @@ Page({
     api.level.all({}, function (data) {
 
       _this.setData({
+        coins: bus.client.coins || 0,
         levelItems: data.data || []
       });
     });
   },
-  onShareAppMessage: function (res) {
 
+  onShareAppMessage: function (res) {
+    
     var _this = this;
 
     this.selectComponent('#coins').close();
     return api.wechat.share('level', res, function (data) {
+
+      bus.client.coins = (bus.client.coins || 0) + (data.coins || 0);
+      _this.setData({ coins: bus.client.coins || 0 });
       _this.selectComponent('#toast').show(data.coins, 'add');
     });
   },
@@ -67,6 +73,10 @@ Page({
         levelId: levelInfo.id || 0
       }, function(data){
 
+        _this.data.levelItems[_this.data.levelIndex].subjectAnswerCount = 0;
+        _this.setData({
+          levelItems: _this.data.levelItems
+        });
         util.setNavigate('../guess/guess?' + util.serialize(_this._currentLevel()));
       });
     } else {
@@ -113,5 +123,14 @@ Page({
 
     var index = this.data.levelIndex || 0;
     return (index < this.data.levelItems.length ? (this.data.levelItems[index] || {}) : {});
+  },
+  _setWX: function(){
+
+    wx.setNavigationBarTitle({
+      title: '选择关卡'
+    });
+    wx.showShareMenu({
+      withShareTicket: true
+    });
   }
 })
