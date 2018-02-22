@@ -34,9 +34,17 @@
   </view>
 </view>
 
-<view class="tips">
+<view class="tips" wx-if="{{!goodsHave}}">
   根据听到的音乐猜出电视节目的名称，答对继续下一题，答错 结束
 </view>
+<button class="store" bindtap="onStore" wx-if="{{goodsHave}}">
+  <image src="{{goodsInfo.pic}}" class="image" />
+  <span class="text">
+    <em>{{goodsInfo.title}}</em>
+    <dfn>原价 <var>{{goodsInfo.originPrice}}</var> 券后 <strong>{{goodsInfo.originPrice-goodsInfo.couponValue}}</strong></dfn>
+    <code>更多></code>
+  </span>
+</button>
 
 <mc-coins id="coins"></mc-coins>
 <mc-toast id="toast"></mc-toast>

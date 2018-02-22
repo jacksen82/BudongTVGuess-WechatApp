@@ -7,6 +7,8 @@ const api = require('../../services/api.js');
 
 Page({
   data: {
+    goodsHave: false,
+    goodsInfo: {},
     isLoading: true,
     lineHeight: 0
   },
@@ -37,17 +39,19 @@ Page({
 
     util.setNavigate('../about/about');
   },
-  onBannerTap: function(){
+  onStore: function(){
 
-    util.setNavigate('../store/store?url=' + this.data.bannerUrl);
+    util.setNavigate('../goods/goods');
   },
   _authorize: function(){
 
     var _this = this;
 
     api.wechat.authorize(function (data) {
-
+      
       util.setData(_this, 'isLoading', false);
+      util.setData(_this, 'goodsHave', data.goodsHave);
+      util.setData(_this, 'goodsInfo', data.goodsInfo);
     });
   },
   _setWX: function () {

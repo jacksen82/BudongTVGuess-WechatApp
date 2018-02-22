@@ -9,7 +9,7 @@ App({
     bus.launchScene = options.scene || 0;
 
     wx.getSystemInfo({
-      success: this.systemInfoSuccess 
+      success: this.systemInfoSuccess
     });
     wx.getShareInfo({
       shareTicket: options.shareTicket,
@@ -21,7 +21,7 @@ App({
   },
   systemInfoSuccess: function (res){
 
-    bus.system = res;
+    bus.system = res || {};
   },
   shareInfoSuccess: function(res){
 

@@ -37,14 +37,16 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  height: 200px;
-  padding: 0px 50px;
+  height: 220px;
+  padding: 0px 0px;
 }
 .controls .start {
   display: block;
   overflow: hidden;
   padding: 0px 5px 5px 5px;
   margin-top: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
   border-radius: 31px;
   background: #db2863;
 }
@@ -74,29 +76,70 @@
   color: rgba(255,255,255,.5);
   font-size: 11pt;
   line-height: 40px;
-  margin:25px auto 0px auto;
+  margin: 35px 50px 0px 50px;
   border-radius: 20px;
   background: rgba(0,0,0,.1);
 }
 .controls .link.active {
   background: rgba(0,0,0,.2);
 }
-.controls .banner {
+.controls .store {
   display: block;
-  height: 48px;
-  padding: 5px;
-  margin: 25px auto 0px auto;
-  border-radius: 7px;
+  height: 86px;
+  padding: 0px;
+  margin: 20px 15px 0px 15px;
   background:rgba(0,0,0,.1);
 }
-.controls .banner .image {
+.controls .store .image {
   float: left;
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 86px;
+  height: 86px;
 }
-.controls .banner .text {
+.controls .store .text {
   display: block;
-  height: 48px;
-  margin-left: 56px;
+  height: 86px;
+  text-align: left;
+  margin-left: 92px;
+}
+.controls .store .text em {
+  display:-webkit-box; 
+  overflow:hidden; 
+  height: 44px;
+  color: rgba(255,255,255,.8);
+  font-size: 14px;
+  line-height: 22px;
+  padding: 3px 5px 3px 3px;
+  text-align: left;
+  text-overflow:ellipsis;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
+}
+.controls .store .text dfn {
+  float: left;
+  display: block;
+  height: 28px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  line-height: 28px;
+  padding: 0px 10px;
+  margin-top: 0px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background: rgba(0,0,0,.1);
+}
+.controls .store .text dfn var {
+  text-decoration:line-through;
+}
+.controls .store .text dfn strong {
+  color: #fad759;
+  font-size: 15px;
+  font-weight: bold;
+}
+.controls .store .text code {
+  float: right;
+  display: block;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  padding-right: 9px;
 }

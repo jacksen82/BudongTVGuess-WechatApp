@@ -14,7 +14,9 @@ Page({
     thumbWidth: 0,
     thumbHeight: 0,
     levelIndex: 0,
-    levelItems: [bus.level.none]
+    levelItems: [bus.level.none],
+    goodsHave: false,
+    goodsInfo: {}
   },
   onLoad: function () {
 
@@ -22,7 +24,9 @@ Page({
       coins: bus.client.coins || 0,
       avatarUrl: bus.client.avatarUrl,
       thumbWidth: Math.floor(bus.system.windowWidth - 160),
-      thumbHeight: Math.floor(bus.system.windowWidth - 160)
+      thumbHeight: Math.floor(bus.system.windowWidth - 160),
+      goodsHave: bus.client.goodsHave,
+      goodsInfo: bus.client.goodsInfo
     });
     this._setWX();
   },
@@ -38,7 +42,10 @@ Page({
       });
     });
   },
+  onStore: function () {
 
+    util.setNavigate('../goods/goods');
+  },
   onShareAppMessage: function (res) {
     
     var _this = this;

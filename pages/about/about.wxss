@@ -39,12 +39,19 @@
   line-height: 25px;
   text-align: center;
 }
+.contact .button {
+  display: block;
+  color: #db2863;
+  font-size: 15pt;
+  background: #fad759;
+}
 .contact dfn {
   display: block;
   color:rgba(255,255,255,0.5);
   font-size: 12px;
   line-height: 25px;
   text-align: center;
+  margin-top:15px;
 }
 .contact dfn strong {
   color:#fad759;
