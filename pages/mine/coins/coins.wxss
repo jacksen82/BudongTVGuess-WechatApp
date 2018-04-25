@@ -1,0 +1,56 @@
+/* pages/mine/coins/coins.wxss */
+
+.coins {
+  display: block;
+  padding: 0px 7px 0px 12px;
+  margin-top: 10px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  background: #f7f7fa;
+}
+.coins .item {
+  display: block;
+  height: 44px;
+  font-size: 14px;
+  line-height: 43px;
+  padding: 0px 5px;
+  border-bottom: 1px solid #eeeeee;
+}
+.coins .item:last-child{
+  border-bottom: 0px;
+}
+.coins .item em {
+  display: inline-block;
+  width: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.coins .item em.add {
+  color: #09BB07;
+}
+.coins .item em.minus {
+  color: #e64340;
+}
+.coins .item var {
+  color: #353535;
+  font-size: 14px;
+}
+.coins .item dfn {
+  float: right;
+  width: 72px;
+  color: #969696;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  margin: 6px 0px;
+}
+
+.loading {
+  display: block;
+  height: 50px;
+  color: #909398;
+  font-size: 12px;
+  text-align: center;
+  line-height: 50px;
+}

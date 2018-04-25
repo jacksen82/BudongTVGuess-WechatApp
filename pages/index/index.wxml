@@ -1,26 +1,43 @@
 <!--index.wxml-->
-<view class="page">
-  <view class="cover">
-    <view class="logo">
-      <mc-television id="television">
-        <view class="screen" style="line-height:{{lineHeight}}px">猜</view>
-      </mc-television>
+
+<wxs src="../../utils/filter.wxs" module="util" />
+
+<view class="container">
+  <view class="missions">
+    <view class="item {{item.missionClientId ? 'playing' : ''}}" wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}">
+      <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
+      <view class="intro">
+        <view class="title">
+          {{item.title}}
+        </view>
+        <view class="author">
+          <span class="nick">{{item.nick}}
+            <small>{{util.listGender(item.gender)}} / {{util.listBirthyear(item.birthyear)}}</small>
+          </span>
+        </view>
+        <view class="affix">
+          <span class="count">
+            {{util.listDuration(item.missionClientId, item.subjectIndex, item.subjectCount)}}
+          </span>
+          <span class="tags">
+            <dfn class="tag {{item.type==101?'friend':(item.type==201?'group':(item.grade>0?'hot':''))}}">{{item.type==101?'好友':(item.type==201?'群':(item.grade>0?'热门':''))}}
+            </dfn>
+            <dfn wx:for="{{util.tagsToArray(item.tags)}}" wx:key="item" class="tag">{{item}}</dfn>
+          </span>
+        </view>
+      </view>
     </view>
-    <text class="title">听音乐，猜电视</text>
+    <view class="nodata" wx:if="{{!missionItems || missionItems.length==0}}">
+      你的好友/群还没有分享过关卡
+    </view>
   </view>
-  <view class="controls">
-    <button class="start {{isLoading ? 'loading' : ''}}" hover-class="active" bindtap="onStart">
-      <span><em> {{isLoading ? '正在启动..' : '开始游戏'}} </em></span>
-    </button>
-    <button class="link" hover-class="active" bindtap="onContact" wx-if="{{!goodsHave}}">关于猜电视</button>
-    <button class="store" bindtap="onStore" wx-if="{{goodsHave}}">
-      <image src="{{goodsInfo.pic}}" class="image" />
-      <span class="text">
-        <em>{{goodsInfo.title}}</em>
-        <dfn>原价 <var>{{goodsInfo.originPrice}}</var> 券后 <strong>{{goodsInfo.originPrice-goodsInfo.couponValue}}</strong></dfn>
-        <code>更多></code>
-      </span>
+  <view class="datamore">
+    <span class="loading {{missionIsEnd ? 'isend' : ''}}">{{missionIsEnd ? '已到达底部' : '正在载入更多...'}}</span>
+  </view>
+  <view class="controls" wx:if="{{!haveMissionCreate}}">
+    <button class="button" bindtap="onMissionCreate">
+      <dfn>创 建</dfn>
+      <dfn>关 卡</dfn>
     </button>
   </view>
 </view>
-<mc-toast id="toast"></mc-toast>

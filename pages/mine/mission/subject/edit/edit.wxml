@@ -1,0 +1,33 @@
+<!--pages/mine/mission/question/add/add.wxml-->
+
+<view class="container">
+  <view class="recorder">
+    <view class="play {{playing ? 'pause' : ''}}" bindtap="onPlayerTap">
+      <dfn>{{playing ? '停止播放' : '音频试听'}} </dfn>
+      <em>{{playlength}}</em>
+    </view>
+  </view>
+  <view class="cells">
+    <form>
+      <view class="group">
+        <span class="item">
+          <picker bindchange="onCategoryChange" value="{{categoryIndex}}" range="{{categoryItems}}">
+            <view class="picker {{categoryIndex < 0 ? 'holdplace' : ''}}">
+              {{categoryIndex < 0 ? '请选择题目分类' : categoryItems[categoryIndex]}}
+            </view>
+          </picker>
+        </span>
+        <span class="item">
+          <input bindinput="onTitleInput" placeholder="请输入正确答案" confirm-type="next" bindconfirm="onTitleNext" focus="{{titleFocus}}" value="{{title}}" />
+        </span>
+        <span class="item">
+          <input bindinput="onTipInput" placeholder="请输入答案提示" confirm-type="done" bindconfirm="onSubjectEditTap" focus="{{tipFocus}}" value="{{tip}}" />
+        </span>
+      </view>    
+      <view class="controls">
+        <button type="primary" bindtap="onSubjectEditTap" class="submit"> 修改题目 </button>
+        <button type="warn" bindtap="onSubjectDeleteTap" class="delete"> 删除题目 </button>
+      </view>
+    </form>
+  </view>
+</view>

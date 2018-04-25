@@ -1,0 +1,44 @@
+<!--pages/index/mission/guess/guess.wxml-->
+
+<view class="container">
+  <view class="titlebar">
+    <view class="author">
+      <image src="{{avatarUrl}}" mode="aspectFit" lazy-load="true" class="header" />
+      <em class="duration">{{subjectIndex}} / {{subjectCount}}</em>
+    </view>
+    <view class="coins">
+      {{timeSpan}}
+    </view>
+  </view>
+  <view class="player">
+    <view class="coins">
+      <em>{{balance}}</em>
+      <dfn>金币</dfn>
+    </view>
+    <view class="disc">
+      <image src="../../../../images/disc_main.png" class="main {{playing ? 'playing' : ''}}" />
+      <image src="../../../../images/disc_needle.png" class="needle {{playready ? 'playing' : ''}}" />
+    </view>
+    <view class="actions">
+      <view class="innerbox">
+        <span class="button tip {{subjectTiped ? 'disabled' : ''}}" bindtap="onSubjectTipTap">
+          <em><image src="../../../../images/icon_tip.png" /></em>
+          <dfn>提示 <small>-30</small></dfn>
+        </span>
+        <span class="button skip {{subjectIndex >= subjectCount ? 'disabled' : ''}}" bindtap="onSubjectSkipTap">
+          <em><image src="../../../../images/icon_skip.png" /></em>
+          <dfn>跳过 <small>-30</small></dfn>
+        </span>
+        <span class="button replay {{playready || playing ? 'disabled' : ''}}" bindtap="onSubjectReplayTap">
+          <em><image src="../../../../images/icon_replay.png" /></em>
+          <dfn>重听 <small>-10</small></dfn>
+        </span>
+      </view>
+    </view>
+  </view>
+  <view class="controls">
+    <form>
+      <input bindinput="onSubjectInput" placeholder="输入答案，{{subjectCategory}}，{{subjectTitle.length}}个字" confirm-type="done" bindconfirm="onSubjectAnswer" value="{{subjectAnswer || ''}}" />
+    </form>
+  </view>
+</view>

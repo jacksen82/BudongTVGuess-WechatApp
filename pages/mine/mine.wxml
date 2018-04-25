@@ -1,0 +1,32 @@
+<!--pages/mine/mine.wxml-->
+
+<view class="container">
+  <view class="header">
+    <image src="{{avatarUrl}}" class="avatar" bindtap="onHeaderTap" />
+    <view class="info" bindtap="onHeaderTap">
+      <span class="nick">{{nick}}</span> 
+      <span class="gender_age">{{gender==1?'帅哥':'美女'}} / {{birthyear ? birthyear + ' 年出生 ' : '设置出生年代'}}</span>
+    </view>
+  </view>
+  <view class="cells">
+    <view class="group">
+      <button class="item" bindtap="onCoinsDetailTap">
+        <em>我的金币</em>
+        <dfn>{{balance}}</dfn>
+      </button>
+    </view>
+    <view class="caption" wx:if="{{missionItems.length == 0}}">
+      你还没有关卡，快去创建一个吧
+    </view>
+    <view class="group">
+      <button class="item" wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}">
+        <var wx:if="{{item.grade == 1}}">{{item.grade == 1 ? '热门' : ''}}</var>
+        {{item.title}}
+      </button>
+      <button class="item create" bindtap="onMissionCreateTap">创建新关卡</button>
+    </view>
+    <view class="group">
+      <button class="item" bindtap="onAboutTap">关于我们</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,27 @@
+<!--pages/index/mission/rank/rank.wxml-->
+
+<wxs src="../../../../utils/filter.wxs" module="util" />
+
+<view class="container">
+  <view class="header">
+    <image src="{{avatarUrl}}" class="avatar" />
+    <text class="title"> 《{{title}}》</text>
+    <text class="caption {{subjectIndex >= subjectCount?'done':''}}">{{subjectIndex >= subjectCount?'闯关成功':'正在闯关..'}}</text>
+    <view class="desc" wx:if="{{subjectIndex >= subjectCount}}">
+      得分 <strong>{{score}}</strong>，用时 <strong>{{timespan}}</strong>
+    </view>
+    <view class="desc" wx:if="{{subjectIndex < subjectCount}}">
+      共有 <strong>{{subjectCount}}</strong> 道题，已答 <strong>{{subjectIndex}}</strong> 道
+    </view>
+  </view>
+  <view class="players">
+    <view class="item {{item.score==subjectCount ? 'winner' : ''}} {{item.clientId==clientId ? 'self' : ''}}" wx:for="{{playerItems}}" wx:key="item">
+      <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
+      <text class="score">{{item.score==subjectCount ? util.durationToTimeSpan(item.secondCount) : item.score}}</text>
+      <text class="nick">{{item.nick}}</text>
+    </view>
+  </view>
+  <view class="controls">
+    <button type="default" open-type="share" class="share"> 分享至好友/群 </button>
+  </view>
+</view>

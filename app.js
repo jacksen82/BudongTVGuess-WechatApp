@@ -1,34 +1,61 @@
 //  app.js
 
-const bus = require('./utils/bus.js');
+const util = require('utils/util.js')
+const store = require('utils/store.js')
+const api = require('api/index.js')
 
-App({
-  onLaunch: function (options) {
+App ({
+
+  /*
+    说明：启动时发生
+  */
+  onLaunch: function(options){
     
-    bus.launchClientId = options.query.fromClientId || 0;
-    bus.launchScene = options.scene || 0;
+    var query = options.query || {};
 
-    wx.getSystemInfo({
-      success: this.systemInfoSuccess
-    });
-    wx.getShareInfo({
-      shareTicket: options.shareTicket,
-      success: this.shareInfoSuccess 
-    });
+    //  检查登录态
+    api.wechat.checkSession(options.scene)
+      .then( function( data ){
+        
+        store.launched = true;
+        store.client = data;
+        store.session3rd = data.session3rd || ''
+        store.gameFirstDone = wx.getStorageSync('gameFirstDone');
+
+        wx.setStorageSync('session3rd', data.session3rd || '')
+        
+        //  获取用户资料
+        if (data.actived != 1) {
+          api.wechat.getUserInfo()
+            .then(function (data) {
+
+              data = data.data || {};
+              store.client = data;
+            })
+        }
+      })
   },
-  onLoad: function (options){
+  
+  /*
+    说明：打开时发生
+  */
+  onShow: function (options) {
     
-  },
-  systemInfoSuccess: function (res){
+    var query = options.query || {};
 
-    bus.system = res || {};
-  },
-  shareInfoSuccess: function(res){
+    util.timerStart('AppShow', function(){
 
-    bus.launchShareTicketData = res.encryptedData || "";
-    bus.launchShareTicketIV = res.iv || "";
-  },
-  globalData: { 
-    
+      //  记录用户来源 ( 内部做了去重，避免重复调用 )
+      if (store.launched == true && store.session3rd) {
+        
+        util.timerClear('AppShow', function(){
+          
+          api.wechat.checkSource(query.mid, query.cid, options.shareTicket)
+            .then(function (data) {
+              
+            })
+        });
+      }
+    }, 50)
   }
 })

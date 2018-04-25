@@ -1,0 +1,14 @@
+<!--pages/mine/coins/coins/coins.wxml-->
+
+<wxs src="../../../utils/filter.wxs" module="util" />
+
+<view class="container">
+  <view class="coins">
+    <view class="item" wx:for="{{coinsItems}}" wx:key="item">
+      <em class="{{item.amount > 0 ? 'add' : 'minus'}}">{{item.amount > 0 ? '+' + item.amount : item.amount}}</em>
+      <var>{{item.text}}</var>
+      <dfn> {{util.dateTimeToString(util.timestampToDateTime(item.createTime))}} </dfn>
+    </view>
+  </view>
+  <span class="loading {{coinsIsEnd ? 'isend' : ''}}">{{coinsIsEnd ? '已到达底部' : '正在载入更多...'}}</span>
+</view>

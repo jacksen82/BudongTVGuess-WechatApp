@@ -1,0 +1,34 @@
+<!--pages/mine/mission/detail/detail.wxml-->
+
+<wxs src="../../../../utils/filter.wxs" module="util" />
+
+<view class="container">
+  <view class="cells">
+    <view class="group">
+      <button class="item" bindtap="onEditTap">
+        {{title}}
+        <dfn>修改名称</dfn>
+      </button>
+    </view>
+  </view>
+  <view class="caption">
+    题目管理
+  </view>
+  <view class="subjects">
+    <view class="item" wx:for="{{subjectItems}}" wx:key="item" bindtap="onSubjectItemTap" data-subject-id="{{item.id}}">
+      {{item.title}}
+      <var> {{util.categoryIdToName(item.categoryId)}} </var>
+    </view>
+    <view class="item create" bindtap="onSubjectAddTap">
+      添加新题目
+    </view>
+  </view>
+  <view class="controls">
+    <span class="tip" wx:if="{{subjectItems.length < 5}}">
+      {{subjectItems.length == 0 ? '请先为你的关卡添加题目' : '最少需要 5 道题目才能分享关卡'}}
+    </span>
+    <button type="default" open-type="share" disabled="{{subjectItems.length < 5}}" class="share"> 分享至好友/群 </button>
+    <button type="warn" bindtap="onMissionDeleteTap" class="delete"> 删除关卡 </button>
+  </view>
+</view>
+

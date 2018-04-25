@@ -1,0 +1,98 @@
+/* pages/mine/mission/detail/detail.wxss */
+
+.cells {
+  padding: 15px 0px;
+}
+.cells .group {
+  display: block;
+  padding: 0px 7px 0px 12px;
+  margin: 15px 0px 0px 0px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  background: #f7f7fa;
+}
+.cells .group:first-child {
+  margin-top: 0px;
+}
+.cells .group .item {
+  display: block;
+  height: 44px;
+  color: #353535;
+  font-size: 14px;
+  text-align: left;
+  line-height: 44px;
+  padding-left: 5px;
+  border: 0px;
+  border-bottom: 1px solid #efefef;
+  background: transparent;
+}
+.cells .group .item dfn {
+  float: right;
+  color: #ec3851;
+  font-size: 12px;
+}
+.cells .group .item:last-child {
+  border-bottom: none;
+}
+
+.caption {
+  color: #707070;
+  font-size: 12px;
+  padding-left: 15px;
+}
+
+.subjects {
+  display: block;
+  padding: 0px 7px 0px 12px;
+  margin-top: 10px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  background: #f7f7fa;
+}
+.subjects .item {
+  display: block;
+  height: 44px;
+  font-size: 14px;
+  line-height: 43px;
+  padding: 0px 5px;
+  border-bottom: 1px solid #eeeeee;
+}
+.subjects .item:last-child{
+  border-bottom: 0px;
+}
+.subjects .item var {
+  color: #969696;
+  font-size: 12px;
+}
+.subjects .item.create {
+  color: #ec3851;
+}
+
+.controls {
+  display: block;
+  padding: 15px;
+  text-align: center;
+}
+.controls .tip {
+  display: block;
+  color: #969696;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+.controls .share {
+  height: 44px;
+  color: #353535;
+  font-size: 14px;
+  line-height: 44px;
+  border: 1px solid #dfdfdf;
+  background: #fcfcfc;
+}
+.controls .delete {
+  height: 44px;
+  color: #ec3851;
+  font-size: 14px;
+  line-height: 44px;
+  margin-top: 15px;
+  border: 1px solid #ec3851;
+  background: #ffffff;
+}

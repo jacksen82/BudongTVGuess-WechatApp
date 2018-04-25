@@ -1,0 +1,18 @@
+<!--pages/mine/profile/profile.wxml-->
+
+<view class="container">
+  <view class="cells">
+    <view class="group">
+      <span class="item">
+        <picker bindchange="onBirthyearChange" value="{{birthyearIndex}}" range="{{birthyearItems}}">
+          <view class="picker">
+            {{birthyear == 0 ? '选择出生年代' : birthyear + ' 年出生'}}
+          </view>
+        </picker>
+      </span>
+    </view>
+    <view class="controls">
+      <button type="primary" bindtap="onProfileChange" hover-class="hover"> 确认修改 </button>
+    </view>
+  </view>
+</view>

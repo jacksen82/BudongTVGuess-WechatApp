@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "mc-television": "../../components/television/television"
-  }
-}

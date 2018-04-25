@@ -1,0 +1,87 @@
+/* pages/mine/mine.wxss */
+
+.header {
+  padding: 30px 0px 20px 0px;
+}
+.header .avatar {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0px auto;
+  border-radius: 50%;
+}
+.header .nick {
+  display: block;
+  color: #ec3851;
+  text-align: center;
+  margin-top: 20px;
+}
+.header .edit {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.header .gender_age {
+  display: block;
+  color: #909398;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.cells {
+  padding: 15px 0px;
+}
+.cells .caption {
+  color: #707070;
+  font-size: 12px;
+  padding-top: 15px;
+  padding-left: 15px;
+  margin-bottom: -5px;
+}
+.cells .group {
+  display: block;
+  padding: 0px 7px 0px 12px;
+  margin: 15px 0px 0px 0px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  background: #f7f7fa;
+}
+.cells .group:first-child {
+  margin-top: 0px;
+}
+.cells .group .item {
+  display: block;
+  height: 44px;
+  color: #353535;
+  font-size: 14px;
+  text-align: left;
+  line-height: 44px;
+  padding-left: 5px;
+  border: 0px;
+  border-bottom: 1px solid #efefef;
+  background: transparent;
+}
+.cells .group .item var {
+  display: inline-block;
+  height: 20px;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 20px;
+  vertical-align: middle;
+  padding: 0px 5px;
+  margin:12px 0px;
+  border-radius: 3px;
+  background: #FF8C00;
+}
+.cells .group .item dfn {
+  float:right;
+  color:#ec3851;
+  font-weight: bold;
+}
+.cells .group .item:last-child {
+  border-bottom: none;
+}
+.cells .group .item.create {
+  color: #ec3851;
+}

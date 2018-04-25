@@ -1,0 +1,194 @@
+/* pages/mine/mission/question/add/add.wxss */
+
+.recorder {
+  display: block;
+  height: 150px;
+  text-align: center;
+  padding-top: 15px;
+}
+.recorder .start {
+  display: inline-block;
+  width: 64px;
+  text-align:center;
+  vertical-align: baseline;
+}
+.recorder .start em {
+  display: block;
+  width: 36px;
+  height: 36px;
+  padding: 14px;
+  margin: 0px auto;
+  border-radius: 50%;
+  background: #353535;
+}
+.recorder .start em:before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #09BB07;
+}
+.recorder .start dfn {
+  display:block;
+  height: 32px;
+  color: #707070;
+  font-size: 12px;
+  line-height: 32px;
+}
+.recorder .start.recording em:before {
+  animation: recording 360ms linear 10ms infinite;
+}
+.recorder .start.disabled em {
+  background: #bbbbbb;
+}
+.recorder .start.disabled em:before {
+  background: #dfdfdf;
+}
+.recorder .timer {
+  display: inline-block;
+  width: 64px;
+  padding: 0px 10px;
+}
+.recorder .timer em {
+  display: block;
+  height: 36px;
+  font-size: 14px;
+  line-height: 36px;
+  padding: 0px 10px;
+  margin: 14px 0px;
+  border: 1px solid #dfdfdf;
+  border-radius: 18px;
+}
+.recorder .timer dfn {
+  display:block;
+  height: 32px;
+  color: #ffffff;
+}
+.recorder .play {
+  display: inline-block;
+  width: 64px;
+  text-align:center;
+  vertical-align: baseline;
+}
+.recorder .play em {
+  display: block;
+  width: 24px;
+  height: 24px;
+  padding: 12px;
+  margin: 6px auto;
+  border-radius: 10px;
+  background: #353535;
+}
+.recorder .play em:before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 0px;
+  margin-left: 7px;
+  border: 12px solid transparent;
+  border-left: 12px solid #ffffff;
+}
+.recorder .play dfn {
+  display:block;
+  height: 32px;
+  color: #707070;
+  font-size: 12px;
+  line-height: 32px;
+}
+.recorder .play.pause em:before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 24px;
+  margin-left: 0px;
+  border: 0px;
+  background: #ffffff;
+}
+.recorder .play.pause em:after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 24px;
+  margin-left: 6px;
+  border: 0px;
+  background: #ffffff;
+}
+.recorder .play.disabled em {
+  background: #bbbbbb;
+}
+.recorder .play.disabled em:before {
+  border-left-color: #dfdfdf;
+}
+.recorder .play.disabled.pause em:before,
+.recorder .play.disabled.pause em:after {
+  background: #dfdfdf;
+}
+.recorder .tip {
+  display: block; 
+  color: #969696;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 7px 12px;
+}
+
+.cells {
+  padding: 15px 0px;
+}
+.cells .group {
+  display: block;
+  padding: 0px 7px 0px 12px;
+  margin-top: 15px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  background: #f7f7fa;
+}
+.cells .group:first-child {
+  margin-top: 0px;
+}
+.cells .group .item {
+  display: block;
+  height: 44px;
+  font-size: 14px;
+  text-align: left;
+  line-height: 44px;
+  padding-left: 5px;
+  border: 0px;
+  border-bottom: 0.5px solid #dfdfdf;
+}
+.cells .group .item:last-child {
+  border-bottom: none;
+}
+.cells .group .item .holdplace {
+  color: #808080;
+}
+.cells .group .item input {
+  height: 44px;
+  line-height: 44px;
+}
+
+.controls {
+  display: block;
+  padding: 15px;
+}
+.controls button {
+  height: 44px;
+  font-size: 14px;
+  line-height: 44px;
+  background: #ec3851;
+}
+.controls button.hover{
+  background: #d7223b;
+}
+
+@keyframes recording {
+  0% {
+    background: #e64340;
+  }
+  50% {
+    background: #ffcc00;
+  }
+  100% {
+    background: #e64340;
+  }
+}

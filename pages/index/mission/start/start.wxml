@@ -1,0 +1,31 @@
+<!--pages/index/mission/start/start.wxml-->
+
+<view class="container">
+  <view class="review">
+    <image src="{{avatarUrl}}" mode="aspectFit" class="avatar" />
+    <span class="title">{{title}}</span>
+    <span class="author"><em>{{nick}}</em> {{gender == 1 ? '帅哥' : (gender == 2 ? '美女' : '未知')}} / {{birthyear ? birthyear + '年出生' : '未知年代'}} </span>
+    <span class="tags">
+      <dfn wx:for="{{tags}}" wx:key="item" class="tag-item">{{item}}</dfn>
+    </span>
+    <span class="stars">
+      <span class="item">
+        <dfn>{{subjectCount}}</dfn>
+        <em>题目数量</em>
+      </span>
+      <span class="item">
+        <dfn>{{playerCount}}</dfn>
+        <em>游戏人数</em>
+      </span>
+    </span>
+  </view>
+  <view class="controls">
+    <button class="start" bindtap="onMissionStart">
+    {{ subjectIndex > 0 ? 
+      ( subjectIndex < subjectCount ? '继续答题 ' + (subjectIndex + 1) + '/' + subjectCount : '重新开始' ) 
+      :
+      '开始答题' }}
+    </button>
+    <button class="rank" bindtap="onMissionRank">排行榜</button>
+  </view>
+</view>

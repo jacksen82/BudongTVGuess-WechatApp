@@ -1,0 +1,16 @@
+  <!--pages/mine/mission/create/create.wxml-->
+
+<view class="container">
+  <form>
+    <view class="cells">
+      <view class="group">
+        <span class="item">
+          <input bindinput="onTitleInput" placeholder="请输入关卡名称" confirm-type="done" bindconfirm="onEditTap" focus="true" value="{{title}}" />
+        </span>
+      </view>
+      <view class="controls">
+        <button type="primary" bindtap="onEditTap" form-type="submit" hover-class="hover" > 确认修改 </button>
+      </view>
+    </view>
+  </form>
+</view>

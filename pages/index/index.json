@@ -1,9 +1,3 @@
 {
-  "window": {
-    "navigationBarTitleText": "猜电视"
-  },
-  "usingComponents": {
-    "mc-toast": "../../components/toast/toast",
-    "mc-television": "../../components/television/television"
-  }
+  "navigationBarTitleText": "游戏关卡"
 }
