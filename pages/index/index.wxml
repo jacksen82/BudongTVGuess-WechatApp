@@ -3,8 +3,11 @@
 <wxs src="../../utils/filter.wxs" module="util" />
 
 <view class="container">
+  <view class="adbar">
+    <ad unit-id="adunit-a30047e3bc673219"></ad>
+  </view>
   <view class="missions">
-    <view class="item {{item.missionClientId ? 'playing' : ''}}" wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}">
+    <view wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}" class="item {{item.missionClientId ? 'playing' : ''}}">
       <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
       <view class="intro">
         <view class="title">
@@ -17,10 +20,10 @@
         </view>
         <view class="affix">
           <span class="count">
-            {{util.listDuration(item.missionClientId, item.subjectIndex, item.subjectCount)}}
+          {{util.listDuration(item.missionClientId, item.subjectIndex, item.subjectCount)}}
           </span>
           <span class="tags">
-            <dfn class="tag {{item.type==101?'friend':(item.type==201?'group':(item.grade>0?'hot':''))}}">{{item.type==101?'好友':(item.type==201?'群':(item.grade>0?'热门':''))}}
+            <dfn class="tag {{item.type==101?'friend':(item.type==201?'group':(item.grade>0?'hot':''))}}" wx:if="{{item.type==101 || item.type==201 || item.grade>0}}">{{item.type==101?'好友':(item.type==201?'群':(item.grade>0?'热门':''))}}
             </dfn>
             <dfn wx:for="{{util.tagsToArray(item.tags)}}" wx:key="item" class="tag">{{item}}</dfn>
           </span>

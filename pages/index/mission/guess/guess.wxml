@@ -11,7 +11,7 @@
     </view>
   </view>
   <view class="player">
-    <view class="coins">
+    <view class="coins" bindtap="onCoinsTipTap">
       <em>{{balance}}</em>
       <dfn>金币</dfn>
     </view>

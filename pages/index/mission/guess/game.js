@@ -96,6 +96,7 @@ var wrong = function(game){
     success: function (res) {
 
       interval(game);
+      util.pageSetData(game.page, 'subjectAnswer', '');
       (res.cancel) && util.pageNavigate('back');
     }
   })
@@ -181,6 +182,7 @@ module.exports = {
     intervalClear();
 
     this.player.stop();
+    this.page.data.subjectAnswer = (this.page.data.subjectAnswer || '').trim()
     if (this.page.data.subjectAnswer) {
       if (this.page.data.subjectAnswer == subject.title) {
         api.mission.game.answer(subject.id, seconds, function(data){

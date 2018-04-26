@@ -34,7 +34,6 @@ Page({
 
     util.timerStart('IndexLoad', this.onLoadDelay, 50)
   },
-
   /*
     说明：页面延迟加载事件
   */
@@ -62,7 +61,7 @@ Page({
       })
     })
   },
-
+  
   /*
     说明：上拉刷新事件
   */

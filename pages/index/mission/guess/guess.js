@@ -88,6 +88,18 @@ Page({
     })
   },
 
+  onCoinsTipTap: function(){
+
+    wx.showModal({
+      title: '操作提示',
+      showCancel: false,
+      content: '金币可以通过如下途径获得：\r\n ' + 
+        '1. 首次分享到群可以获得 100 金币\r\n ' + 
+        '2. 首次闯关成功，可获取对应的金币',
+      confirmText: '知道了'
+    })
+  },
+
   /*
     说明：题目提示事件
   */

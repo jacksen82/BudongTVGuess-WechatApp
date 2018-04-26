@@ -75,13 +75,31 @@
   margin: 6px 0px;
   border-radius: 50%;
 }
+.players .item .index {
+  float:left;
+  display: block;
+  width: 24px;
+  height: 20px;
+  color: #576b95;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  margin-top: 12px;
+  margin-left: 9px;
+  border-radius: 3px;
+  background: #cddfef;
+}
+.players .item .index.top {
+  color: #ffffff;
+  background: #ec3851;
+}
 .players .item .nick {
   display: block;
   height: 44px;
   color: #576b95;
   font-size: 14px;
   line-height: 44px;
-  margin-left: 48px;
+  margin-left: 75px;
   margin-right: 64px;
   border-bottom: 1px dotted #dfdfdf;
 }

@@ -34,7 +34,13 @@ Page({
   */
   onShow: function () {
 
+    store.tabs = 'mine';
     this.onLoadProfile();
+  },
+
+  onHide: function(){
+
+    store.tabs = '';
   },
 
   /*

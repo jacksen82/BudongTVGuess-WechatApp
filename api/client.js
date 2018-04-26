@@ -69,8 +69,6 @@ const relate = function (missionId, fromClientId, encryptedData, iv, callback){
     iv: iv || ''
   }, function (data) {
 
-    console.log('api.relate')
-    console.log(data)
     if (data.code == 0) {
       callback(data.data)
     } else {
@@ -84,9 +82,10 @@ const relate = function (missionId, fromClientId, encryptedData, iv, callback){
 /*
   说明：分享
 */
-const share = function (encryptedData, iv, callback){
+const share = function (missionId, encryptedData, iv, callback){
 
   ajax.post('/client/share.ashx', {
+    missionId: missionId,
     encryptedData: encryptedData,
     iv: iv
   }, function (data) {

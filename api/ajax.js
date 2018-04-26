@@ -27,7 +27,6 @@ const result = function (code, message) {
 */
 const error = function (callback, data) {
 
-  wx.hideLoading();
   if (callback) {
     callback(data);
   } else {
@@ -52,15 +51,17 @@ const post = function (url, data, callback, fail, loading) {
       header: { 'content-type': 'application/x-www-form-urlencoded' },
       success: function (data) {
 
-        wx.hideLoading();
-        store[url] = false;
         data.data.url = url;
         callback && callback(data.data || {})
       },
       fail: function (res) {
 
-        store[url] = false;
         error(fail, { message: '请求失败' })
+      },
+      complete: function(){
+
+        store[url] = false;
+        (loading == true) && wx.hideLoading();
       }
     });
   }
@@ -80,16 +81,18 @@ const upload = function (url, data, fileName, tempFilePath, callback, fail) {
       formData: Object.assign({ app3rdId: 2, session3rd: store.session3rd }, data),
       success: function (data) {
         
-        wx.hideLoading();
-        store[url] = false;
         data = JSON.parse(data.data) || {};
         data.url = url;
         callback && callback(data || {})
       },
       fail: function (res) {
 
-        store[url] = false;
         error(fail, { message: '上传失败' })
+      },
+      complete: function(){
+
+        store[url] = false;
+        wx.hideLoading();
       }
     }).onProgressUpdate(function (res) {
 

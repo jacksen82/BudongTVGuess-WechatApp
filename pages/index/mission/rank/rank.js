@@ -14,7 +14,7 @@ Page({
     clientId: 0,
     missionId: 0,
     avatarUrl: '',
-    title: '',
+    title: '关卡名称',
     score: 0,
     timespan: '00:00',
     subjectIndex: 0,
@@ -58,6 +58,9 @@ Page({
         subjectCount: data.subjectCount || 0,
         playerItems: data.players || []
       })
+      if (data.coins > 0){
+        util.pageToast('+' + data.coins + ' 金币');
+      }
     })
   },
 

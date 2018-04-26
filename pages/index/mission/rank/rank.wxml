@@ -18,6 +18,7 @@
     <view class="item {{item.score==subjectCount ? 'winner' : ''}} {{item.clientId==clientId ? 'self' : ''}}" wx:for="{{playerItems}}" wx:key="item">
       <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
       <text class="score">{{item.score==subjectCount ? util.durationToTimeSpan(item.secondCount) : item.score}}</text>
+      <dfn class="index {{index<3?'top':''}}">{{(index+1)}}</dfn>
       <text class="nick">{{item.nick}}</text>
     </view>
   </view>

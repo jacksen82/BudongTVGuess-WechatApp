@@ -102,7 +102,7 @@ const getShareMessage = function(title, missionId){
         getShareInfo(shareTicket)
           .then(function(res){
             
-            client.share(res.encryptedData || '', res.iv || '', function(data){
+            client.share(missionId || 0, res.encryptedData || '', res.iv || '', function(data){
 
               if (data.coins > 0){
                 wx.showToast({
@@ -114,7 +114,6 @@ const getShareMessage = function(title, missionId){
                   title: '-' + data.coins + ' 金币',
                 })
               }
-              options.callback && options.callback(data);
             })
           });
       }
