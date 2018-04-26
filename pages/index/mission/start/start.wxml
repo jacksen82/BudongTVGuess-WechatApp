@@ -27,5 +27,8 @@
       '开始答题' }}
     </button>
     <button class="rank" bindtap="onMissionRank">排行榜</button>
+    <view class="adbar">
+      <ad unit-id="adunit-a30047e3bc673219"></ad>
+    </view>
   </view>
 </view>

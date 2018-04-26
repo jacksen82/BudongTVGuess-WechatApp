@@ -3,9 +3,6 @@
 <wxs src="../../utils/filter.wxs" module="util" />
 
 <view class="container">
-  <view class="adbar">
-    <ad unit-id="adunit-a30047e3bc673219"></ad>
-  </view>
   <view class="missions">
     <view wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}" class="item {{item.missionClientId ? 'playing' : ''}}">
       <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />

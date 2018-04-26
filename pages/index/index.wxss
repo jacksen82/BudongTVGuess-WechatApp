@@ -1,11 +1,5 @@
 /**index.wxss**/
 
-.adbar {
-  display: block;
-  text-align: center;
-  padding: 1px 10px;
-}
-
 .missions {
   display: block;
 }
