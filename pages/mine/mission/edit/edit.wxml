@@ -2,17 +2,19 @@
 
 <view class="container">
   <view class="logo">
-    <image src="{{logoUrl}}" class="image" bindtap="onLogoTap" wx:if="{{!logoFileName}}" />
-    <canvas canvas-id="logoCanvas" class="image" bindtap="onLogoTap" wx:if="{{logoFileName}}"></canvas>
+    <image src="{{logoUrl}}" class="image" bindtap="onLogoTap" />
   </view>
   <view class="cells">
     <view class="group">
       <span class="item">
-        <input bindinput="onTitleInput" placeholder="请输入关卡名称" confirm-type="done" bindconfirm="onEditTap" focus="true" value="{{title}}" class="input" />
+        <input bindinput="onTitleInput" placeholder="请输入关卡名称" confirm-type="done" bindconfirm="onEditTap" value="{{title}}" class="input" />
       </span>
     </view>
   </view>
   <view class="bottombar">
     <button type="primary" bindtap="onEditTap" class="submit" hover-class="hover" > 确认修改 </button>
+  </view>
+  <view class="canvas">
+    <canvas canvas-id="logoCanvas" bindtap="onLogoTap"></canvas>
   </view>
 </view>

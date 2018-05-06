@@ -18,7 +18,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "画外听音",
+    "navigationBarTitleText": "猜电视",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": "50px"
   },

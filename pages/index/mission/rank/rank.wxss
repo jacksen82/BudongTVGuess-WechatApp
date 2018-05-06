@@ -67,6 +67,11 @@
   border-top: 1px solid #dfdfdf;
 }
 
+.adbar {
+  display: block;
+  margin-top: 12px;
+}
+
 /*
   玩家排行榜
 */
@@ -116,6 +121,7 @@
 }
 .players .item .nick {
   display: block;
+  overflow: hidden;
   height: 44px;
   color: #576b95;
   font-size: 14px;

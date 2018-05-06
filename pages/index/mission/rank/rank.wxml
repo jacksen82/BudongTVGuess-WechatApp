@@ -33,6 +33,9 @@
       <button type="default" open-type="share" class="share"> 邀请好友来 PK </button>
     </view>
   </view>
+  <view class="adbar">
+    <ad unit-id="adunit-7ca91370ff20e795"></ad>
+  </view>
   <view class="caption">
     总排行
   </view>

@@ -42,28 +42,73 @@ Page({
       count: 1,
       success: function(res) {
 
-        _this.setData({
-          'logoUrl': res.tempFilePaths[0],
-          'logoFileName': res.tempFilePaths[0]
-        });
-        wx.getImageInfo({
-          src: res.tempFilePaths[0],
-          success: function(__res){
-
-            if (__res.width > __res.height){
-              _zoom = 480 / __res.height;
-              _offset = Math.floor((__res.width - __res.height) / 2 * _zoom);
-              ctx.drawImage(res.tempFilePaths[0], -_offset, 0, __res.width * _zoom, 480);
-            } else {
-              _zoom = 480 / __res.width;
-              _offset = Math.floor((__res.height - __res.width) / 2 * _zoom);
-              ctx.drawImage(res.tempFilePaths[0], 0, -_offset, 480, __res.height * _zoom);
-            }
-            ctx.draw();
-          }
-        })
+        if (res.tempFilePaths && res.tempFilePaths.length > 0){
+          _this.onLogoRepaint(res.tempFilePaths[0]);
+        }else {
+          util.pageToast('图片无效');
+        }
       },
     })
+  },
+
+  /*
+    说明：重新绘制封面事件
+  */
+  onLogoRepaint: function(path){
+
+    var _this = this; 
+    var _zoom = 1, _offset = 0;
+
+    wx.getImageInfo({
+      src: path,
+      success: function (res) {
+
+        if (res.width > res.height) {
+          _zoom = 288 / res.height;
+          _offset = Math.floor((res.width - res.height) / 2 * _zoom);
+          ctx.drawImage(res.path, -_offset, 0, res.width * _zoom, 288);
+        } else {
+          _zoom = 288 / res.width;
+          _offset = Math.floor((res.height - res.width) / 2 * _zoom);
+          ctx.drawImage(res.path, 0, -_offset, 288, res.height * _zoom);
+        }
+        ctx.draw();
+        setTimeout(function(){
+
+          _this.onLogoPreview();
+        }, 100);
+      }
+    })
+  },
+
+  /*
+    说明：预览封面事件
+  */
+  onLogoPreview: function(){
+
+    var _this = this; 
+    
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: 288,
+      height: 288,
+      destWidth: 288,
+      destHeight: 288,
+      quality: 0.8,
+      canvasId: 'logoCanvas',
+      success: function (res) {
+
+        _this.setData({
+          'logoUrl': res.tempFilePath,
+          'logoFileName': res.tempFilePath
+        });
+      },
+      fail: function (res) {
+
+        util.pageToast('图片无效');
+      }
+    });
   },
 
   /*
@@ -87,23 +132,11 @@ Page({
       util.pageToast('名称不能为空');
     } else {
       if (this.data.logoFileName){
-        wx.canvasToTempFilePath({
-          x: 0,
-          y: 0,
-          width: 480,
-          height: 480,
-          destWidth: 480,
-          destHeight: 480,
-          canvasId: 'logoCanvas',
-          success: function (res) {
+        api.mine.mission.edit(_this.data.missionId, _this.data.title, this.data.logoFileName, function (data) {
 
-            api.mine.mission.edit(_this.data.missionId, _this.data.title, res.tempFilePath, function (data) {
-
-              store.client = null;  //  强制刷新用户信息
-              util.pageNavigate('back');
-            });
-          }
-        })
+          store.client = null;  //  强制刷新用户信息
+          util.pageNavigate('back');
+        });
       } else {
         api.mine.mission.edit(this.data.missionId, this.data.title, '', function (data) {
 
