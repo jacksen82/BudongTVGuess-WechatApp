@@ -1,22 +1,16 @@
 //  client.js
 
+const consts = require('../utils/consts.js');
+const util = require('../utils/util.js');
+const store = require('../utils/store.js');
 const ajax = require('./ajax.js');
 
 /*
   说明：获取用户 Token
 */
-const token = function(scene, callback, fail){
+const token = function(callback){
 
-  ajax.post('/client/token.ashx', {
-    scene: scene 
-  }, function (data) {
-
-      if (data.code == 0) {
-        callback(data.data)
-      } else {
-        fail(data)
-      }
-    }, fail)
+  ajax.post('/client/token.ashx', { }, callback);
 }
 
 /*
@@ -25,44 +19,24 @@ const token = function(scene, callback, fail){
 const login = function(code, callback){
 
   ajax.post('/client/login.ashx', { 
-    code: code 
+    code: code || ''
   }, function (data) {
 
     if (data.code == 0) {
       callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
-}
-
-/*
-  说明：获取用户资料
-*/
-const detail = function (callback) {
-
-  ajax.post('/client/detail.ashx', {
-
-  }, function (data) {
-
-    if (data.code == 0) {
-      callback(data.data)
-    } else {
-      wx.showToast({
-        title: data.message,
-      })
-    }
-  }, null)
+  })
 }
 
 /*
   说明：用户关系
 */
-const relate = function (missionId, fromClientId, encryptedData, iv, callback){
+const relate = function (subjectId, missionId, fromClientId, encryptedData, iv, callback){
   
   ajax.post('/client/relate.ashx', {
+    subjectId: subjectId || 0,
     missionId: missionId || 0,
     fromClientId: fromClientId || 0,
     encryptedData: encryptedData || '',
@@ -72,9 +46,7 @@ const relate = function (missionId, fromClientId, encryptedData, iv, callback){
     if (data.code == 0) {
       callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
   })
 }
@@ -85,25 +57,22 @@ const relate = function (missionId, fromClientId, encryptedData, iv, callback){
 const share = function (missionId, encryptedData, iv, callback){
 
   ajax.post('/client/share.ashx', {
-    missionId: missionId,
-    encryptedData: encryptedData,
-    iv: iv
+    missionId: missionId || 0,
+    encryptedData: encryptedData || '',
+    iv: iv || ''
   }, function (data) {
 
     if (data.code == 0) {
       callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 module.exports = {
   token: token,
   login: login,
-  detail: detail,
   relate: relate,
   share: share
 }

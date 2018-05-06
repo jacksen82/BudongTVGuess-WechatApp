@@ -1,32 +1,43 @@
 <!--pages/index/mission/start/start.wxml-->
 
+<wxs src="../../../../filters/filter.wxs" module="filter" />
+
 <view class="container">
-  <view class="review">
-    <image src="{{avatarUrl}}" mode="aspectFit" class="avatar" />
+  <view class="mission">
+    <image src="{{logoUrl}}" mode="aspectFit" class="logo" />
     <span class="title">{{title}}</span>
-    <span class="author"><em>{{nick}}</em> {{gender == 1 ? '帅哥' : (gender == 2 ? '美女' : '未知')}} / {{birthyear ? birthyear + '年出生' : '未知年代'}} </span>
     <span class="tags">
       <dfn wx:for="{{tags}}" wx:key="item" class="tag-item">{{item}}</dfn>
     </span>
+    <span class="author">
+      <image src="{{avatarUrl}}" mode="aspectFit" class="avatar" />
+      <em class="nick">{{nick}}</em>
+      {{filter.getGender(gender)}} / {{filter.getBirthyear(birthyear)}}
+    </span>
     <span class="stars">
       <span class="item">
-        <dfn>{{subjectCount}}</dfn>
-        <em>题目数量</em>
+        <dfn class="numeric">{{subjectCount}}</dfn>
+        <em class="text">题目数量</em>
       </span>
       <span class="item">
-        <dfn>{{playerCount}}</dfn>
-        <em>游戏人数</em>
+        <dfn class="numeric">{{playerCount}}</dfn>
+        <em class="text">游戏人数</em>
       </span>
     </span>
   </view>
-  <view class="controls">
-    <button class="start" bindtap="onMissionStart">
-    {{ subjectIndex > 0 ? 
-      ( subjectIndex < subjectCount ? '继续答题 ' + (subjectIndex + 1) + '/' + subjectCount : '重新开始' ) 
-      :
-      '开始答题' }}
-    </button>
-    <button class="rank" bindtap="onMissionRank">排行榜</button>
+  <view class="footer">
+    <view class="buttons" wx:if="{{actived>0}}">
+      <button class="start" bindtap="onMissionStart" wx:if="{{subjectIndex && subjectIndex < subjectCount}}">继续答题 {{(subjectIndex + 1) + ' / ' + subjectCount}}</button>
+      <button class="start" bindtap="onMissionStart" wx:if="{{subjectIndex && subjectIndex >= subjectCount}}">重新开始</button>
+      <button class="start" bindtap="onMissionStart" wx:if="{{!subjectIndex}}">开始答题</button>
+    </view>
+    <view class="buttons" wx:if="{{actived<=0}}">
+      <button class="start" open-type="getUserInfo" bindgetuserinfo="onMissionActive">开始答题</button>
+    </view>
+    <view class="links">
+      <button type="default" bindtap="onMissionRank" class="item rank">排行榜</button>
+      <button type="default" open-type="share" class="item share">邀请好友来PK</button>
+    </view>
     <view class="adbar">
       <ad unit-id="adunit-a30047e3bc673219"></ad>
     </view>

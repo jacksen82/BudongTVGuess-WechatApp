@@ -1,32 +1,49 @@
 <!--pages/mine/mine.wxml-->
 
+<wxs src="../../filters/filter.wxs" module="filter" />
+
 <view class="container">
-  <view class="header">
+  <view class="userinfo" wx:if="{{actived<=0}}">
+    <button class="button" bindtap="onProfileTap">设置出生年代</button>
+    <text class="text">你还没有设置出生年代，请先进行设置</text>
+  </view>
+  <view class="header" wx:if="{{actived>0}}">
     <image src="{{avatarUrl}}" class="avatar" bindtap="onHeaderTap" />
     <view class="info" bindtap="onHeaderTap">
       <span class="nick">{{nick}}</span> 
-      <span class="gender_age">{{gender==1?'帅哥':'美女'}} / {{birthyear ? birthyear + ' 年出生 ' : '设置出生年代'}}</span>
+      <span class="other">{{gender==1?'帅哥':'美女'}} / {{birthyear ? birthyear + ' 年出生 ' : '设置出生年代'}}</span>
+    </view>
+  </view>
+  <view class="cells" wx:if="{{actived>0}}">
+    <view class="group">
+      <view class="item {{signined ? 'disabled' : ''}}" bindtap="onSignInTap">
+        {{signined ? '今日已签到' : '每日签到'}}
+        <dfn class="tip">可获得 50 金币</dfn>
+      </view>
+      <view class="item" bindtap="onCoinsTap">
+        我的金币
+        <dfn class="numeric">{{balance}}</dfn>
+      </view>
+    </view>
+    <view class="caption">
+      {{missionItems.length == 0 ? '你还没有关卡，快去创建一个吧' : '我的关卡'}}
+    </view>
+    <view class="group mission">
+      <view class="item" wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}">
+        <image src="{{filter.getLogo(item.logoUrl)}}" class="logo" />
+        <span class="title">
+          {{item.title}}
+          <var wx:if="{{item.grade == 1 || item.winnerCount > 10}}" class="tag {{item.grade == 1 ? 'recommend' : 'hot'}}">
+            {{item.grade == 1 ? '推荐' : (item.winnerCount > 10 ? '热门' : '')}}
+          </var>
+        </span>
+      </view>
+      <view class="item create" bindtap="onMissionCreateTap">创建新关卡</view>
     </view>
   </view>
   <view class="cells">
-    <view class="group">
-      <button class="item" bindtap="onCoinsDetailTap">
-        <em>我的金币</em>
-        <dfn>{{balance}}</dfn>
-      </button>
-    </view>
-    <view class="caption" wx:if="{{missionItems.length == 0}}">
-      你还没有关卡，快去创建一个吧
-    </view>
-    <view class="group">
-      <button class="item" wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}">
-        <var wx:if="{{item.grade == 1}}">{{item.grade == 1 ? '热门' : ''}}</var>
-        {{item.title}}
-      </button>
-      <button class="item create" bindtap="onMissionCreateTap">创建新关卡</button>
-    </view>
-    <view class="group">
-      <button class="item" bindtap="onAboutTap">关于我们</button>
+    <view class="group top bottom">
+      <view class="item" bindtap="onAboutTap">关于我们</view>
     </view>
   </view>
 </view>

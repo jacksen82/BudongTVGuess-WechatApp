@@ -1,5 +1,6 @@
 // pages/index/mission/guess/game.js
 
+const consts = require('../../../../utils/consts.js')
 const util = require('../../../../utils/util.js')
 const store = require('../../../../utils/store.js')
 const api = require('../../../../api/index.js')
@@ -17,7 +18,7 @@ var interval = function(game){
 
     seconds += 1;
     game.page.setData({
-      timeSpan: util.durationToTimeSpan(seconds) 
+      timeSpan: util.getTimeSpan(seconds) 
     })
   }, 1000);
 };
@@ -45,7 +46,8 @@ var showtip = function(game, tip){
       game.page.setData({ balance: game.page.data.balance - 30 })
       interval(game);
       store.client.balance = game.page.data.balance;
-      util.pageToast(' -30 金币')
+      store.missions = null;  //  强制刷新关卡
+      util.pageToast(' -30 金币');
     }
   })
 };
@@ -75,8 +77,8 @@ var correct = function (game){
     success: function (res) {
 
       if (res.confirm) {
-        game.page.setData({ subjectIndex: game.subjectIndex + 1 });
         game.subjectIndex++;
+        game.page.setData({ subjectIndex: game.subjectIndex + 1 });
         game.next();
       }
     }
@@ -120,18 +122,20 @@ module.exports = {
   }, 
   next: function(){
 
-    seconds = 0;
     subject = getSubject(this.subjectItems, this.subjectIndex);
+    seconds = 0;
     interval(this);
 
     this.page.setData({
       timeSpan: '00:00',
+      subjectId: subject.id,
       subjectTitle: subject.title,
-      subjectCategory: util.categoryIdToName(subject.categoryId),
+      subjectCategory: util.getCategory(subject.categoryId),
       subjectTiped: false,
+      subjectHelped: false,
       subjectAnswer: ''
     });
-    this.player.play(store.domain + subject.mp3Url);
+    this.player.play(consts.HTTP_CDN + subject.mp3Url);
   },
   tip: function () {
 
@@ -160,20 +164,15 @@ module.exports = {
         _this.next();
         util.pageToast(' -30 金币')
         store.client.balance = _this.page.data.balance;
+        store.missions = null;  //  强制刷新关卡
       });
     }
   },
   replay: function(){
 
     var _this = this;
-
-    api.mission.game.replay(subject.id, function (data) {
-
-      _this.player.play(store.domain + subject.mp3Url);
-      _this.page.setData({ balance: _this.page.data.balance - 10 })
-      util.pageToast(' -10 金币');
-      store.client.balance = _this.page.data.balance;
-    });
+    
+    _this.player.play(consts.HTTP_CDN + subject.mp3Url);
   },
   answer: function(){
 
@@ -188,10 +187,17 @@ module.exports = {
         api.mission.game.answer(subject.id, seconds, function(data){
 
           if (_this.subjectIndex >= _this.subjectItems.length - 1) {
-            util.pageNavigate('/pages/index/mission/rank/rank?missionId=' + _this.page.data.missionId, true)
+            api.mission.game.complete(_this.page.data.missionId, function(__data){
+
+              util.pageNavigate('/pages/index/mission/rank/rank?missionId=' + _this.page.data.missionId, true);
+              (__data.coins > 0) && _this.page.setData({ balance: _this.page.data.balance + __data.coins });
+              (__data.coins > 0) && util.pageToast('+' + __data.coins + ' 金币');
+            });
           } else {
             correct(_this);
           }
+          store.client.balance = _this.page.data.balance;
+          store.missions = null;  //  强制刷新关卡
         });
       } else {
         wrong(_this);

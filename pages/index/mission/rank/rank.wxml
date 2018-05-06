@@ -1,28 +1,47 @@
 <!--pages/index/mission/rank/rank.wxml-->
 
-<wxs src="../../../../utils/filter.wxs" module="util" />
+<wxs src="../../../../filters/filter.wxs" module="filter" />
 
 <view class="container">
-  <view class="header">
-    <image src="{{avatarUrl}}" class="avatar" />
+  <view class="mission">
+    <image src="{{logoUrl}}" class="logo" />
     <text class="title"> 《{{title}}》</text>
-    <text class="caption {{subjectIndex >= subjectCount?'done':''}}">{{subjectIndex >= subjectCount?'闯关成功':'正在闯关..'}}</text>
+    <view class="status">
+      <em class="{{subjectIndex >= subjectCount?'win':'unwin'}}">
+        {{subjectIndex >= subjectCount?'闯关成功':'正在闯关..'}}
+      </em>
+    </view>
     <view class="desc" wx:if="{{subjectIndex >= subjectCount}}">
-      得分 <strong>{{score}}</strong>，用时 <strong>{{timespan}}</strong>
+      得分 <em>{{score}}</em>，用时 <em>{{timespan}}</em>
     </view>
     <view class="desc" wx:if="{{subjectIndex < subjectCount}}">
-      共有 <strong>{{subjectCount}}</strong> 道题，已答 <strong>{{subjectIndex}}</strong> 道
+      共有 <em>{{subjectCount}}</em> 道题，已答 <em>{{subjectIndex}}</em> 道
     </view>
+  </view>
+  <view class="caption">
+    好友/群排行
   </view>
   <view class="players">
-    <view class="item {{item.score==subjectCount ? 'winner' : ''}} {{item.clientId==clientId ? 'self' : ''}}" wx:for="{{playerItems}}" wx:key="item">
+    <view wx:for="{{playerInFriendItems}}" wx:key="item" class="item {{item.score==subjectCount ? 'win' : ''}} {{item.clientId==clientId ? 'self' : ''}}">
       <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
-      <text class="score">{{item.score==subjectCount ? util.durationToTimeSpan(item.secondCount) : item.score}}</text>
-      <dfn class="index {{index<3?'top':''}}">{{(index+1)}}</dfn>
-      <text class="nick">{{item.nick}}</text>
+      <text class="score">{{item.score==subjectCount ? filter.getTimeSpan(item.secondCount) : item.score}}</text>
+      <dfn class="index {{index < 3?'top':''}}">{{(index+1)}}</dfn>
+      <text class="nick">{{item.nick || ''}}</text>
+    </view>
+    <view wx:if="{{playerInFriendItems.length == 0}}" class="nodata">
+      <text class="tip">你还没有好友挑战过这个关卡</text>
+      <button type="default" open-type="share" class="share"> 邀请好友来 PK </button>
     </view>
   </view>
-  <view class="controls">
-    <button type="default" open-type="share" class="share"> 分享至好友/群 </button>
+  <view class="caption">
+    总排行
+  </view>
+  <view class="players">
+    <view wx:for="{{playerTop10Items}}" wx:key="item" class="item {{item.score==subjectCount ? 'win' : ''}} {{item.clientId==clientId ? 'self' : ''}}">
+      <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
+      <text class="score">{{item.score==subjectCount ? filter.getTimeSpan(item.secondCount) : item.score}}</text>
+      <dfn class="index {{item.index < 3?'top':''}}">{{(item.index+1)}}</dfn>
+      <text class="nick">{{item.nick || ''}}</text>
+    </view>
   </view>
 </view>

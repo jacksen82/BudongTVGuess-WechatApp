@@ -1,200 +1,168 @@
 //  wechat.js
 
+const consts = require('../utils/consts.js');
+const util = require('../utils/util.js');
 const store = require('../utils/store.js');
 const ajax = require('./ajax.js')
 const client = require('./client.js');
 const mine = require('./mine.js');
 
-/*
-  说明：获取用户资料
-*/
-const getUserInfo = function (withCredentials) {
+//  请求登录授权
+var __login = function (missionId, fromClientId, shareTicket, callback) {
 
-  //  打开用户资料授权方法
-  var resetting = function (resolve, reject) {
-    
-    wx.openSetting({
-      success: function(res){
+  wx.login({
+    success: function (res) {
 
-        if (res.authSetting['scope.userInfo'] == true){
+      client.login(res.code, callback);
 
-          getUserInfo(resolve, reject)
-        }
-      },
-      fail: function(){
+      //  记录启动来源
+      trace(missionId, fromClientId, shareTicket);
+    },
+    fail: function () {
 
-        wx.showToast({
-          title: '授权失败'
-        })
-      }
-    })
-  }
-  
-  //  获取用户资料
-  var getUserInfo = function (resolve, reject){
-    
-    if (store.client.actived == 1) {
-      client.detail(resolve)
-    } else {
-      wx.getUserInfo({
-        withCredentials: withCredentials,
-        success: function (res) {
-
-          mine.updateProfile(res.userInfo.nickName, res.userInfo.gender, res.userInfo.avatarUrl, resolve)
-        },
-        fail: function (res) {
-
-          resetting(resolve, reject)
-        }
-      })
+      util.pageToast('登录失败');
     }
-  }
-
-  //  获取用户资料
-  return new Promise(function(resolve, reject){
-
-    getUserInfo(resolve, reject)
   })
 }
 
 /*
   说明：获取群信息
 */
-const getShareInfo = function (shareTicket) {
+const __getShareInfo = function (shareTicket, callback)    {
 
-  return new Promise(function (resolve, reject) {
+  if (shareTicket) {
+    wx.getShareInfo({
+      shareTicket: shareTicket,
+      success: callback,
+      fail: callback
+    })
+  } else {
+    callback && callback({ encryptedData: '', iv: ''});
+  }
+}
 
-    if (shareTicket) {
-      wx.getShareInfo({
-        shareTicket: shareTicket,
-        success: resolve,
-        fail: resolve
-      })
-    } else {
-      resolve({})
+/*
+  说明：获取指定权限
+*/
+const getSettings = function (item, callback) {
+
+  wx.getSetting({
+    success: function (res) {
+
+      if (res.authSetting['scope.' + item]) {
+        callback && callback(true);
+      } else {
+        wx.openSetting({
+          success: function (res) {
+
+            if (res.authSetting['scope.' + item] == true) {
+              callback && callback(true);
+            }
+          },
+          fail: function () {
+            callback && callback(false);
+          }
+        })
+      }
+    },
+    fail: function (res) {
+
+      util.pageToast(res || '发生未知错误');
     }
-  });
+  })
 }
 
 /*
   说明：获取分享结构
 */
-const getShareMessage = function(title, missionId){
+const getShareMessage = function(title, missionId, subjectId){
 
-  var shareTicket;
+  var shareTicket = {};
 
   return {
     title: (title ? title : '你能猜出这段声音出自哪里吗？' ),
-    path: (missionId > 0 ? 
-      '/pages/index/index?mid=' + missionId + '&cid=' + store.client.id 
-      : 
-      '/pages/index/index?cid=' + store.client.id),
-    imageUrl: 'https://cdn.shenxu.name/wechat_app/static/images/share_cover.png',
+    path: '/pages/index/index?cid=' + (store.client.id || 0) + (missionId ? '&mid=' + missionId : '') + (subjectId ? '&sid=' + subjectId : ''),
+    imageUrl: consts.HTTP_CDN + '/wechat_app/static/images/share_cover.png',
     success: function(res){
-
-      shareTicket = {}
 
       if (res.shareTickets && res.shareTickets.length){
         shareTicket = res.shareTickets[0]
       }
       
-      if (store.session3rd) {
-        getShareInfo(shareTicket)
-          .then(function(res){
-            
-            client.share(missionId || 0, res.encryptedData || '', res.iv || '', function(data){
+      if (consts.APP_3RD_SESSION) {
+        __getShareInfo(shareTicket, function(__res){
 
-              if (data.coins > 0){
-                wx.showToast({
-                  title: '+' + data.coins + ' 金币', 
-                })
-              } 
-              if (data.coins < 0) {
-                wx.showToast({
-                  title: '-' + data.coins + ' 金币',
-                })
-              }
-            })
-          });
+          client.share(missionId, __res.encryptedData, __res.iv, function (data) {
+
+            (data.coins > 0) && util.pageToast('+' + data.coins + ' 金币');
+            (data.coins < 0) && util.pageToast('-' + data.coins + ' 金币');
+            store.client.balance = (store.client.balance || 0) + (data.coins || 0);
+          })
+        })
       }
     },
     fail: function (res) {
 
-      wx.showToast({
-        title: '放弃分享'
-      })
+      util.pageToast('放弃分享');
     }
   }
 }
 
 /*
-  说明：检查登录态有效性
+  说明：启动场景
 */
-const checkSession = function (scene) {
+const trace = function (subjectId, missionId, fromClientId, shareTicket, callback){
 
-  //  获取本地缓存三方标识
-  store.session3rd = wx.getStorageSync('session3rd') || ''
+  if (consts.APP_LAUNCHED) {
+    __getShareInfo(shareTicket, function(res){
 
-  //  登录方法
-  var relogin = function (resolve, reject) {
-
-    wx.login({
-      success: function (res) {
-
-        client.login(res.code, resolve)
-      },
-      fail: function () {
-        
-        reject(ajax.result(ajax.CODE_TYPE.LOGIN_FAIL, '登录失败'))
+      if (missionId || fromClientId || (res.encryptedData && res.iv)) {
+        client.relate(subjectId, missionId, fromClientId, res.encryptedData, res.iv, function(data){ });
       }
-    })
-  }
-
-  //  检查会话登陆态
-  return new Promise(function (resolve, reject) {
-    
-    if (store.session3rd) {
-      wx.checkSession({
-        success: function (res) {
-          
-          client.token(scene, resolve, function(data){
-            
-            relogin(resolve, reject)
-          })
-        },
-        fail: function () {
-          
-          relogin(resolve, reject)
-        }
-      })
-    } else {
+      callback && callback();
+    });
+  } else {
+    setTimeout(function () {
       
-      relogin(resolve, reject)
-    }
-  })
-}
+      trace(subjectId, missionId, fromClientId, shareTicket, callback);
+    }, 100);
+  }
+};
 
 /*
-  说明：检查访问来源
+  说明：启动登录
 */
-const checkSource = function (missionId, fromClientId, shareTicket){
-  
-  return new Promise(function(resolve, reject){
+const authorize = function (missionId, fromClientId, shareTicket, callback) {
 
-      getShareInfo(shareTicket)
-        .then(function (res) {
-          
-          if (missionId || fromClientId || (res.encryptedData && res.iv)) {
-            client.relate(missionId, fromClientId, res.encryptedData, res.iv, resolve);
+  let beginTime = new Date().getTime();
+
+  //  如果有本地会话标识，则检查会话标识有效性
+  if (consts.APP_3RD_SESSION) {
+    wx.checkSession({
+      success: function (res) {
+        
+        client.token(function(data){
+
+          if (data.code == 0 && data.data.session3rd){
+            callback && callback(data.data);
+          } else {
+            __login(missionId, fromClientId, shareTicket, callback);
           }
         });
-  })
+      },
+      fail: function (res) {
+
+        __login(missionId, fromClientId, shareTicket, callback);
+      }
+    });
+  } else {
+    __login(missionId, fromClientId, shareTicket, callback);
+  }
 }
 
 module.exports = {
-  getUserInfo: getUserInfo,
+  getSettings: getSettings,
   getShareMessage: getShareMessage,
-  getShareInfo: getShareInfo,
-  checkSession: checkSession,
-  checkSource: checkSource
+  trace: trace,
+  authorize: authorize
 }

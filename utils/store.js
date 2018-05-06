@@ -1,5 +1,6 @@
+//  utils/store.js
+
 module.exports = {
-  domain: 'https://cdn.shenxu.name',
-  launchSecond: 500,
-  client: {}
+  client: {},       //  客户端信息
+  missions: {}      //  关卡列表
 }

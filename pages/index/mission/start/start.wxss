@@ -1,88 +1,107 @@
 /* pages/index/mission/start/start.wxss */
 
-.review {
+/*
+  关卡详情
+*/
+.mission {
   display: block;
 }
-.review .avatar {
+.mission .logo {
   display: block;
   width: 96px;
   height: 96px;
   margin: 20px auto 0px auto;
-  border-radius: 50%;
+  border-radius: 10px;
 }
-.review .title {
+.mission .title {
   display: block;
   height: 32px;
-  color: #353535;
-  font-size: 15px;
+  color: #ec3851;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 32px;
   text-align: center;
   padding-top: 10px;
 }
-.review .author {
+.mission .author {
   display: block;
   color: #909398;
   font-size: 12px;
   line-height: 32px;
   text-align: center;
 }
-.review .author em {
+.mission .author .avatar {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin-right: 9px;
+  border-radius: 50%;
+}
+.mission .author .nick {
   color: #576b95;
 }
-.review .tags {
+.mission .tags {
   display: block;
-  height: 24px;
-  line-height: 24px;
+  height: 36px;
+  line-height: 36px;
   text-align: center;
 }
-.review .tags .tag-item {
+.mission .tags .tag-item {
   display: inline-block;
   height: 20px;
   color:#ffffff;
   font-size: 12px;
   line-height: 20px;
   padding:0px 5px;
-  margin-right: 3px;
+  margin: 0px 2px;
   border-radius: 3px;
   background: #ec3851;
 }
-.review .stars {
+.mission .stars {
   display: block;
   text-align: center;
-  padding: 5px 15px 0px 15px;
+  padding: 10px 15px 0px 15px;
   margin: 0px auto;
 }
-.review .stars .item {
+.mission .stars .item {
   display: inline-block;
   padding: 0px 20px;
   border-right: 0.5px dotted #dfdfdf;
 }
-.review .stars .item:last-child {
+.mission .stars .item:last-child {
   border-right: 0px;
 }
-.review .stars .item dfn {
+.mission .stars .item .numeric {
   display: block;
   color: #ec3851;
   font-size: 21px;
-  line-height: 32px;
+  line-height: 36px;
 }
-.review .stars .item em {
+.mission .stars .item .text {
   display: block;
   color: #909398;
   font-size: 14px;
   line-height: 24px;
 }
 
-.controls {
+/*
+  关卡操作栏
+*/
+.footer {
   display: block;
   position: absolute;
   left: 0px;
   right: 0px;
   bottom: 0px;
+  text-align: center;
 }
-.controls .start {
+.footer .buttons {
   display: block;
-  width: 128px;
+  height: 36px;
+}
+.footer .buttons .start {
+  display: inline-block;
   height: 36px;
   color: #ffffff;
   font-size: 14px;
@@ -90,15 +109,21 @@
   border-radius: 5px;
   background: #ec3851;
 }
-.controls .rank {
+.footer .links {
   display: block;
+  height: 36px;
+  padding: 4px 0px;
+}
+.footer .links .item {
+  display: inline-block;
+  height: 36px;
   color: #ec3851;
   font-size: 12px;
   line-height: 36px;
-  margin: 5px 0px;
+  padding: 0px 15px;
   background: transparent;
 }
-.controls .adbar {
+.footer .adbar {
   display: block;
   margin-top: 1px;
 }

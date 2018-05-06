@@ -1,6 +1,7 @@
 // pages/index/mission/guess/guess.js
 
 const app = getApp()
+const consts = require('../../../../utils/consts.js')
 const util = require('../../../../utils/util.js')
 const player = require('../../../../utils/player.js')
 const store = require('../../../../utils/store.js')
@@ -14,11 +15,13 @@ Page({
   */
   data: {
     missionId: 0,
+    title: '',
     balance: 0,
-    avatarUrl: '',
+    logoUrl: '',
     timeSpan: '00:00',
     subjectAnswer: '',
     subjectTiped: false,
+    subjectHelped: false,
     subjectIndex: 0,
     subjectCount: 0
   },
@@ -42,7 +45,7 @@ Page({
 
     var _this = this;
 
-    if (!store.gameFirstDone) {
+    if (!wx.getStorageSync('gameFirstDone')) {
       wx.showModal({
         title: '游戏提示',
         showCancel: false,
@@ -50,13 +53,12 @@ Page({
         confirmText: '知道了',
         success: function () {
 
-          _this.onLoadDetail();
-          store.gameFirstDone = 'true';
+          _this.onDetailLoad();
           wx.setStorageSync('gameFirstDone', 'true');
         }
       })
     } else {
-      this.onLoadDetail();
+      this.onDetailLoad();
     }
   },
 
@@ -71,14 +73,15 @@ Page({
   /*
     说明：页面关卡详情加载事件
   */
-  onLoadDetail: function () {
+  onDetailLoad: function () {
 
     var _this = this;
 
     api.mission.game.start(this.data.missionId, function (data) {
 
       _this.setData({
-        avatarUrl: (data.author || {}).avatarUrl,
+        title: data.title || '',
+        logoUrl: util.getLogo(data.logoUrl),
         subjectIndex: data.subjectIndex + 1,
         subjectCount: data.subjectCount
       })
@@ -93,9 +96,10 @@ Page({
     wx.showModal({
       title: '操作提示',
       showCancel: false,
-      content: '金币可以通过如下途径获得：\r\n ' + 
-        '1. 首次分享到群可以获得 100 金币\r\n ' + 
-        '2. 首次闯关成功，可获取对应的金币',
+      content: '通过以下途径可获得金币：\r\n ' + 
+        '1. 分享到群可获得金币 \r\n ' + 
+        '2. 闯关成功可获取金币\r\n' + 
+        '3. 每日签到可获得金币',
       confirmText: '知道了'
     })
   },
@@ -139,11 +143,7 @@ Page({
     var _this = this;
 
     if (!this.data.playready && !this.data.playing){
-      if (this.data.balance >= 10) {
-        this.game.replay();
-      } else {
-        util.pageToast('金币不足')
-      }
+      this.game.replay();
     }
   },
 
@@ -168,6 +168,8 @@ Page({
   */
   onShareAppMessage: function (res) {
 
-    return api.wechat.getShareMessage('我正在闯关《' + this.data.title + '》，你敢来挑战吗？', this.data.missionId);
+    util.pageSetData(this, 'subjectHelped', true)
+
+    return api.wechat.getShareMessage('我正在【猜电视】闯关，快帮我听听看，这段声音出自哪个' + this.data.subjectCategory + '？', this.data.missionId, this.data.subjectId);
   }
 })

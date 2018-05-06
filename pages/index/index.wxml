@@ -1,41 +1,38 @@
 <!--index.wxml-->
 
-<wxs src="../../utils/filter.wxs" module="util" />
+<wxs src="../../filters/filter.wxs" module="filter" />
 
 <view class="container">
   <view class="missions">
-    <view wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}" class="item {{item.missionClientId ? 'playing' : ''}}">
-      <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="true" class="avatar" />
+    <view wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}" class="item">
+      <image src="{{filter.getLogo(item.logoUrl)}}" mode="aspectFit" lazy-load="true" class="logo" />
       <view class="intro">
         <view class="title">
           {{item.title}}
         </view>
         <view class="author">
           <span class="nick">{{item.nick}}
-            <small>{{util.listGender(item.gender)}} / {{util.listBirthyear(item.birthyear)}}</small>
+            <small>{{filter.getGender(item.gender)}} / {{filter.getBirthyear(item.birthyear)}}</small>
           </span>
         </view>
         <view class="affix">
-          <span class="count">
-          {{util.listDuration(item.missionClientId, item.subjectIndex, item.subjectCount)}}
-          </span>
+          <span class="status {{filter.getStatus(item).css}}">{{filter.getStatus(item).text}}</span>
           <span class="tags">
-            <dfn class="tag {{item.type==101?'friend':(item.type==201?'group':(item.grade>0?'hot':''))}}" wx:if="{{item.type==101 || item.type==201 || item.grade>0}}">{{item.type==101?'好友':(item.type==201?'群':(item.grade>0?'热门':''))}}
-            </dfn>
-            <dfn wx:for="{{util.tagsToArray(item.tags)}}" wx:key="item" class="tag">{{item}}</dfn>
+            <dfn wx:if="{{filter.getRelateType(item.type).css}}" class="tag {{filter.getRelateType(item.type).css}}">{{filter.getRelateType(item.type).text}}</dfn>
+            <dfn wx:for="{{filter.getTags(item.tags)}}" wx:key="item" class="tag">{{item}}</dfn>
           </span>
         </view>
       </view>
     </view>
-    <view class="nodata" wx:if="{{!missionItems || missionItems.length==0}}">
-      你的好友/群还没有分享过关卡
+    <view class=" {{loading ? 'loading' : (missionIsEnd ? 'isend': '')}}">
+      {{loading ? '正在加载..' : (missionIsEnd ? '已经到达结尾': '上拉加载更多')}}
+    </view>
+    <view class="nodata" wx:if="{{!loading && (!missionItems || missionItems.length==0)}}">
+      暂时没有可玩儿的关卡
     </view>
   </view>
-  <view class="datamore">
-    <span class="loading {{missionIsEnd ? 'isend' : ''}}">{{missionIsEnd ? '已到达底部' : '正在载入更多...'}}</span>
-  </view>
-  <view class="controls" wx:if="{{!haveMissionCreate}}">
-    <button class="button" bindtap="onMissionCreate">
+  <view class="floater" wx:if="{{!haveMissionCreate}}">
+    <button class="create" bindtap="onMissionCreate">
       <dfn>创 建</dfn>
       <dfn>关 卡</dfn>
     </button>

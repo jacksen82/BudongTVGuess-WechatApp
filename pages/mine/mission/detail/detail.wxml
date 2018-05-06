@@ -1,33 +1,34 @@
 <!--pages/mine/mission/detail/detail.wxml-->
 
-<wxs src="../../../../utils/filter.wxs" module="util" />
+<wxs src="../../../../filters/filter.wxs" module="filter" />
 
 <view class="container">
   <view class="cells">
-    <view class="group">
+    <view class="group mission">
       <button class="item" bindtap="onEditTap">
-        {{title}}
-        <dfn>修改名称</dfn>
+        <image src="{{logoUrl}}" class="logo" />
+        <dfn class="link">修改名称</dfn>
+        <span class="title">{{title}}</span>
       </button>
     </view>
-  </view>
-  <view class="caption">
-    题目管理
-  </view>
-  <view class="subjects">
-    <view class="item" wx:for="{{subjectItems}}" wx:key="item" bindtap="onSubjectItemTap" data-subject-id="{{item.id}}">
-      {{item.title}}
-      <var> {{util.categoryIdToName(item.categoryId)}} </var>
+    <view class="caption">
+      题目管理
     </view>
-    <view class="item create" bindtap="onSubjectAddTap">
-      添加新题目
+    <view class="group">
+      <view class="item" wx:for="{{subjectItems}}" wx:key="item" bindtap="onSubjectItemTap" data-subject-id="{{item.id}}">
+        {{item.title}}
+        <small class="tip"> {{filter.getCategory(item.categoryId)}} </small>
+      </view>
+      <view class="item create" bindtap="onSubjectAddTap">
+        添加新题目
+      </view>
     </view>
-  </view>
-  <view class="controls">
-    <span class="tip" wx:if="{{subjectItems.length < 5}}">
-      {{subjectItems.length == 0 ? '请先为你的关卡添加题目' : '最少需要 5 道题目才能分享关卡'}}
+    <span class="hint" wx:if="{{subjectItems.length < 5}}">
+       {{subjectItems.length == 0 ? '请先为你的关卡添加题目' : '5 个以上题目，闯关超过 10 人，可以出现在首页'}}
     </span>
-    <button type="default" open-type="share" disabled="{{subjectItems.length < 5}}" class="share"> 分享至好友/群 </button>
+  </view>
+  <view class="bottombar">
+    <button type="default" open-type="share" class="share"> 邀请好友来闯关 </button>
     <button type="warn" bindtap="onMissionDeleteTap" class="delete"> 删除关卡 </button>
   </view>
 </view>

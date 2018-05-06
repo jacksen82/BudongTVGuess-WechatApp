@@ -29,13 +29,24 @@ Page({
   */
   onShow: function () {
 
-    this.onLoadCoins()
+    this.onCoinsLoad()
+  },
+
+  /*
+    说明：上拉刷新事件
+  */
+  onReachBottom: function () {
+
+    if (!this.data.coinsIsEnd) {
+      this.setData({ coinsPageId: this.data.coinsPageId + 1 })
+      this.onCoinsLoad()
+    }
   },
 
   /*
     说明：页面金币明细加载事件
   */
-  onLoadCoins: function(){
+  onCoinsLoad: function(){
 
     var _this = this;
 
@@ -48,17 +59,6 @@ Page({
         coinsItems: _this.data.coinsItems
       })
     })
-  },
-
-  /*
-    说明：上拉刷新事件
-  */
-  onReachBottom: function () {
-
-    if (!this.data.coinsIsEnd) {
-      this.setData({ coinsPageId: this.data.coinsPageId + 1 })
-      this.onLoadCoins()
-    }
   },
 
   /*

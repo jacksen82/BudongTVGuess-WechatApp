@@ -1,42 +1,44 @@
 //  mission.js
 
+const consts = require('../utils/consts.js');
+const util = require('../utils/util.js');
+const store = require('../utils/store.js');
 const ajax = require('./ajax.js');
 const game = require('./mission/game.js');
 
 /*
   说明：获取关卡列表
 */
-const list = function (callback) {
+const list = function (pageId, callback) {
 
-  ajax.post('/mission/list.ashx', {
-  }, function (data) {
+  //  初始化关卡信息
+  store.missions = store.missions || {};
 
-    if (data.code == 0) {
-      callback(data.data)
-    } else {
-      wx.showToast({
-        title: data.message,
-      })
-    }
-  }, null)
-}
-
-/*
-  说明：获取推荐关卡列表
-*/
-const recommend = function (callback) {
-
-  ajax.post('/mission/recommend.ashx', {
-  }, function (data) {
-
-    if (data.code == 0) {
-      callback(data.data)
-    } else {
-      wx.showToast({
-        title: data.message,
-      })
-    }
-  }, null)
+  //  如果页码相同，并且上次请求在 60 秒内，则从本地获取
+  if (pageId == store.missions.pageId && (new Date().getTime() - store.missions.lastTime < consts.AJAX_TIMESTAMP_NORMAL)) {
+    callback && callback();
+  } else {
+    ajax.post('/mission/list.ashx', {
+      pageId: pageId || 1
+    }, function (data) {
+      
+      if (data.code == 0) {
+        if (pageId == 1){
+          store.missions.data = (data.data || {}).data || [];
+        } else {
+          store.missions.data = store.missions.data || [];
+          store.missions.data.concat((data.data || {}).data || []);
+        }
+        store.missions.pageId = pageId || 1;
+        store.missions.pageCount = (data.data || {}).pageCount || 1;
+        store.missions.lastTime = new Date().getTime();
+        
+        callback && callback();
+      } else {
+        util.pageToast(data.message || '发生未知错误');
+      }
+    })
+  }
 }
 
 /*
@@ -45,22 +47,19 @@ const recommend = function (callback) {
 const detail = function(missionId, callback){
 
   ajax.post('/mission/detail.ashx', {
-    missionId: missionId
+    missionId: missionId || 1
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data);
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 module.exports = {
   list: list,
-  recommend: recommend,
   detail: detail,
   game: game
 }

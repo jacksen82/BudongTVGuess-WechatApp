@@ -1,70 +1,91 @@
 /* pages/index/mission/rank/rank.wxss */
 
-.header {
+/*
+  用户信息
+*/
+.mission {
   display: block;
   font-size: 14px;
   line-height: 26px;
   padding: 12px 15px 2px 15px; 
 }
-.header .avatar {
+.mission .logo {
   display: block;
   width: 64px;
   height: 64px;
   margin: 0px auto;
-  border-radius: 50%;
+  border-radius: 7px;
 }
-.header .title {
+.mission .title {
   display: block;
-  color: #ec3851;
+  color: #576b95;
   font-size: 18px;
   text-align: center;
   padding-top: 10px;
 }
-.header .caption {
+.mission .status {
   display: block;
-  width: 128px;
-  height: 22px;
-  color: #576b95;
-  font-size: 14px;
+  height: 24px;
   text-align: center;
-  line-height: 22px;
-  margin: 10px auto 5px auto;
-  border:1px solid #576b95;
-  border-radius: 12px;
-  background: #ffffff;
+  margin: 10px 0px;
 }
-.header .caption.done {
+.mission .status em {
+  display: inline-block;
+  height: 24px;
+  font-size: 12px;
+  line-height: 24px;
+  padding: 0px 7px;
+  border-radius: 5px;
+}
+.mission .status em.win {
   color: #ffffff;
   border:1px solid #ec3851;
   background: #ec3851;
 }
-.header .desc {
+.mission .status em.unwin {
+  color: #576b95;
+  border:1px solid #576b95;
+  background: #ffffff;
+}
+.mission .desc {
   display: block;
   color: #353535;
   text-align: center;
 }
-.header .desc strong {
+.mission .desc em {
   color:#ec3851;
   font-weight: bold;
 }
 
+.caption {
+  display: block;
+  color: #576b95;
+  font-size: 12px;
+  line-height: 36px;
+  padding-left: 15px;
+  margin-top: 12px;
+  border-top: 1px solid #dfdfdf;
+}
+
+/*
+  玩家排行榜
+*/
 .players {
   display: block;
   padding: 0px 7px 0px 12px;
-  margin-top: 10px;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
-  background: #f7f7fa;
+  background: #f9f9f9;
 }
-.coins .item {
+.players .item {
   display: block;
   height: 44px;
   font-size: 14px;
   line-height: 43px;
-  padding: 0px 5px;
+  padding: 0px;
   border-bottom: 1px solid #eeeeee;
 }
-.coins .item:last-child{
+.players .item:last-child{
   border-bottom: 0px;
 }
 .players .item .avatar {
@@ -85,13 +106,13 @@
   line-height: 20px;
   text-align: center;
   margin-top: 12px;
-  margin-left: 9px;
+  margin-left: 7px;
   border-radius: 3px;
   background: #cddfef;
 }
 .players .item .index.top {
   color: #ffffff;
-  background: #ec3851;
+  background: #FF9900;
 }
 .players .item .nick {
   display: block;
@@ -99,7 +120,7 @@
   color: #576b95;
   font-size: 14px;
   line-height: 44px;
-  margin-left: 75px;
+  margin-left: 70px;
   margin-right: 64px;
   border-bottom: 1px dotted #dfdfdf;
 }
@@ -114,7 +135,7 @@
   text-align: right;
   border-bottom: 0.5px dotted #dfdfdf;
 }
-.players .item.winner .score {
+.players .item.win .score {
   color: #ec3851;
 }
 .players .item:last-child .nick,
@@ -132,17 +153,22 @@
   border-radius: 1px;
   background: #ec3851;
 }
-
-.controls {
+.players .nodata {
+  padding: 15px 25px;
+  margin: 0px -7px 0px -12px;
+}
+.players .nodata .tip {
   display: block;
-  padding: 15px;
+  color: #969696;
+  font-size: 12px;
+  line-height: 36px;
   text-align: center;
 }
-.controls .share {
-  display: inline-block;
+.players .nodata .share {
+  height: 44px;
   color: #353535;
   font-size: 14px;
-  margin: 0px 10px;
-  border: 0.5px solid #dfdfdf;
+  line-height: 44px;
+  border: 1px solid #dfdfdf;
   background: #fcfcfc;
 }

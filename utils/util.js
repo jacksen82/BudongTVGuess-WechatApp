@@ -1,10 +1,19 @@
-var timer = {};
+//  utils/util.js
 
 module.exports = {
 
-  categoryItems: ['电视', '电影', '动画', '游戏', '广告', '音乐', '其他'],
+  //  获取时间区间
+  getTimeSpan: function (secondCount) {
 
-  categoryIdToName: function (categoryId) {
+    var minute = Math.floor(secondCount / 60);
+    var second = (secondCount % 60);
+
+    return (minute > 9 ? minute : '0' + minute) + ':' +
+      (second > 9 ? second : '0' + second);
+  },
+
+  //  获取分类名称
+  getCategory: function(categoryId){
 
     switch (categoryId) {
       case 101: return '电视';
@@ -16,29 +25,15 @@ module.exports = {
       default: return '其他';
     }
   },
-  
-  durationToTimeSpan : function(duration){
 
-    var minute = Math.floor(duration / 60);
-    var second = (duration % 60);
+  getLogo: function (logoUrl) {
 
-    return (minute > 9 ? minute : '0' + minute) + 
-      ':' + 
-      (second > 9 ? second : '0' + second);
+    logoUrl = logoUrl || '';
+
+    return logoUrl.indexOf('https') == 0 ? logoUrl : 'https://cdn.shenxu.name' + logoUrl;
   },
 
-  timerStart: function(id, callback, delay){
-
-    timer[id] && clearInterval(timer[id])
-    timer[id] = setInterval(callback, delay)
-  },
-
-  timerClear: function(id, callback){
-
-    timer[id] && clearInterval(timer[id])
-    callback && callback()
-  },
-
+  //  设置页面标题
   pageSetTitle: function(title){
 
     wx.setNavigationBarTitle({
@@ -46,6 +41,7 @@ module.exports = {
     })
   },
 
+  //  设置页面变量
   pageSetData: function(page, key, value){
 
     var data = {};
@@ -55,6 +51,7 @@ module.exports = {
     page.setData(data)
   },
 
+  //  设置页面跳转
   pageNavigate: function (url, isRedirect){
 
     if (url == 'back'){
@@ -72,6 +69,7 @@ module.exports = {
     }
   },
 
+  //  显示弹出提示
   pageToast: function (title){
 
     wx.showToast({
@@ -79,6 +77,7 @@ module.exports = {
     })
   },
 
+  //  设置开启分享至群
   pageShareMenu: function(){
 
     wx.showShareMenu({

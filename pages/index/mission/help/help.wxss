@@ -1,45 +1,12 @@
-/* pages/index/mission/guess/guess.wxss */
+/* pages/index/mission/help/help.wxss */
 
-.titlebar {
+.caption {
   display: block;
-  height: 32px;
-  padding: 6px 12px;
-}
-.titlebar .mission {
-  float: left;
-  display: block;
-  height: 32px;
-  border-radius: 16px;
-  background: #909398;
-}
-.titlebar .mission .logo {
-  float: left;
-  display: block;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-}
-.titlebar .mission .duration {
-  float: left;
-  display: block;
-  color: #ffffff;
-  font-size: 14px;
-  line-height: 32px;
+  height: 44px;
+  color: #353535;
+  font-size: 16px;
+  line-height: 44px;
   text-align: center;
-  padding: 0px 12px 0px 7px;
-}
-.titlebar .timespan {
-  float: right;
-  display: block;
-  width: 42px;
-  height: 32px;
-  color: #ffffff;
-  font-size: 14px;
-  line-height: 32px;
-  text-align: center;
-  padding: 0px 15px;
-  border-radius: 16px;
-  background: #909398;
 }
 
 .player {
@@ -159,26 +126,36 @@
   background: #cccccc;
 }
 
-.confirm {
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  padding: 30px;
-}
-.confirm .input {
+.fromer {
   display: block;
-  width: 100%;
-  height: 44px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0px auto;
-  border: 1px solid #6a323a;
-  border-radius: 5px;
-  background: #353535;
+  position: absolute;
+  overflow: hidden;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  padding: 12px;
+  border: 1px solid #dfdfdf;
+  border-radius: 12px;
+  background: #f9f9f9;
 }
+.fromer .avatar {
+  float: left;
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.fromer .text {
+  display: block;
+  font-size: 12px;
+  line-height: 22px;
+  margin-left: 76px;
+}
+.fromer .text .strong {
+  color: #576b95;
+  font-weight: bold;
+}
+
 
 @keyframes main_rotate_play {
   0% {

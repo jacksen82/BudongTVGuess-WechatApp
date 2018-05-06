@@ -1,5 +1,8 @@
 //  mission/game.js
 
+const consts = require('../../utils/consts.js');
+const util = require('../../utils/util.js');
+const store = require('../../utils/store.js');
 const ajax = require('../ajax.js');
 
 /*
@@ -8,17 +11,15 @@ const ajax = require('../ajax.js');
 const tip = function (subjectId, callback) {
 
   ajax.post('/mission/game/tip.ashx', {
-    subjectId: subjectId
+    subjectId: subjectId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 /*
@@ -27,18 +28,16 @@ const tip = function (subjectId, callback) {
 const skip = function (subjectId, secondCount, callback) {
 
   ajax.post('/mission/game/skip.ashx', {
-    subjectId: subjectId,
-    secondCount: secondCount
+    subjectId: subjectId || 0,
+    secondCount: secondCount || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 /*
@@ -47,18 +46,35 @@ const skip = function (subjectId, secondCount, callback) {
 const replay = function (subjectId, callback) {
 
   ajax.post('/mission/game/replay.ashx', {
-    subjectId: subjectId
+    subjectId: subjectId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
+
+/*
+  说明： 求助好友
+*/
+const help = function (missionId, subjectId, fromClientId, callback) {
+
+  ajax.post('/mission/game/help.ashx', {
+    missionId: missionId || 0,
+    subjectId: subjectId || 0,
+    fromClientId: fromClientId || 0
+  }, function (data) {
+
+    if (data.code == 0) {
+      callback && callback(data.data)
+    } else {
+      util.pageToast(data.message || '发生未知错误');
+    }
+  })
+};
 
 /*
   说明： 题目答题
@@ -66,18 +82,33 @@ const replay = function (subjectId, callback) {
 const answer = function (subjectId, secondCount, callback) {
 
   ajax.post('/mission/game/answer.ashx', {
-    subjectId: subjectId,
-    secondCount: secondCount
+    subjectId: subjectId || 0,
+    secondCount: secondCount || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
+}
+
+/*
+  说明：闯关成功
+*/
+const complete = function (missionId, callback) {
+
+  ajax.post('/mission/game/complete.ashx', {
+    missionId: missionId || 0
+  }, function (data) {
+
+    if (data.code == 0) {
+      callback && callback(data.data)
+    } else {
+      util.pageToast(data.message || '发生未知错误');
+    }
+  })
 }
 
 /*
@@ -86,17 +117,15 @@ const answer = function (subjectId, secondCount, callback) {
 const start = function (missionId, callback) {
 
   ajax.post('/mission/game/start.ashx', {
-    missionId: missionId
+    missionId: missionId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 /*
@@ -105,24 +134,24 @@ const start = function (missionId, callback) {
 const rank = function (missionId, callback) {
 
   ajax.post('/mission/game/rank.ashx', {
-    missionId: missionId
+    missionId: missionId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 module.exports = {
   tip: tip,
   skip: skip,
   replay: replay,
+  help: help,
   answer: answer,
+  complete: complete,
   start: start,
   rank: rank,
 }

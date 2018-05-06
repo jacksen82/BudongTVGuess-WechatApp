@@ -2,11 +2,11 @@
 
 <view class="container">
   <view class="titlebar">
-    <view class="author">
-      <image src="{{avatarUrl}}" mode="aspectFit" lazy-load="true" class="header" />
+    <view class="mission">
+      <image src="{{logoUrl}}" mode="aspectFit" lazy-load="true" class="logo" />
       <em class="duration">{{subjectIndex}} / {{subjectCount}}</em>
     </view>
-    <view class="coins">
+    <view class="timespan">
       {{timeSpan}}
     </view>
   </view>
@@ -15,9 +15,9 @@
       <em>{{balance}}</em>
       <dfn>金币</dfn>
     </view>
-    <view class="disc">
-      <image src="../../../../images/disc_main.png" class="main {{playing ? 'playing' : ''}}" />
-      <image src="../../../../images/disc_needle.png" class="needle {{playready ? 'playing' : ''}}" />
+    <view class="disc" bindtap="onSubjectReplayTap">
+      <image src="../../../../images/disc_main.png" class="main {{playing ? 'playing' : 'stoped'}}" />
+      <image src="../../../../images/disc_needle.png" class="needle {{playready ? 'playing' : 'stoped'}}" />
     </view>
     <view class="actions">
       <view class="innerbox">
@@ -29,16 +29,14 @@
           <em><image src="../../../../images/icon_skip.png" /></em>
           <dfn>跳过 <small>-30</small></dfn>
         </span>
-        <span class="button replay {{playready || playing ? 'disabled' : ''}}" bindtap="onSubjectReplayTap">
-          <em><image src="../../../../images/icon_replay.png" /></em>
-          <dfn>重听 <small>-10</small></dfn>
-        </span>
+        <button class="button help {{subjectHelped ? 'disabled' : ''}}" open-type="share">
+          <em><image src="../../../../images/icon_help.png" /></em>
+          <dfn>求助好友</dfn>
+        </button>
       </view>
     </view>
   </view>
-  <view class="controls">
-    <form>
-      <input bindinput="onSubjectInput" placeholder="输入答案，{{subjectCategory}}，{{subjectTitle.length}}个字" confirm-type="done" bindconfirm="onSubjectAnswer" value="{{subjectAnswer || ''}}" />
-    </form>
+  <view class="confirm">
+    <input bindinput="onSubjectInput" placeholder="输入答案，{{subjectCategory}}，{{subjectTitle.length}}个字" confirm-type="done" bindconfirm="onSubjectAnswer" value="{{subjectAnswer || ''}}" class="input" />
   </view>
 </view>

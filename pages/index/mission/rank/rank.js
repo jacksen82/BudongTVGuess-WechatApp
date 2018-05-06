@@ -13,13 +13,14 @@ Page({
   data: {
     clientId: 0,
     missionId: 0,
-    avatarUrl: '',
-    title: '关卡名称',
+    logoUrl: '',
+    title: '',
     score: 0,
     timespan: '00:00',
     subjectIndex: 0,
     subjectCount: 0,
-    playerItems: []
+    playerTop10Items: [],
+    playerInFriendItems: []
   },
 
   /*
@@ -50,17 +51,15 @@ Page({
     api.mission.game.rank(this.data.missionId, function (data) {
 
       _this.setData({
-        avatarUrl: data.author.avatarUrl,
+        logoUrl: util.getLogo(data.logoUrl),
         title: data.title,
         score: data.score || 0,
-        timespan: util.durationToTimeSpan(data.secondCount),
+        timespan: util.getTimeSpan(data.secondCount),
         subjectIndex: data.subjectIndex || 0,
         subjectCount: data.subjectCount || 0,
-        playerItems: data.players || []
+        playerTop10Items: data.playersTop10 || [],
+        playerInFriendItems: data.playersInFriend || []
       })
-      if (data.coins > 0){
-        util.pageToast('+' + data.coins + ' 金币');
-      }
     })
   },
 

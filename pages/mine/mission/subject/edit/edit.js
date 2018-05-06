@@ -1,6 +1,7 @@
 // pages/mine/mission/question/add/add.js
 
 const app = getApp()
+const consts = require('../../../../../utils/consts.js')
 const util = require('../../../../../utils/util.js')
 const player = require('../../../../../utils/player.js')
 const store = require('../../../../../utils/store.js')
@@ -34,7 +35,7 @@ Page({
     util.pageShareMenu();
     this.setData({
       subjectId: options.subjectId,
-      categoryItems: util.categoryItems
+      categoryItems: consts.DATA_CATEGORYS
     });
   },
 
@@ -80,7 +81,7 @@ Page({
   */
   onPlayerTap: function(){
 
-    player.playOrStop(store.domain + this.data.mp3Url);
+    player.playOrStop(consts.HTTP_CDN + this.data.mp3Url);
   },
 
   /*

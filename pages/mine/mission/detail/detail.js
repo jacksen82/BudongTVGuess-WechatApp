@@ -1,6 +1,7 @@
 // pages/mine/mission/detail/detail.js
 
 const app = getApp()
+const consts = require('../../../../utils/consts.js')
 const util = require('../../../../utils/util.js')
 const store = require('../../../../utils/store.js')
 const api = require('../../../../api/index.js')
@@ -13,6 +14,7 @@ Page({
   data: {
     missionId: 0,
     title: '',
+    logoUrl: '',
     subjectItems: []
   },
 
@@ -30,20 +32,13 @@ Page({
   */
   onShow: function () {
 
-    this.onLoadDetail();
-  },
-
-  /*
-    说明：页面关卡详情加载事件
-  */
-  onLoadDetail: function () {
-
     var _this = this;
 
     api.mine.mission.detail(this.data.missionId, function (data) {
 
       _this.setData({
         title: data.title,
+        logoUrl: util.getLogo(data.logoUrl),
         subjectItems: data.subjects || []
       })
     });
@@ -54,7 +49,7 @@ Page({
   */
   onEditTap: function(){
 
-    util.pageNavigate('/pages/mine/mission/edit/edit?missionId=' + this.data.missionId + '&title=' + this.data.title);
+    util.pageNavigate('/pages/mine/mission/edit/edit?missionId=' + this.data.missionId + '&title=' + this.data.title + '&logoUrl=' + this.data.logoUrl);
   },
 
   /*
@@ -88,6 +83,7 @@ Page({
         if (res.confirm) {
           api.mine.mission._delete(_this.data.missionId, function (data) {
 
+            store.client = null;  //  强制刷新用户信息
             util.pageNavigate('back');
           });
         }

@@ -1,19 +1,17 @@
 <!--pages/mine/mission/create/create.wxml-->
 
 <view class="container">
-  <form>
-    <view class="cells">
-      <view class="group">
-        <span class="item">
-          <input bindinput="onTitleInput" placeholder="请输入关卡名称" confirm-type="done" bindconfirm="onCreateTap" focus="true" />
-        </span>
-      </view>
-      <view class="tip">
-        一句话介绍一下自己的关卡，比如：80年代经典电视剧
-      </view>
-      <view class="controls">
-        <button type="primary" bindtap="onCreateTap" form-type="submit" hover-class="hover" > 创建新关卡 </button>
-      </view>
+  <view class="cells">
+    <view class="group">
+      <span class="item">
+        <input bindinput="onTitleInput" placeholder="请输入关卡名称" confirm-type="done" bindconfirm="onCreateTap" focus="true" class="input" />
+      </span>
     </view>
-  </form>
+    <view class="hint">
+      一句话介绍一下自己的关卡，比如：80年代经典电视剧
+    </view>
+  </view>
+  <view class="bottombar">
+    <button type="primary" bindtap="onCreateTap" class="submit" hover-class="hover" > 创建新关卡 </button>
+  </view>
 </view>

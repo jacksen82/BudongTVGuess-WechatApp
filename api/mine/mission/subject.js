@@ -1,7 +1,9 @@
 //  client/mission/question.js
 
+const consts = require('../../../utils/consts.js');
+const util = require('../../../utils/util.js');
+const store = require('../../../utils/store.js');
 const ajax = require('../../ajax.js');
-
 
 /*
   说明：获取题目详细信息
@@ -9,40 +11,35 @@ const ajax = require('../../ajax.js');
 const detail = function (subjectId, callback) {
 
   ajax.post('/client/mission/subject/detail.ashx', {
-    subjectId: subjectId
+    subjectId: subjectId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 /*
   说明：添加新题目
 */
-const add = function(missionId, title, tip, categoryId, recordFileName, callback, fail){
+const add = function(missionId, title, tip, categoryId, recordFileName, callback){
 
   ajax.upload('/client/mission/subject/add.ashx', {
-    missionId: missionId,
-    title: title,
-    tip: tip,
-    categoryId: categoryId
+    missionId: missionId || 0,
+    title: title || '',
+    tip: tip || '',
+    categoryId: categoryId || 0
   }, 'mp3file', recordFileName, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
-      fail && fail();
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, fail)
+  })
 }
 
 /*
@@ -51,21 +48,19 @@ const add = function(missionId, title, tip, categoryId, recordFileName, callback
 const edit = function (missionId, subjectId, title, tip, categoryId, callback){
 
   ajax.post('/client/mission/subject/edit.ashx', {
-    missionId: missionId, 
-    subjectId: subjectId,
-    title: title,
-    tip: tip,
-    categoryId: categoryId
+    missionId: missionId || 0, 
+    subjectId: subjectId || 0,
+    title: title || '',
+    tip: tip || '',
+    categoryId: categoryId || 0
   }, function (data) {
 
-      if (data.code == 0) {
-        callback(data.data)
-      } else {
-        wx.showToast({
-          title: data.message,
-        })
+    if (data.code == 0) {
+      callback && callback(data.data)
+    } else {
+      util.pageToast(data.message || '发生未知错误');
       }
-    }, null, true)
+  }, true)
 }
 
 /*
@@ -74,17 +69,15 @@ const edit = function (missionId, subjectId, title, tip, categoryId, callback){
 const _delete = function (subjectId, callback){
 
   ajax.post('/client/mission/subject/delete.ashx', {
-    subjectId: subjectId
+    subjectId: subjectId || 0
   }, function (data) {
 
-      if (data.code == 0) {
-        callback(data.data)
-      } else {
-        wx.showToast({
-          title: data.message,
-        })
+    if (data.code == 0) {
+      callback && callback(data.data)
+    } else {
+      util.pageToast(data.message || '发生未知错误');
       }
-    }, null, true)
+  }, true)
 }
 
 module.exports = {

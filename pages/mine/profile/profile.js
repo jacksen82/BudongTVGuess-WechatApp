@@ -32,21 +32,23 @@ Page({
   */
   onShow: function () {
 
-    this.onLoadBirthyear();
+    this.onBirthyearLoad();
   },
 
   /*
     说明：页面出生年份加载事件
   */
-  onLoadBirthyear: function(){
+  onBirthyearLoad: function(){
 
     for (let i = this.data.birthyearMax; i > this.data.birthyearMin; i--) {
       this.data.birthyearItems.push(i + '年');
       i == store.client.birthyear && (this.data.birthyearIndex = this.data.birthyearMax - i);
     }
+
     if (!store.client.birthyear) {
       this.data.birthyearIndex = this.data.birthyearMax - this.data.birthyearDefault
     }
+
     this.setData({
       birthyear: store.client.birthyear,
       birthyearItems: this.data.birthyearItems,
@@ -74,14 +76,32 @@ Page({
   /*
     说明：保存个人资料事件
   */
-  onProfileChange: function(){
+  onProfileSave: function(res){
 
-    api.mine.updateBirthyear(this.data.birthyear, function(data){
+    var _this = this;
 
-      store.client = data || {};
-      util.pageToast('修改成功');
-      util.pageNavigate('back');
-    });
+    if (res.detail.userInfo) {
+      api.mine.update(res.detail.userInfo.nickName, res.detail.userInfo.gender, res.detail.userInfo.avatarUrl, _this.data.birthyear,
+        function (data) {
+
+          //  更新客户端数据
+          store.client = data || {};
+          store.client.lastTime = new Date().getTime();
+
+          //  返回个人中心
+          util.pageToast('修改成功');
+          util.pageNavigate('back');
+        });
+    } else {
+      api.wechat.getSettings('userInfo', function (authSetting) {
+
+        if (authSetting) {
+          util.pageToast('授权成功');
+        } else {
+          util.pageToast('授权失败');
+        }
+      });
+    }
   },
 
   /*

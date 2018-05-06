@@ -33,7 +33,7 @@
   padding: 0px 25px;
 }
 
-.controls {
+.footer {
   display: block;
   position: absolute;
   left: 15px;
@@ -43,7 +43,7 @@
   padding-top: 16px;
   border-top: 1px solid #efefef;
 }
-.controls .contact {
+.footer .contact {
   display: block;
   height: 24px;
   color: #bbbbbb;
@@ -52,10 +52,10 @@
   text-align: center;
   background: transparent;
 }
-.controls .contact em {
+.footer .contact em {
   color: #353535;
 }
-.controls .copyright {
+.footer .copyright {
   display: block;
   color: #bbbbbb;
   font-size: 12px;

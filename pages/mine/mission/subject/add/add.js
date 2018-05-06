@@ -1,6 +1,7 @@
 // pages/mine/mission/question/add/add.js
 
 const app = getApp()
+const consts = require('../../../../../utils/consts.js')
 const util = require('../../../../../utils/util.js')
 const player = require('../../../../../utils/player.js')
 const recorder = require('../../../../../utils/recorder.js')
@@ -38,31 +39,10 @@ Page({
 
     util.pageShareMenu();
     util.pageSetData(this, 'missionId', options.missionId || 0);
-    util.pageSetData(this, 'categoryItems', util.categoryItems);
+    util.pageSetData(this, 'categoryItems', consts.DATA_CATEGORYS);
 
-    wx.getSetting({
-      success: function (res) {
-
-        if (!res.authSetting['scope.record']) {
-          wx.openSetting({
-            success: function (res) {
-
-              if (res.authSetting['scope.record'] == true) {
-                player.init(_this);
-                recorder.init(_this);
-              }
-            },
-            fail: function () {
-
-              util.pageToast('授权失败');
-            }
-          });
-        } else {
-          player.init(_this);
-          recorder.init(_this);
-        }
-      }
-    });
+    player.init(_this);
+    recorder.init(_this);
   },
 
   /*
@@ -142,7 +122,7 @@ Page({
   onSubjectAddTap: function () {
 
     var _this = this;
-
+    
     this.setData({
       titleFocus: false,
       tipFocus: false

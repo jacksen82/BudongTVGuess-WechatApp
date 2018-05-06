@@ -43,6 +43,7 @@ Page({
     } else {
       api.mine.mission.create(this.data.title, function (data) {
 
+        store.client = null;  //  强制刷新用户信息
         util.pageNavigate('/pages/mine/mission/detail/detail?missionId=' + (data.id || 0), true);
       });
     }

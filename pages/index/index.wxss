@@ -6,16 +6,16 @@
 .missions .item {
   display: block;
   height: 64px;
-  padding: 18px 0px;
+  padding: 12px 0px;
   margin: 0px 12px;
-  border-bottom: 0.5px solid #efefef;
+  border-bottom: 1px solid #efefef;
 }
-.missions .item .avatar {
+.missions .item .logo {
   float: left;
   display: block;
   width: 64px;
   height: 64px;
-  border-radius: 50%;
+  border-radius: 7px;
 }
 .missions .item .intro {
   margin-left: 80px;
@@ -71,53 +71,55 @@
   border-radius: 3px;
   background: #ec3851;
 }
-.missions .item .intro .affix .tags .tag.friend {
-  background: #66CD00;
+.missions .item .intro .affix .tags .tag.friend {  
+  background: #99CC66;
 }
-.missions .item .intro .affix .tags .tag.group {
-  background: #6A5ACD;
+.missions .item .intro .affix .tags .tag.group {  
+  background: #0066CC;
 }
-.missions .item .intro .affix .tags .tag.hot {
-  background: #FF8C00;
+.missions .item .intro .affix .tags .tag.recommend {  
+  background: #FF9900;
 }
-.missions .item .intro .affix .count {
+.missions .item .intro .affix .tags .tag.hot {  
+  background: #FF6666;
+}
+.missions .item .intro .affix .status {
   float: right;
   display: block;
-  width: 96px;
   height: 18px;
   color: #909398;
   font-size: 12px;
   text-align: right;
   line-height: 18px;
+  padding: 0px 3px;
+  border-radius: 5px;
 }
-.missions .item.playing .intro .affix .count {
+.missions .item .intro .affix .status.start { 
+  color: #ec3851;
+  border: 1px solid #ec3851;
+}
+.missions .item .intro .affix .status.playing { 
   color: #576b95;
 }
-
-.missions .nodata {
+.missions .item .intro .affix .status.win {
+  color: #969696; 
+  border: 1px solid #969696;
+}
+.missions .nodata,
+.missions .loading,
+.missions .isend {
   display: block;
-  height: 44px;
+  height: 64px;
   color: #969696;
   font-size: 14px;
-  line-height: 44px;
+  line-height: 64px;
   text-align: center;
-  padding: 25px 0px 0px 0px;
 }
 
-.datamore {
-  display: block;
-  padding: 10px 0px;
-}
-.datamore .loading {
-  display: block;
-  height: 50px;
-  color: #909398;
-  font-size: 12px;
-  text-align: center;
-  line-height: 50px;
-}
-
-.controls .button {
+/*
+  浮动按钮
+*/
+.floater .create {
   position: fixed;
   right: 12px;
   bottom: 12px;
@@ -129,7 +131,7 @@
   border-radius: 32px;
   background: #ec3851;
 }
-.controls .button dfn {
+.floater .create dfn {
   display: block;
   color: #ffffff;
   font-size: 14px;

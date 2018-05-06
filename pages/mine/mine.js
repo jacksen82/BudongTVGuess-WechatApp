@@ -1,6 +1,7 @@
 //  pages/mine/mine.js
 
 const app = getApp()
+const consts = require('../../utils/consts.js')
 const util = require('../../utils/util.js')
 const store = require('../../utils/store.js')
 const api = require('../../api/index.js')
@@ -16,6 +17,8 @@ Page({
     birthyear: 1982,
     avatarUrl: '',
     balance: 0,
+    actived: 0,
+    signined: 0,
     missionItems: []
   },
 
@@ -24,8 +27,6 @@ Page({
   */
   onLoad: function () {
 
-    var _this = this;
-
     util.pageShareMenu();
   },
 
@@ -33,49 +34,38 @@ Page({
     说明：页面显示事件
   */
   onShow: function () {
-
-    store.tabs = 'mine';
-    this.onLoadProfile();
-  },
-
-  onHide: function(){
-
-    store.tabs = '';
+    
+    this.onProfileLoad();
   },
 
   /*
-    说明：用户资料加载事件
+    说明：更新用户资料事件
   */
-  onLoadProfile: function(){
+  onProfileLoad: function(){
 
     var _this = this;
 
-    api.wechat.getUserInfo()
-      .then(function (data) {
+    api.mine.detail(function () {
 
-        store.client = data || {};
-        _this.setData({
-          nick: store.client.nick,
-          gender: store.client.gender,
-          birthyear: store.client.birthyear,
-          avatarUrl: store.client.avatarUrl,
-          balance: store.client.balance
-        });
-        _this.onLoadMissions();
+      _this.setData({
+        nick: store.client.nick,
+        gender: store.client.gender,
+        birthyear: store.client.birthyear,
+        avatarUrl: store.client.avatarUrl,
+        balance: store.client.balance,
+        actived: store.client.actived,
+        signined: store.client.signined,
+        missionItems: store.client.missions
       });
+    });
   },
 
   /*
-    说明：用户关卡加载事件
+    说明：设置出生年代点击事件
   */
-  onLoadMissions: function(){
+  onProfileTap: function () {
 
-    var _this = this;
-
-    api.mine.mission.list(function (data) {
-
-      util.pageSetData(_this, 'missionItems', data.data || []);
-    });
+    util.pageNavigate('/pages/mine/profile/profile');
   },
 
   /*
@@ -87,9 +77,30 @@ Page({
   },
 
   /*
+    说明： 每日签到事件
+  */
+  onSignInTap: function(){
+
+    var _this = this;
+
+    if (this.data.signined > 0) {
+      util.pageToast('今日已签到');
+    } else {
+      api.mine.signIn(function(data){
+
+        if (data.coins) {
+          util.pageToast('+' + data.coins + ' 金币');
+          store.client = null;  //  强制刷新用户信息
+          _this.onProfileLoad();
+        }
+      });
+    }
+  },
+
+  /*
     说明： 金币点击事件
   */
-  onCoinsDetailTap: function(){
+  onCoinsTap: function(){
 
     util.pageNavigate('/pages/mine/coins/coins');
   },

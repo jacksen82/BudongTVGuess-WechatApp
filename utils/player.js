@@ -1,3 +1,5 @@
+//  utils/payer.js
+
 const innerAudioContext = wx.createInnerAudioContext()
 
 var timer;

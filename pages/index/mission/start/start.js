@@ -14,9 +14,11 @@ Page({
     missionId: 0,
     title: '',
     nick: '',
-    gender: 1,
+    gender: 0,
     birthyear: 1980,
+    logoUrl: '',
     avatarUrl: '',
+    actived: 0,
     tags: [],
     subjectIndex: 0,
     subjectCount: 0,
@@ -55,13 +57,45 @@ Page({
         nick: (data.author || {}).nick,
         gender: (data.author || {}).gender,
         birthyear: (data.author || {}).birthyear,
+        logoUrl: util.getLogo(data.logoUrl),
         avatarUrl: (data.author || {}).avatarUrl,
+        actived: store.client.actived,
         tags: (data.tags ? data.tags.split(',') : []),
         subjectIndex: data.subjectIndex,
         subjectCount: data.subjectCount,
         playerCount: data.playerCount
       })
     })
+  },
+
+  /*
+    说明：授权访问，并开始答题点击事件
+  */
+  onMissionActive: function(res){
+
+    var _this = this;
+
+    if (res.detail.userInfo) {
+      api.mine.update(res.detail.userInfo.nickName, res.detail.userInfo.gender, res.detail.userInfo.avatarUrl, store.client.birthyear || 0,
+        function (data) {
+
+          //  更新客户端数据
+          store.client = data || {};
+          store.client.lastTime = new Date().getTime();
+
+          //  开始闯关答题
+          _this.onMissionStart();
+        });
+    } else {
+      api.wechat.getSettings('userInfo', function (authSetting){
+
+        if (authSetting) {
+          util.pageToast('授权成功');
+        } else {
+          util.pageToast('授权失败');
+        }
+      });
+    }
   },
 
   /*
@@ -79,11 +113,8 @@ Page({
         cancelText: '取消',
         success: function (res) {
 
-          if (res.confirm) {
-            util.pageNavigate('/pages/index/mission/guess/guess?missionId=' + _this.data.missionId)
-          } else if (res.cancel) {
-            util.pageNavigate('back')
-          }
+          if (res.confirm) { util.pageNavigate('/pages/index/mission/guess/guess?missionId=' + _this.data.missionId) }
+          if (res.cancel) { util.pageNavigate('back') }
         }
       })
     } else {

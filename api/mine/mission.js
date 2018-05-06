@@ -1,5 +1,8 @@
 //  client/mission.js
 
+const consts = require('../../utils/consts.js');
+const util = require('../../utils/util.js');
+const store = require('../../utils/store.js');
 const ajax = require('../ajax.js');
 const subject = require('./mission/subject.js');
 
@@ -8,17 +11,14 @@ const subject = require('./mission/subject.js');
 */
 const list = function (callback) {
 
-  ajax.post('/client/mission/list.ashx', {
-  }, function(data){
+  ajax.post('/client/mission/list.ashx', { }, function(data){
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
+  })
 }
 
 /*
@@ -27,36 +27,15 @@ const list = function (callback) {
 const detail = function (missionId, callback){
 
   ajax.post('/client/mission/detail.ashx', {
-    missionId: missionId
+    missionId: missionId || 0
   }, function (data) {
 
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null)
-}
-
-/*
-  说明：获取关卡详细信息
-*/
-const qrcode = function (missionId, callback) {
-
-  ajax.post('/client/mission/qrcode.ashx', {
-    missionId: missionId
-  }, function (data) {
-
-    if (data.code == 0) {
-      callback(data.data)
-    } else {
-      wx.showToast({
-        title: data.message,
-      })
-    }
-  }, null)
+  })
 }
 
 /*
@@ -65,37 +44,47 @@ const qrcode = function (missionId, callback) {
 const create = function (title, callback) {
 
   ajax.post('/client/mission/create.ashx', {
-    title: title
+    title: title || ''
   }, function (data) {
     
     if (data.code == 0) {
-      callback(data.data)
+      callback && callback(data.data)
     } else {
-      wx.showToast({
-        title: data.message,
-      })
+      util.pageToast(data.message || '发生未知错误');
     }
-  }, null, true)
+  }, true)
 }
 
 /*
   说明：修改关卡标题
 */
-const edit = function(missionId, title, callback){
+const edit = function (missionId, title, logoFileName, callback){
 
-  ajax.post('/client/mission/edit.ashx', {
-    missionId: missionId,
-    title: title
-  }, function (data) {
+  if (logoFileName){
+    ajax.upload('/client/mission/edit.ashx', {
+      missionId: missionId || 0,
+      title: title || ''
+    }, 'logofile', logoFileName, function (data) {
 
       if (data.code == 0) {
-        callback(data.data)
+        callback && callback(data.data)
       } else {
-        wx.showToast({
-          title: data.message,
-        })
+        util.pageToast(data.message || '发生未知错误');
       }
-    }, null, true)
+    })
+  } else {
+    ajax.post('/client/mission/edit.ashx', {
+      missionId: missionId || 0,
+      title: title || ''
+    }, function (data) {
+
+      if (data.code == 0) {
+        callback && callback(data.data)
+      } else {
+        util.pageToast(data.message || '发生未知错误');
+      }
+    }, true)
+  }
 }
 
 /*
@@ -104,23 +93,20 @@ const edit = function(missionId, title, callback){
 const _delete = function (missionId, callback) {
 
   ajax.post('/client/mission/delete.ashx', {
-    missionId: missionId
+    missionId: missionId || 0
   }, function (data) {
 
-      if (data.code == 0) {
-        callback(data.data)
-      } else {
-        wx.showToast({
-          title: data.message,
-        })
-      }
-    }, null, true)
+    if (data.code == 0) {
+      callback && callback(data.data)
+    } else {
+      util.pageToast(data.message || '发生未知错误');
+    }
+  }, true)
 }
 
 module.exports = {
   list: list,
   detail: detail,
-  qrcode: qrcode,
   create: create,
   edit: edit,
   _delete: _delete,

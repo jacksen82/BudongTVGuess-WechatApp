@@ -1,3 +1,5 @@
+//  utils/recorder.js
+
 const recorderManager = wx.getRecorderManager()  
 
 var timer;
@@ -64,8 +66,26 @@ module.exports = {
 
     recorderManager.onError(function (res) {
 
-      wx.showToast({
-        title: '录音失败'
+      wx.getSetting({
+        success: function (res) {
+
+          if (!res.authSetting['scope.record']) {
+            wx.openSetting({
+              success: function (res) {
+
+                util.pageToast('开启成功');
+              },
+              fail: function () {
+
+                util.pageToast('授权失败');
+              }
+            })
+          }
+        },
+        fail: function (res) {
+
+          util.pageToast(res || '发生未知错误');
+        }
       })
     });
   },

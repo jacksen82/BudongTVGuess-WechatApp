@@ -1,111 +1,95 @@
 //  client.js
 
+const consts = require('../utils/consts.js');
 const store = require('../utils/store.js');
-
-/*
-  说明：操作结果代码常量
-*/
-const CODE_TYPE = {
-  SESSION_NULL: 101,
-  SESSION_EXPIRE: 102,
-  LOGIN_FAIL:111
-}
-
-/*
-  说明：操作结果
-*/
-const result = function (code, message) {
-
-  return {
-    code: code,
-    message: message
-  }
-}
-
-/*
-  说明：请求失败方法
-*/
-const error = function (callback, data) {
-
-  if (callback) {
-    callback(data);
-  } else {
-    wx.showToast({
-      title: data.message || '请求失败'
-    })
-  }
-}
 
 /*
   说明：POST 请求方法
 */
-const post = function (url, data, callback, fail, loading) {
+const post = function (url, data, callback, loading) {
   
-  if (!store[url]){
-    store[url] = true;
-    (loading == true) && wx.showLoading();
-    wx.request({
-      url: 'https://shenxu.name/wechat_app/api' + url,
-      data: Object.assign({ app3rdId: 2, session3rd: store.session3rd }, data),
-      method: 'POST',
-      header: { 'content-type': 'application/x-www-form-urlencoded' },
-      success: function (data) {
+  //  如果正在请求，则跳出
+  if (consts.AJAX_URL_STATE[url] == true) return;
 
-        data.data.url = url;
-        callback && callback(data.data || {})
-      },
-      fail: function (res) {
+  //  设置正在请求中..
+  consts.AJAX_URL_STATE[url] = true;
 
-        error(fail, { message: '请求失败' })
-      },
-      complete: function(){
+  //  如果需要则显示正在加载
+  (loading == true) && wx.showLoading();
 
-        store[url] = false;
-        (loading == true) && wx.hideLoading();
-      }
-    });
-  }
+  let beginTime =  new Date().getTime();
+
+  //  发起请求
+  wx.request({
+    url: consts.HTTP_API + url,
+    data: Object.assign({
+      scene: consts.APP_SCENE,
+      app3rdId: consts.APP_3RD_ID, 
+      session3rd: consts.APP_3RD_SESSION
+    }, data),
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded' 
+    },
+    success: function (data) {
+      
+      callback && callback(data.data || { code: consts.AJAX_CODE_TYPE.UNKONOW, message: '发生未知错误'});
+    },
+    fail: function (res) {
+
+      callback && callback({ code: consts.AJAX_CODE_TYPE.UNKONOW, message: res || '发生未知错误' });
+    },
+    complete: function(res){
+
+      (loading == true) && wx.hideLoading();
+      consts.AJAX_URL_STATE[url] = false;
+    }
+  });
 }
 
 /*
   说明：UPLOAD 请求方法
 */
-const upload = function (url, data, fileName, tempFilePath, callback, fail) {
+const upload = function (url, data, fileName, tempFilePath, callback) {
 
-  if (!store[url]) {
-    store[url] = true;
-    wx.uploadFile({
-      url: 'https://shenxu.name/wechat_app/api' + url,
-      filePath: tempFilePath,
-      name: fileName,
-      formData: Object.assign({ app3rdId: 2, session3rd: store.session3rd }, data),
-      success: function (data) {
-        
-        data = JSON.parse(data.data) || {};
-        data.url = url;
-        callback && callback(data || {})
-      },
-      fail: function (res) {
+  //  如果正在请求，则跳出
+  if (consts.AJAX_URL_STATE[url] == true) return;
 
-        error(fail, { message: '上传失败' })
-      },
-      complete: function(){
+  //  设置正在请求中..
+  consts.AJAX_URL_STATE[url] = true;
 
-        store[url] = false;
-        wx.hideLoading();
-      }
-    }).onProgressUpdate(function (res) {
+  //  开始上传
+  wx.uploadFile({
+    url: consts.HTTP_API + url,
+    filePath: tempFilePath,
+    name: fileName,
+    formData: Object.assign({
+      scene: consts.APP_SCENE,
+      app3rdId: consts.APP_3RD_ID,
+      session3rd: consts.APP_3RD_SESSION
+    }, data),
+    success: function (data) {
+      
+      callback && callback((JSON.parse(data.data) || {}) || { code: consts.AJAX_CODE_TYPE.UNKONOW, message: '发生未知错误' });
+    },
+    fail: function (res) {
 
-      wx.showLoading({
-        title: '已上传' + res.progress
-      });
-    })
-  }
+      callback && callback({ code: consts.AJAX_CODE_TYPE.UNKONOW, message: res || '上传失败' });
+    },
+    complete: function(){
+
+      wx.hideLoading();
+      consts.AJAX_URL_STATE[url] = false;
+    }
+  }).onProgressUpdate(function (res) {
+
+    wx.showLoading({
+      title: '已上传' + res.progress
+    });
+  })
 }
 
 module.exports = {
-  CODE_TYPE: CODE_TYPE,
-  result: result,
   post: post,
   upload: upload
 }

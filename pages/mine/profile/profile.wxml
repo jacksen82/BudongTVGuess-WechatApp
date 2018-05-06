@@ -11,8 +11,11 @@
         </picker>
       </span>
     </view>
-    <view class="controls">
-      <button type="primary" bindtap="onProfileChange" hover-class="hover"> 确认修改 </button>
+    <view class="hint">
+      修改出生年代会同步更新微信资料 ( 头像、昵称、性别 )
     </view>
+  </view>
+  <view class="bottombar">
+    <button type="primary" open-type="getUserInfo" bindgetuserinfo="onProfileSave" class="submit" hover-class="hover"> 确认修改 </button>
   </view>
 </view>

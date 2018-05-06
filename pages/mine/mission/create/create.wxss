@@ -1,55 +1,9 @@
 /* pages/mine/mission/create/create.wxss */
 
-.cells {
-  padding: 15px 0px;
-}
-.cells .group {
-  display: block;
-  padding: 0px 7px 0px 12px;
-  margin-top: 15px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-  background: #f7f7fa;
-}
-.cells .group:first-child {
-  margin-top: 0px;
-}
-.cells .group .item {
-  display: block;
-  height: 44px;
-  font-size: 14px;
-  text-align: left;
-  line-height: 44px;
-  padding-left: 5px;
-  border: 0px;
-  border-bottom: 1px solid #eeeeee;
-  background: #f7f7fa;
-}
-.cells .group .item:last-child {
-  border-bottom: none;
-}
-.cells .group .item input {
-  height: 44px;
-  line-height: 44px;
-}
-.cells .tip {
+.cells .hint {
   display: block;
   color: #969696;
   font-size: 12px;
   line-height: 20px;
-  padding: 7px 12px;
-}
-
-.controls {
-  display: block;
-  padding: 15px;
-}
-.controls button {
-  height: 44px;
-  font-size: 14px;
-  line-height: 44px;
-  background: #ec3851;
-}
-.controls button.hover{
-  background: #d7223b;
+  padding: 7px 12px;        
 }

@@ -1,11 +1,11 @@
 /* pages/mine/mission/question/add/add.wxss */
 
-.recorder {
+.player {
   display: block;
   text-align: center;
-  padding: 15px 15px 0px 15px;
+  padding: 15px;
 }
-.recorder .play dfn {
+.player .controls .play-pause {
   display: inline-block;
   height: 44px;
   color: #ffffff;
@@ -16,7 +16,7 @@
   border-radius: 22px;
   background: #353535;
 }
-.recorder .play em {
+.player .controls .timespan {
   display: inline-block;
   height: 42px;
   color: #353535;
@@ -27,62 +27,4 @@
   border: 1px solid #dfdfdf;
   border-radius: 22px;
   background: #ffffff;
-}
-
-.cells {
-  padding: 15px 0px;
-}
-.cells .group {
-  display: block;
-  padding: 0px 7px 0px 12px;
-  margin-top: 15px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-  background: #f7f7fa;
-}
-.cells .group:first-child {
-  margin-top: 0px;
-}
-.cells .group .item {
-  display: block;
-  height: 44px;
-  font-size: 14px;
-  text-align: left;
-  line-height: 44px;
-  padding-left: 5px;
-  border: 0px;
-  border-bottom: 0.5px solid #dfdfdf;
-}
-.cells .group .item:last-child {
-  border-bottom: none;
-}
-.cells .group .item input {
-  height: 44px;
-  line-height: 44px;
-}
-
-.controls {
-  display: block;
-  padding: 15px;
-}
-.controls .submit {
-  height: 44px;
-  font-size: 14px;
-  line-height: 44px;
-  background: #ec3851;
-}
-.controls .submit.hover{
-  background: #d7223b;
-}
-.controls .delete {
-  height: 44px;
-  color: #ec3851;
-  font-size: 14px;
-  line-height: 44px;
-  margin-top: 15px;
-  border: 1px solid #ec3851;
-  background: #ffffff;
-}
-.controls .delete:hover {
-  background: #efefef;
 }
