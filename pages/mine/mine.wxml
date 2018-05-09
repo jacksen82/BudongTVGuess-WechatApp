@@ -33,9 +33,7 @@
         <image src="{{filter.getLogo(item.logoUrl)}}" class="logo" />
         <span class="title">
           {{item.title}}
-          <var wx:if="{{item.grade == 1 || item.winnerCount > 10}}" class="tag {{item.grade == 1 ? 'recommend' : 'hot'}}">
-            {{item.grade == 1 ? '推荐' : (item.winnerCount > 10 ? '热门' : '')}}
-          </var>
+          <var wx:if="{{item.grade == 1 || item.winnerCount > 10}}" class="tag {{item.grade == 1 ? 'recommend' : 'hot'}}">{{item.grade == 1 ? '推荐' : (item.winnerCount > 10 ? '热门' : '')}}</var>
         </span>
       </view>
       <view class="item create" bindtap="onMissionCreateTap">创建新关卡</view>

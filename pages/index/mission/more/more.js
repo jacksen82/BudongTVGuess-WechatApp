@@ -1,10 +1,10 @@
-// pages/index/index.js
+// pages/index/mission/more/more.js
 
 const app = getApp()
-const consts = require('../../utils/consts.js')
-const util = require('../../utils/util.js')
-const store = require('../../utils/store.js')
-const api = require('../../api/index.js')
+const consts = require('../../../../utils/consts.js')
+const util = require('../../../../utils/util.js')
+const store = require('../../../../utils/store.js')
+const api = require('../../../../api/index.js')
 
 Page({
 
@@ -33,7 +33,7 @@ Page({
     说明：页面显示事件
   */
   onShow: function (options) {
-    
+
     this.onMissionLoad();
   },
 
@@ -54,49 +54,32 @@ Page({
   onMissionLoad: function () {
 
     var _this = this;
-    
-    if (consts.APP_LAUNCHED) {
-      util.pageSetData(this, 'clientId', store.client.id || 0);
-      util.pageSetData(this, 'loading', true);
-      api.mission.list(this.data.missionPageId || 1, function () {
 
-        _this.setData({
-          loading: false,
-          missionPageId: store.missions.pageId,
-          missionIsEnd: store.missions.pageCount <= store.missions.pageId,
-          missionItems: store.missions.data
-        });
+    util.pageSetData(this, 'clientId', store.client.id || 0);
+    util.pageSetData(this, 'loading', true);
+    api.mission.more(this.data.missionPageId || 1, function (data) {
+      
+      if (_this.data.missionPageId == 1) {
+        _this.data.missionItems = data.data || [];
+      } else {
+        _this.data.missionItems = _this.data.missionItems || [];
+        _this.data.missionItems = _this.data.missionItems.concat(data.data || []);
+      }
+      _this.setData({
+        loading: false,
+        missionPageId: _this.data.missionPageId || 1,
+        missionIsEnd: data.pageCount <= _this.data.missionPageId,
+        missionItems: _this.data.missionItems
       });
-    } else {
-      setTimeout(function(){
-
-        _this.onMissionLoad();
-      }, 100);
-    }
+    });
   },
 
   /*
     说明：任务关卡点击事件
   */
-  onMissionItemTap: function(obj){
+  onMissionItemTap: function (obj) {
 
     util.pageNavigate('/pages/index/mission/start/start?missionId=' + obj.currentTarget.dataset.missionId)
-  },
-
-  /*
-    说明：查看待审核关卡点击事件
-  */
-  onMissionMore: function () {
-
-    util.pageNavigate('/pages/index/mission/more/more');
-  },
-
-  /*
-    说明：创建新关卡点击事件
-  */
-  onMissionCreate: function(){
-
-    util.pageNavigate('/pages/mine/mission/create/create');
   },
 
   /*

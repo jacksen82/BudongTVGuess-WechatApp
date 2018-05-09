@@ -27,7 +27,7 @@ const list = function (pageId, callback) {
           store.missions.data = (data.data || {}).data || [];
         } else {
           store.missions.data = store.missions.data || [];
-          store.missions.data.concat((data.data || {}).data || []);
+          store.missions.data = store.missions.data.concat((data.data || {}).data || []);
         }
         store.missions.pageId = pageId || 1;
         store.missions.pageCount = (data.data || {}).pageCount || 1;
@@ -39,6 +39,23 @@ const list = function (pageId, callback) {
       }
     })
   }
+}
+
+/*
+  说明：获取待审核关卡详情
+*/
+const more = function (pageId, callback) {
+
+  ajax.post('/mission/more.ashx', {
+    pageId: pageId || 1
+  }, function (data) {
+
+    if (data.code == 0) {
+      callback && callback(data.data);
+    } else {
+      util.pageToast(data.message || '发生未知错误');
+    }
+  })
 }
 
 /*
@@ -60,6 +77,7 @@ const detail = function(missionId, callback){
 
 module.exports = {
   list: list,
+  more: more,
   detail: detail,
   game: game
 }

@@ -83,6 +83,14 @@ Page({
   },
 
   /*
+    说明：我也要玩点击事件
+  */
+  onMissionStart: function(){
+
+    util.pageNavigate('/pages/index/mission/start/start?missionId=' + this.data.missionId, true);
+  },
+
+  /*
     说明：分享回调事件
   */
   onShareAppMessage: function (res) {

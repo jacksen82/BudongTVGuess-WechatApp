@@ -10,7 +10,6 @@ const api = require('../../../../api/index.js')
 */
 var timer;
 var seconds = 0;
-var subject;
 var interval = function(game){
 
   timer && clearInterval(timer);
@@ -32,24 +31,58 @@ var intervalClear = function(){
 };
 
 /*
-  说明：显示提示
+  说明：获取可选字
 */
-var showtip = function(game, tip){
+var getWords = function (subjects, title, index){
 
-  wx.showModal({
-    title: '答案提示',
-    showCancel: false,
-    content: tip || '没有提供任何提示',
-    confirmText: '知道了',
-    success: function () {
+  title = title || '猜';
+  subjects = subjects || [];
 
-      game.page.setData({ balance: game.page.data.balance - 30 })
-      interval(game);
-      store.client.balance = game.page.data.balance;
-      store.missions = null;  //  强制刷新关卡
-      util.pageToast(' -30 金币');
+  var temp = '一天神奇多传侠雨飞侣世家恩怨情仇乐书笑豪江湖争途星';
+  var words = [];
+  var allwords = [];
+  var getOptions = function(word){
+
+    var _options = [];
+    var _index = Math.floor(Math.random() * 24);
+    var _char = '';
+    var _count = 0;
+
+    while (_options.length < 24 && _count < 100){
+
+      _char = allwords[Math.floor(Math.random() * allwords.length)];
+      if (_index == _options.length ){
+        _options.push(word);
+      } else {
+        (_options.indexOf(_char) == -1) && (_char != word)&& _options.push(_char);
+      }
+      _count ++ ;
     }
-  })
+    return _options;
+  };
+
+  //  获取所有可选字集合
+  for (var i = 0; i < subjects.length; i++) {
+    if (subjects[i].title) {
+      for (var j = 0; j < subjects[i].title.length; j++) {
+        (allwords.indexOf(subjects[i].title.charAt(j)) == -1) && allwords.push(subjects[i].title.charAt(j));
+      }
+    }
+  }
+  for (var i = 0; i < temp.length ; i ++){
+    allwords.push(temp.charAt(i));
+  }
+
+  //  初始化可选字列表
+  for (var i = 0; i < title.length; i++){
+    words.push({
+      text: '',
+      word: title.charAt(i),
+      options: getOptions(title.charAt(i))
+    });
+  }
+
+  return words;
 };
 
 /*
@@ -98,6 +131,9 @@ var wrong = function(game){
     success: function (res) {
 
       interval(game);
+      console.log(game);
+      util.pageSetData(game.page, 'subjectWordIndex', -1);
+      util.pageSetData(game.page, 'subjectWords', getWords(game.subjectItems, (game.subject || {}).title));
       util.pageSetData(game.page, 'subjectAnswer', '');
       (res.cancel) && util.pageNavigate('back');
     }
@@ -115,6 +151,7 @@ module.exports = {
 
     this.page = page;
     this.player = player;
+    this.width = wx.getSystemInfoSync().windowWidth;
     this.subjectIndex = (page.data.subjectIndex || 1) - 1;
     this.subjectItems = data.subjects || [];
 
@@ -122,29 +159,44 @@ module.exports = {
   }, 
   next: function(){
 
-    subject = getSubject(this.subjectItems, this.subjectIndex);
-    seconds = 0;
-    interval(this);
-
+    this.subject = getSubject(this.subjectItems, this.subjectIndex);
+    this.player.play(consts.HTTP_CDN + this.subject.mp3Url);
     this.page.setData({
       timeSpan: '00:00',
-      subjectId: subject.id,
-      subjectTitle: subject.title,
-      subjectCategory: util.getCategory(subject.categoryId),
+      wordMarginLeft: Math.floor((this.width - (this.subject.title.length * 28) - ((this.subject.title.length + 1) * 2)) / 2),
+      optionMarginLeft: Math.floor((this.width - (36 * 6) - (3 * 7)) / 2),
+      subjectId: this.subject.id,
+      subjectTitle: this.subject.title,
+      subjectWordIndex: -1,
+      subjectWords: getWords(this.subjectItems, this.subject.title),
+      subjectCategory: util.getCategory(this.subject.categoryId),
       subjectTiped: false,
       subjectHelped: false,
       subjectAnswer: ''
     });
-    this.player.play(consts.HTTP_CDN + subject.mp3Url);
+    seconds = 0;
+    interval(this);
   },
   tip: function () {
 
     var _this = this;
 
-    intervalClear();
-    api.mission.game.tip(subject.id, function(data){
+    api.mission.game.tip(this.subject.id, function(data){
 
-      showtip(_this, subject.tip);
+      var _words = _this.page.data.subjectWords || [];
+
+      for (var i = 0; i<_words.length; i++){
+        if (_words[i].text != _words[i].word){
+          _words[i].text = _words[i].word;
+          break;
+        }
+      }
+
+      util.pageSetData(_this.page, 'balance', _this.page.data.balance - 30);
+      util.pageSetData(_this.page, 'subjectWords', _words);
+      util.pageToast(' -30 金币');
+      store.client.balance = _this.page.data.balance;
+      store.missions = null;  //  强制刷新关卡
     })
   },
   skip: function(){
@@ -156,7 +208,7 @@ module.exports = {
     } else if (this.subjectIndex < 0){
       util.pageToast('题目不存在')
     } else {
-      api.mission.game.skip(subject.id, seconds, function (data) {
+      api.mission.game.skip(this.subject.id, seconds, function (data) {
 
         _this.subjectIndex++;
         _this.page.setData({ balance: _this.page.data.balance - 30 });
@@ -172,7 +224,7 @@ module.exports = {
 
     var _this = this;
     
-    _this.player.play(consts.HTTP_CDN + subject.mp3Url);
+    _this.player.play(consts.HTTP_CDN + this.subject.mp3Url);
   },
   answer: function(){
 
@@ -181,10 +233,9 @@ module.exports = {
     intervalClear();
 
     this.player.stop();
-    this.page.data.subjectAnswer = (this.page.data.subjectAnswer || '').trim()
     if (this.page.data.subjectAnswer) {
-      if (this.page.data.subjectAnswer == subject.title) {
-        api.mission.game.answer(subject.id, seconds, function(data){
+      if (this.page.data.subjectAnswer == (this.subject || {}).title) {
+        api.mission.game.answer(this.subject.id, seconds, function(data){
 
           if (_this.subjectIndex >= _this.subjectItems.length - 1) {
             api.mission.game.complete(_this.page.data.missionId, function(__data){

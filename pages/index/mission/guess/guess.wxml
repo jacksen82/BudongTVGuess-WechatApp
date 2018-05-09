@@ -37,6 +37,14 @@
     </view>
   </view>
   <view class="confirm">
-    <input bindinput="onSubjectInput" placeholder="输入答案，{{subjectCategory}}，{{subjectTitle.length}}个字" confirm-type="done" bindconfirm="onSubjectAnswer" value="{{subjectAnswer || ''}}" class="input" />
+    <view class="options" wx:if="{{subjectOptionsVisible}}" style="left: {{optionMarginLeft}}px">
+      <view wx:for="{{subjectOptions}}" wx:key="item" bindtap="onSubjectSelectTap" data-value="{{item}}" class="optionitem {{index%6==0?'left':''}}">{{item == subjectWordText ? '' : item}}</view>
+    </view>
+    <view class="inner" style="margin-left:{{wordMarginLeft}}px">
+      <view wx:for="{{subjectWords}}" wx:key="item" bindtap="onSubjectWordTap" data-index="{{index}}" data-value="{{item}}" class="worditem {{subjectWordIndex==index?'highlight':''}}">{{item.text}}</view>
+    </view>
+    <view class="hint">
+      点上面的格子选择答案
+    </view>
   </view>
 </view>

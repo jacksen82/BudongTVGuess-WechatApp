@@ -152,8 +152,21 @@
   color: #576b95;
   font-weight: bold;
 }
-.fromer .adbar {
+.fromer .buttons {
   display: block;
+  height: 36px;
+  padding: 12px 0px 5px 0px;
+}
+.fromer .buttons .start {
+  display: block;
+  width: 96px;
+  height: 36px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 36px;
+  margin: 0px auto;
+  border-radius: 5px;
+  background: #ec3851;
 }
 
 @keyframes main_rotate_play {

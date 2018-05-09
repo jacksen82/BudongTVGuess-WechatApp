@@ -1,6 +1,6 @@
-<!--index.wxml-->
+<!--pages/index/mission/more/more.wxml-->
 
-<wxs src="../../filters/filter.wxs" module="filter" />
+<wxs src="../../../../filters/filter.wxs" module="filter" />
 
 <view class="container">
   <view class="missions">
@@ -24,20 +24,8 @@
         </view>
       </view>
     </view>
-    <view class="nodata" wx:if="{{!loading && (!missionItems || missionItems.length==0)}}">
-      暂时没有可玩儿的关卡
-    </view>
-    <view class="loadmore">
-      <button class="button" bindtap="onMissionMore">去看看待审核区的关卡</button>
-    </view>
     <view class=" {{loading ? 'loading' : 'isend'}}">
       {{loading ? '正在加载..' : (missionIsEnd ? '已经到达结尾': '上拉加载更多')}}
     </view>
-  </view>
-  <view class="floater" wx:if="{{!haveMissionCreate}}">
-    <button class="create" bindtap="onMissionCreate">
-      <dfn>创 建</dfn>
-      <dfn>关 卡</dfn>
-    </button>
   </view>
 </view>

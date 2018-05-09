@@ -19,6 +19,13 @@ Page({
     balance: 0,
     logoUrl: '',
     timeSpan: '00:00',
+    wordMarginLeft: 0,
+    optionMarginLeft: 0,
+    subjectWordIndex: -1,
+    subjectWordText: '',
+    subjectWords: [],
+    subjectOptions: [],
+    subjectOptionsVisible: false,
     subjectAnswer: '',
     subjectTiped: false,
     subjectHelped: false,
@@ -148,19 +155,57 @@ Page({
   },
 
   /*
-    说明：输入答案事件
+    说明：选字事件
   */
-  onSubjectInput: function(e){
+  onSubjectSelectTap: function(e){
 
-    util.pageSetData(this, 'subjectAnswer', e.detail.value || '')
+    this.data.subjectWords = this.data.subjectWords || [];
+
+    if (this.data.subjectWordIndex > -1 && this.data.subjectWordIndex < this.data.subjectWords.length)
+    {
+      var word = this.data.subjectWords[this.data.subjectWordIndex];
+      word.text = e.target.dataset.value;
+      this.data.subjectWords[this.data.subjectWordIndex] = word;
+      this.setData({
+        subjectWordText: word.text,
+        subjectWords: this.data.subjectWords
+      });
+    }
+
+    if (this.data.subjectWordIndex < this.data.subjectWords.length - 1){
+      this.data.subjectWordIndex ++;
+      this.setData({
+        subjectWordText: '',
+        subjectWordIndex: this.data.subjectWordIndex,
+        subjectOptions: this.data.subjectWords[this.data.subjectWordIndex].options || [],
+        subjectOptionsVisible:  true
+      });
+    } else {
+      this.data.subjectAnswer = '';
+      for (var i = 0; i < this.data.subjectWords.length; i++) {
+        this.data.subjectAnswer += this.data.subjectWords[i].text || '';
+      }
+      this.setData({
+        subjectWordText: '',
+        subjectWordIndex: -1,
+        subjectOptionsVisible: false,
+        subjectAnswer: this.data.subjectAnswer
+      });
+      this.game.answer();
+    }
   },
 
   /*
-    说明：确认答题事件
+    说明：选字事件
   */
-  onSubjectAnswer: function(){
+  onSubjectWordTap: function(e){
 
-    this.game.answer();
+    this.setData({
+      subjectWordIndex: ((e.target.dataset.index == this.data.subjectWordIndex) ? -1 : e.target.dataset.index),
+      subjectWordText: e.target.dataset.value.text || '',
+      subjectOptions: e.target.dataset.value.options || [],
+      subjectOptionsVisible: ((e.target.dataset.index == this.data.subjectWordIndex) ? !this.data.subjectOptionsVisible : true)
+    });
   },
 
   /*
