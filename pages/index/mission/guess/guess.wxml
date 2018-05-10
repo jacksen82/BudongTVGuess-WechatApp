@@ -44,7 +44,7 @@
       <view wx:for="{{subjectWords}}" wx:key="item" bindtap="onSubjectWordTap" data-index="{{index}}" data-value="{{item}}" class="worditem {{subjectWordIndex==index?'highlight':''}}">{{item.text}}</view>
     </view>
     <view class="hint">
-      点上面的格子选择答案
+      点上面的格子选择答案【{{subjectCategory}}】
     </view>
   </view>
 </view>
