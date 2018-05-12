@@ -183,18 +183,22 @@ module.exports = {
 
     api.mission.game.tip(this.subject.id, function(data){
 
+      var _eof = true;
       var _words = _this.page.data.subjectWords || [];
 
       for (var i = 0; i<_words.length; i++){
         if (_words[i].text != _words[i].word){
           _words[i].text = _words[i].word;
+          _eof = (i >= _words.length - 1);
           break;
         }
       }
 
+      util.pageSetData(_this.page, 'subjectTiped', _eof)
       util.pageSetData(_this.page, 'balance', _this.page.data.balance - 30);
       util.pageSetData(_this.page, 'subjectWords', _words);
       util.pageToast(' -30 金币');
+      
       store.client.balance = _this.page.data.balance;
       store.missions = null;  //  强制刷新关卡
     })

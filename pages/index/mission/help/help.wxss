@@ -155,7 +155,7 @@
 .fromer .buttons {
   display: block;
   height: 36px;
-  padding: 12px 0px 5px 0px;
+  padding: 0px 0px 25px 0px;
 }
 .fromer .buttons .start {
   display: block;

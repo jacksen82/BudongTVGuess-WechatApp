@@ -50,7 +50,23 @@ Page({
   */
   onShow: function(){
 
-    this.onDetailLoad();
+    var _this = this;
+
+    if (!wx.getStorageSync('gameFirstDone')) {
+      wx.showModal({
+        title: '游戏提示',
+        showCancel: false,
+        content: '开始后，小程序会自动播放一段音频，猜一猜这段音频出自哪个电视、电影或动画，然后在下面的输入框中输入正确答案',
+        confirmText: '知道了',
+        success: function () {
+
+          _this.onDetailLoad();
+          wx.setStorageSync('gameFirstDone', 'true');
+        }
+      })
+    } else {
+      this.onDetailLoad();
+    }
   },
 
   /*
@@ -104,7 +120,6 @@ Page({
 
     if (!this.data.subjectTiped) {
       if (this.data.balance >= 30) {
-        util.pageSetData(this, 'subjectTiped', true)
         this.game.tip(this);
       } else {
         util.pageToast('金币不足')

@@ -27,6 +27,8 @@ Page({
     util.pageShareMenu();
     util.pageSetData(this, 'clientId', store.client.id || 0);
     util.pageSetData(this, 'loading', true);
+
+    this.onMissionLoad();
   },
 
   /*
@@ -34,7 +36,6 @@ Page({
   */
   onShow: function (options) {
 
-    this.onMissionLoad();
   },
 
   /*
