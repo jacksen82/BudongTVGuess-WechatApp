@@ -5,8 +5,8 @@ module.exports = {
   APP_LAUNCHED: false,                              //  已启动标识
   APP_3RD_ID: 2,                                    //  微信小程序 AppID
   APP_3RD_SESSION: '',                              //  三方会话标识
-  HTTP_API: 'https://shenxu.name/wechat_app/api',   //  接口前缀
-  HTTP_CDN: 'https://cdn.shenxu.name',              //  CDN 前缀
+  HTTP_API: 'https://wechat.duomijuan.com/wechat_app/api',   //  接口前缀
+  HTTP_CDN: 'https://file.duomijuan.com',              //  CDN 前缀
   AJAX_TIMESTAMP_NORMAL: 6000,
   AJAX_CODE_TYPE: {
     SESSION_NULL: 101,

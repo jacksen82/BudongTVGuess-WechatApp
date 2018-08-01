@@ -118,6 +118,6 @@ module.exports = {
 
     logoUrl = logoUrl || '';
     
-    return logoUrl.indexOf('https') == 0 ? logoUrl : 'https://cdn.shenxu.name' + logoUrl;
+    return logoUrl.indexOf('https') == 0 ? logoUrl : 'https://file.duomijuan.com' + logoUrl;
   }
 };
