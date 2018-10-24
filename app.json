@@ -1,44 +1,18 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/mission/more/more",
-    "pages/index/mission/start/start",
-    "pages/index/mission/rank/rank",
-    "pages/index/mission/guess/guess",
-    "pages/index/mission/help/help",
-    "pages/mine/mine",
-    "pages/mine/profile/profile",
-    "pages/mine/coins/coins",
-    "pages/mine/mission/create/create",
-    "pages/mine/mission/detail/detail",
-    "pages/mine/mission/edit/edit",
-    "pages/mine/mission/subject/add/add",
-    "pages/mine/mission/subject/edit/edit",
-    "pages/mine/about/about"
+    "pages/game/index",
+    "pages/rank/index",
+    "pages/card/index"
   ],
   "window": {
+    "onReachBottomDistance": 50,
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "猜电视",
-    "navigationBarTextStyle": "black",
-    "onReachBottomDistance": "50px"
-  },
-  "tabBar": {
-    "color": "#707070",
-    "selectedColor": "#ec3851",
-    "list": [
-      {
-        "iconPath": "images/mission.png",
-        "selectedIconPath": "images/mission_selected.png",
-        "pagePath": "pages/index/index",
-        "text": "游戏关卡"
-      },
-      {
-        "iconPath": "images/mine.png",
-        "selectedIconPath": "images/mine_selected.png",
-        "pagePath": "pages/mine/mine",
-        "text": "个人中心"
-      }
-    ]
+    "backgroundColorTop": "#2e2e2e",
+    "backgroundColorBottom": "#2e2e2e",
+    "navigationStyle": "default",
+    "navigationBarBackgroundColor": "#2e2e2e",
+    "navigationBarTitleText": "小恐龙博士",
+    "navigationBarTextStyle": "white"
   }
 }

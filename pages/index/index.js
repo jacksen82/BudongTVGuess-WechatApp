@@ -1,109 +1,179 @@
 // pages/index/index.js
 
 const app = getApp()
-const consts = require('../../utils/consts.js')
-const util = require('../../utils/util.js')
-const store = require('../../utils/store.js')
-const api = require('../../api/index.js')
+const utils = require('../../utils/utils.js')
+const constants = require('../../data/constants.js')
+const store = require('../../data/store.js')
+const client = require('../../services/client.js')
 
 Page({
 
-  /*
-    说明：页面的初始数据
+  /* 
+    说明：页面数据集合
   */
   data: {
-    clientId: 0,
-    loading: true,
-    missionPageId: 1,
-    missionIsEnd: false,
-    missionItems: []
+    loaded: false,
+    cards: 0,
+    duration: 0,
+    popuped: false,
+    actived: 0,
+    fromClientAvatarUrl: '',
+    fromClientNick: '',
+    fromOpenGId: ''
   },
 
-  /*
+  /* 
     说明：页面加载事件
   */
-  onLoad: function (options) {
+  onLoad: function(){
 
-    util.pageShareMenu();
-    util.pageSetData(this, 'clientId', store.client.id || 0);
-    util.pageSetData(this, 'loading', true);
+    var wp = this;
+
+    store.awaitAuthorize(function(){
+      
+      wp.setData({
+        loaded: true,
+        cards: store.client.cards,
+        duration: store.client.duration,
+        actived: store.client.actived,
+        fromClientAvatarUrl: store.fromClient.avatarUrl || '',
+        fromClientNick: store.fromClient.nick || '',
+        fromOpenGId: store.openGId || ''
+      });
+        
+      if ( store.forSaved == 1 ){
+        wp.selectComponent('#dialogSave').show();
+      }
+    });
   },
 
-  /*
-    说明：页面显示事件
+  /* 
+    说明：开始游戏事件 [ 授权 ]
   */
-  onShow: function (options) {
-    
-    this.onMissionLoad();
-  },
+  onGetUserInfo: function(res){
 
-  /*
-    说明：上拉刷新事件
-  */
-  onReachBottom: function () {
+    var wp = this;
 
-    if (!this.data.missionIsEnd) {
-      this.setData({ missionPageId: this.data.missionPageId + 1 })
-      this.onMissionLoad()
+    if (this.data.actived != 1){
+      client.mine.setUserInfo(res.detail.userInfo, function (data) {
+
+        wp.setData({
+          actived: store.client.actived
+        });
+        wp.onStart();
+      });
     }
   },
 
-  /*
-    说明：页面关卡加载事件
+  /* 
+    说明：开始游戏事件
   */
-  onMissionLoad: function () {
+  onStart: function () {
 
-    var _this = this;
-    
-    if (consts.APP_LAUNCHED) {
-      util.pageSetData(this, 'clientId', store.client.id || 0);
-      util.pageSetData(this, 'loading', true);
-      api.mission.list(this.data.missionPageId || 1, function () {
-
-        _this.setData({
-          loading: false,
-          missionPageId: store.missions.pageId,
-          missionIsEnd: store.missions.pageCount <= store.missions.pageId,
-          missionItems: store.missions.data
+    if (this.data.actived == 1) {
+      if (store.client.status == 200){
+        this.selectComponent('#dialogStart').show();
+      } else {
+        wx.navigateTo({
+          url: '/pages/game/index',
         });
+      }
+    }
+  },
+
+  /* 
+    说明：排行榜事件
+  */
+  onRank: function(){
+
+    if (this.data.actived == 1) {
+      wx.navigateTo({
+        url: '/pages/rank/index',
+      });
+    }
+  },
+
+  /* 
+    说明：使用复活卡继续答题事件
+  */
+  onContinue: function(){
+
+    var wp = this;
+
+    if (this.data.cards) {
+      client.game._continue(function (data) {
+
+        store.client = data || {};
+
+        wp.selectComponent('#dialogStart').close();
+        wp.onStart();
       });
     } else {
-      setTimeout(function(){
+      wx.showToast({
+        title: '没有复活卡',
+      })
+    }
+  },
 
-        _this.onMissionLoad();
-      }, 100);
+  /* 
+    说明：重新开始答题事件
+  */
+  onRestart: function () {
+
+    var wp = this;
+    var callback = function (data) {
+
+      store.client = data || {};
+
+      wp.selectComponent('#dialogStart').close();
+      wp.onStart();
+    }
+
+    if (this.data.duration < 2) {
+      client.game.restart(callback);
+    } else {
+      wx.showModal({
+        title: '操作提示',
+        content: '重新开始会清除之前的成绩，确定要重新开始吗？',
+        success: function (res) {
+
+          if (res.confirm) {
+            client.game.restart(callback);
+          }
+        }
+      })
     }
   },
 
   /*
-    说明：任务关卡点击事件
+    说明：激活复活卡事件
   */
-  onMissionItemTap: function(obj){
+  onSaved: function(){
 
-    util.pageNavigate('/pages/index/mission/start/start?missionId=' + obj.currentTarget.dataset.missionId)
+    var wp = this;
+
+    client.game.saved(store.fromClientId, store.fromOpenGId, function(data){
+
+      wp.selectComponent('#dialogSave').close();
+      wx.showToast({
+        title: '激活成功',
+      })
+    });
   },
 
   /*
-    说明：查看待审核关卡点击事件
+    说明：放弃激活事件
   */
-  onMissionMore: function () {
+  onAbort: function(){
 
-    util.pageNavigate('/pages/index/mission/more/more');
-  },
-
-  /*
-    说明：创建新关卡点击事件
-  */
-  onMissionCreate: function(){
-
-    util.pageNavigate('/pages/mine/mission/create/create');
+    this.selectComponent('#dialogSave').close();
   },
 
   /*
     说明：分享回调事件
   */
   onShareAppMessage: function (res) {
-
-    return api.wechat.getShareMessage()
+    
+    return client.shareAppMessage(res, {}, function(){ });
   }
 })

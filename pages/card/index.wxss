@@ -1,0 +1,69 @@
+/* pages/card/index.wxss */
+
+.ad {
+  display: block;
+  margin: 12px;
+  border-radius: 7px;
+  background: rgba(0,0,0,.25);
+}
+
+.caption {
+  display: block;
+  height: 36px;
+  color: rgba(255,255,255,.5);
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 36px;
+  padding: 0px 15px;
+  margin: 10px 15px 0px 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 7px 7px 0px 0px;
+  background: rgba(0,0,0,.4);
+}
+
+.list {
+  display: block;
+  padding: 7px;
+  margin: 0px 15px 10px 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 0px;
+  border-radius: 0px 0px 7px 7px;
+  background: rgba(0,0,0,.2);
+}
+.list .item {
+  display: block;
+  height: 48px;
+  padding: 7px 0px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.list .item:last-child {
+  border-bottom: 0px;
+}
+.list .item .avatar {
+  float: left;
+  display: block;
+  width: 36px;
+  height: 36px;
+  margin: 6px 0px 6px 6px;
+  border-radius: 18px;
+}
+.list .item .info {
+  display: block;
+  margin-left: 48px;
+}
+.list .item .info .nick {
+  display: block;
+  height: 24px;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 24px;
+  margin-left: 6px;
+}
+.list .item .info .time {
+  display: block;
+  height: 24px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  line-height: 24px;
+  margin-left: 6px;
+}

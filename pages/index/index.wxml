@@ -1,43 +1,45 @@
 <!--index.wxml-->
 
-<wxs src="../../filters/filter.wxs" module="filter" />
-
 <view class="container">
-  <view class="missions">
-    <view wx:for="{{missionItems}}" wx:key="item" bindtap="onMissionItemTap" data-mission-id="{{item.id}}" class="item">
-      <image src="{{filter.getLogo(item.logoUrl)}}" mode="aspectFit" lazy-load="true" class="logo" />
-      <view class="intro">
-        <view class="title">
-          {{item.title}}
-        </view>
-        <view class="author">
-          <span class="nick">{{item.nick}}
-            <small>{{filter.getGender(item.gender)}} / {{filter.getBirthyear(item.birthyear)}}</small>
-          </span>
-        </view>
-        <view class="affix">
-          <span class="status {{filter.getStatus(item).css}}">{{filter.getStatus(item).text}}</span>
-          <span class="tags">
-            <dfn wx:if="{{filter.getRelateType(item.type).css}}" class="tag {{filter.getRelateType(item.type).css}}">{{filter.getRelateType(item.type).text}}</dfn>
-            <dfn wx:for="{{filter.getTags(item.tags)}}" wx:key="item" class="tag">{{item}}</dfn>
-          </span>
-        </view>
-      </view>
-    </view>
-    <view class="nodata" wx:if="{{!loading && (!missionItems || missionItems.length==0)}}">
-      暂时没有可玩儿的关卡
-    </view>
-    <view class="loadmore">
-      <button class="button" bindtap="onMissionMore">去看看待审核区的关卡</button>
-    </view>
-    <view class=" {{loading ? 'loading' : 'isend'}}">
-      {{loading ? '正在加载..' : (missionIsEnd ? '已经到达结尾': '上拉加载更多')}}
-    </view>
+
+  <view class="main">
+    <view class="logo"><image src="/images/logo.png" /></view>
+    <view class="name" data-text="小恐龙博士">小恐龙博士</view>
+    <view class="slogan">考考你的恐龙知识，看你认识多少种恐龙</view>
   </view>
-  <view class="floater" wx:if="{{!haveMissionCreate}}">
-    <button class="create" bindtap="onMissionCreate">
-      <dfn>创 建</dfn>
-      <dfn>关 卡</dfn>
-    </button>
+
+  <view class="menu">
+    <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="button submit {{loaded ? '' : 'disabled'}}" wx:if="{{actived != 1}}">开始游戏 <small>授权</small></button>
+    <button bindtap="onStart" class="button submit {{actived == 1 ? '' : 'disabled'}}" wx:if="{{actived == 1}}">开始游戏</button>
+    <button bindtap="onRank" class="button {{actived == 1 ? '' : 'disabled'}}">排行榜</button>
+    <button open-type="share" class="button">邀请好友 PK</button>
   </view>
 </view>
+
+<dialog id="dialogStart">
+  <view class="dialog-text">
+    <em class="content">你已经答对了 <strong>{{duration}}</strong> 道题，现在你可以</em>
+    <dfn class="choice">A：【使用复活卡】继续上次的题目 <var>你有 <strong>{{cards}}</strong> 张复活卡</var></dfn>
+    <dfn class="choice">B：选择【重新开始】再来一次 <var>你的得分将会被清零</var></dfn>
+  </view>
+  <view class="dialog-action">
+    <button bindtap="onContinue" class="button submit {{cards > 0 ? '' : 'disabled'}}">使用复活卡</button>
+    <button bindtap="onRestart" class="button">重新开始</button>
+    <button open-type="share" bindtap="onShare" class="button" data-action="save">求助好友 <small>复活卡 +1</small></button>
+  </view>
+</dialog>
+
+<dialog id="dialogSave">
+  <view class="dialog-text">
+    <image src="{{fromClientAvatarUrl}}" class="avatar" />
+    <em class="content">你的好友 <strong>{{fromClientNick}}</strong>
+        <dfn wx:if="{{fromOpenGId}}"> 来自群
+          【<open-data type="groupName" open-gid="{{fromOpenGId}}"></open-data>】
+        </dfn>
+        向你求助 ，希望你能帮他激活一张复活卡</em>
+  </view>
+  <view class="dialog-action">
+    <button bindtap="onSaved" class="button submit">帮Ta激活</button>
+    <button bindtap="onAbort" class="button">放弃</button>
+  </view>
+</dialog>

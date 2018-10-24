@@ -1,0 +1,25 @@
+<!--pages/card/index.wxml-->
+
+<wxs src="../../filters/filter.wxs" module="filter" />
+
+<view class="container">
+
+  <view class="ad"><ad unit-id="adunit-7ae041f7c3aa6a6b"></ad></view>
+  
+  <view class="caption">复活卡激活记录</view>
+
+  <view class="list">
+    <view class="item" wx:for="{{cardItems}}" wx:key="item">
+      <image src="{{item.avatarUrl}}" class="avatar" />
+      <span class="info">
+        <em class="nick">
+          {{item.nick}} 
+          <dfn wx:if="{{item.openGId}}"> 来自群：
+            <open-data type="groupName" open-gid="{{item.openGId}}"></open-data>
+          </dfn>
+        </em>
+        <dfn class="time">{{filter.getTimeStamp(item.createTime, 101)}} 为你激活了一张复活卡</dfn>
+      </span>
+    </view>
+  </view>
+</view>

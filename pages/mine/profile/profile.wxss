@@ -1,9 +1,0 @@
-/* pages/mine/profile/profile.wxss */
-
-.cells .hint {
-  display: block;
-  color: #969696;
-  font-size: 12px;
-  line-height: 20px;
-  padding: 7px 12px;        
-}

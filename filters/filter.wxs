@@ -3,7 +3,7 @@
 /*
   说明：时间戳转日期时间值
 */
-var getDateTime = function(timestamp){
+var getDateTime = function (timestamp) {
 
   return getDate(parseInt(timestamp.replace('/Date(', '').replace(')/', ''), 10));
 }
@@ -11,7 +11,7 @@ var getDateTime = function(timestamp){
 /*
   说明：日期时间转 JSON 结构
 */
-var getDateTimeJSON = function(dateTime){
+var getDateTimeJSON = function (dateTime) {
 
   return {
     year: dateTime.getFullYear(),
@@ -26,7 +26,7 @@ var getDateTimeJSON = function(dateTime){
 /*
   说明：JSON 结构转日期时间字符串
 */
-var getDateTimeString = function(dateTimeJSON){
+var getDateTimeString = function (dateTimeJSON) {
 
   return dateTimeJSON.year + '-' +
     (dateTimeJSON.month > 9 ? dateTimeJSON.month : '0' + dateTimeJSON.month) + '-' +
@@ -36,88 +36,71 @@ var getDateTimeString = function(dateTimeJSON){
     (dateTimeJSON.second > 9 ? dateTimeJSON.second : '0' + dateTimeJSON.second);
 }
 
+/*
+  说明：时间转时辰
+*/
+var getHourString = function (hour) {
+
+  if (hour >= 23 && hour < 2) { return '午夜'; }
+  else if (hour < 23 && hour >= 20) { return '晚上'; }
+  else if (hour < 20 && hour >= 17) { return '傍晚'; }
+  else if (hour < 17 && hour >= 14) { return '下午'; }
+  else if (hour < 14 && hour >= 11) { return '中午'; }
+  else if (hour < 11 && hour >= 8) { return '上午'; }
+  else if (hour < 8 && hour >= 5) { return '清晨'; }
+  else if (hour < 5 && hour >= 2) { return '凌晨'; }
+  else { return '异次元'; }
+}
+
+/*
+  说明：获取补 0 后的数值
+*/
+var getFullNumber = function (value) {
+
+  return parseInt(value, 10) < 10 ? '0' + value : value;
+}
+
 module.exports = {
 
-  //  获取时间区间
-  getTimeSpan: function(secondCount){
-
-    var minute = Math.floor(secondCount / 60);
-    var second = (secondCount % 60);
-
-    return (minute > 9 ? minute : '0' + minute) + ':' + 
-      (second > 9 ? second : '0' + second);
-  },
-
-  //  获取日期时间字符串
-  getDateTimeString: function(timestamp){
-
-    return getDateTimeString(getDateTimeJSON(getDateTime(timestamp)));
-  },
-
-  //  获取分类名称
-  getCategory: function(categoryId){
-
-    switch (categoryId) {
-      case 101: return '电视';
-      case 102: return '电影';
-      case 103: return '动画';
-      case 104: return '游戏';
-      case 105: return '广告';
-      case 106: return '音乐';
-      default: return '其他';
-    }
-  },
-
-  //  获取性别
-  getGender: function(gender){
-
-    switch (gender) {
-      case 1: return '帅哥';
-      case 2: return '美女';
-      default: return '未知';
-    }
-  },
-
-  //  获取出生年代
-  getBirthyear: function(birthyear){
-
-    return birthyear ? birthyear + '年出生' : '未知年代';
-  },
-
-  //  获取标签数组
-  getTags: function(tags){
-
-    return (tags == null || tags == '') ? [] : tags.split(',');
-  },
-
-  //  获取关卡状态
-  getStatus: function(item){
-
-    if (item.missionClientId) {
-      if (item.subjectIndex >= item.subjectCount) { return { css: 'win', text: '闯关成功' } } 
-      else if (item.subjectIndex <= 0) { return { css: 'start', text: '马上开始' } } 
-      else { return { css: 'playing', text: '已答 ' + (item.subjectIndex + 1) + '/' + item.subjectCount } }
-    }
-    else { return { css: '', text: '题目 ' + item.subjectCount} }
-  },
-
-  //  获取关卡关系类型
-  getRelateType: function(relateType){
-
-    switch (relateType) {
-      case 201: return { css: 'friend', text: '好友' };
-      case 301: return { css: 'group', text: '群' };
-      case 401: return { css: 'recommend', text: '推荐' };
-      case 501: return { css: 'hot', text: '热门' };
-      default: return { css: '', text: '' };
-    }
-  },
-
-  //  获取关卡 Logo 地址
-  getLogo: function(logoUrl){
-
-    logoUrl = logoUrl || '';
+  /*
+    说明：获取日期时间字符串
+  */
+  getTimeStamp: function (timestamp, formatType) {
     
-    return logoUrl.indexOf('https') == 0 ? logoUrl : 'https://file.duomijuan.com' + logoUrl;
+    if (timestamp){
+      var todayDate = getDate(Date.now());
+      var todayJSON = getDateTimeJSON(todayDate);
+      var stampDate = getDateTime(timestamp);
+      var stampJSON = getDateTimeJSON(stampDate);
+      var ticksDays = (todayDate.getTime() - stampDate.getTime()) / 1000 / 60 / 60 / 24;
+
+      switch (formatType) {
+        case 101:
+          if (todayJSON.year - stampJSON.year > 1) { return (todayJSON.year - stampJSON.year) + '年前'; }
+          else if (todayJSON.year - stampJSON.year == 1) { return '去年' + stampJSON.month + '月'; }
+          else {
+            if (ticksDays > 1) { return stampJSON.month + '月' + stampJSON.day + '日'; }
+            else if (ticksDays == 1) { return '昨天' + getHourString(stampJSON.hour); }
+            else { return getFullNumber(stampJSON.hour) + ':' + getFullNumber(stampJSON.minute); }
+          }
+        case 201:
+          if (todayJSON.year - stampJSON.year > 1) { return stampJSON.year + '年'; }
+          else if (todayJSON.year - stampJSON.year == 1) { return '去年'; }
+          else if (ticksDays > 1) { return stampJSON.month + '月' + stampJSON.day + '日'; }
+          else if (ticksDays == 1) { return '昨天'; }
+          else { return '今天'; }
+          break;
+        case 301:
+          if (todayJSON.year - stampJSON.year > 0) { return stampJSON.month + '月' + stampJSON.day + '日'; }
+          else if (ticksDays >= 1) { return getHourString(stampJSON.hour); }
+          else { return getFullNumber(stampJSON.hour) + ':' + getFullNumber(stampJSON.minute); }
+        case 401:
+          if (stampJSON.year - todayJSON.year > 1) { return stampJSON.year + '年' + stampJSON.month + '月'; }
+          else if (stampJSON.year - todayJSON.year == 1) { return '明年' + stampJSON.month + '月' + stampJSON.day + '日'; }
+          else { return stampJSON.month + '月' + stampJSON.day + '日'; }
+        default:
+          return getDateTimeString(stampJSON);
+      }
+    }
   }
 };

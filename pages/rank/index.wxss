@@ -1,0 +1,86 @@
+/* pages/rank/index.wxss */
+
+.ad {
+  display: block;
+  margin: 12px;
+  border-radius: 7px;
+  background: rgba(0,0,0,.25);
+}
+
+.caption {
+  display: block;
+  height: 36px;
+  color: rgba(255,255,255,.5);
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 36px;
+  padding: 0px 15px;
+  margin: 10px 15px 0px 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 7px 7px 0px 0px;
+  background: rgba(0,0,0,.4);
+}
+.caption small {
+  color: rgba(255,255,255,.25);
+  font-size: 12px;
+}
+
+.list {
+  display: block;
+  padding: 10px;
+  margin: 0px 15px 10px 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 0px;
+  border-radius: 0px 0px 7px 7px;
+  background: rgba(0,0,0,.2);
+}
+.list .item {
+  display: block;
+  height: 24px;
+  padding: 7px 0px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.list .item:last-child {
+  border-bottom: 0px;
+}
+.list .item .index {
+  float: left;
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 3px;
+  background: #5088a0;
+}
+.list .item .index.top {
+  background: #ef5152;
+}
+.list .item .avatar {
+  float: left;
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  border-radius: 12px;
+}
+.list .item .nick {
+  float: left;
+  display: block;
+  height: 24px;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 24px;
+  margin-left: 12px;
+}
+.list .item .score {
+  float: right;
+  display: block;
+  height: 24px;
+  color: #ffcc00;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+}

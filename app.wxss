@@ -1,119 +1,39 @@
 /**app.wxss**/
 
 page {
-  background: #ffffff;
+  width: 100%;
+  height: 100%;
 }
+
+.container {
+  display: block;
+  position: fixed;
+  overflow: auto;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #2e2e2e;
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+  background-image: -webkit-linear-gradient(45deg, #343434 25%, transparent 25%, transparent 75%, #343434 75%, #343434), 
+                    -webkit-linear-gradient(45deg, #343434 25%, transparent 25%, transparent 75%, #343434 75%, #343434);
+  -webkit-overflow-scrolling: touch;
+}
+
+button {
+  font-size: 14px;
+  background: transparent;
+}
+
 button::after {
   content: none;
 }
 
-/*
-  表格控件
-*/
-.datalist {
-  display: block;
-  padding: 0px 7px 0px 12px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-  background: #f9f9f9;
-}
-.datalist .item {
-  display: block;
-  height: 44px;
-  font-size: 14px;
-  line-height: 43px;
-  padding: 0px 5px;
-  border-bottom: 1px solid #eeeeee;
-}
-.datalist .loading {
-  display: block;
-  height: 50px;
-  color: #909398;
-  font-size: 12px;
-  text-align: center;
-  line-height: 50px;
-}
-
-/*
-  列表控件
-*/
-.cells {
-  padding: 5px 0px;
-}
-.cells .group {
-  display: block;
-  padding: 0px 7px 0px 12px;
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-  background: #f9f9f9;
-}
-.cells .group.top {
-  margin-top: 15px;
-}
-.cells .group.bottom {
-  margin-bottom: 15px;
-}
-.cells .group:first-child {
-  margin-top: 0px;
-}
-.cells .group .item {
-  display: block;
-  height: 44px;
-  color: #353535;
-  font-size: 14px;
-  text-align: left;
-  line-height: 44px;
-  padding-left: 5px;
-  border: 0px;
-  border-bottom: 1px solid #efefef;
+.button-hover {
   background: transparent;
 }
-.cells .group .item .input {
-  height: 44px;
-  line-height: 44px;
-}
-.cells .group .item .picker {
-  display: block;
-}
-.cells .group .item:last-child {
-  border-bottom: none;
-}
-.cells .group .item.create {
-  color: #ec3851;
-}
 
-
-/*
-  底部控制栏
-*/
-.bottombar {
-  display: block;
-  padding: 15px;
-}
-.bottombar .share {
-  height: 44px;
-  color: #353535;
-  font-size: 14px;
-  line-height: 44px;
-  border: 1px solid #dfdfdf;
-  background: #fcfcfc;
-}
-.bottombar .delete {
-  height: 44px;
-  color: #ec3851;
-  font-size: 14px;
-  line-height: 44px;
-  margin-top: 15px;
-  border: 1px solid #ec3851;
-  background: #ffffff;
-}
-.bottombar .submit {
-  height: 44px;
-  color: #ffffff;
-  font-size: 14px;
-  line-height: 44px;
-  background: #ec3851;
-}
-.bottombar .submit.hover{
-  background: #d7223b;
+.placeholder {
+  color: #cccccc;
 }
