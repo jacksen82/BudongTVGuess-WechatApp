@@ -4,8 +4,8 @@
 
   <view class="main">
     <view class="logo"><image src="/images/logo.png" /></view>
-    <view class="name" data-text="小恐龙博士">小恐龙博士</view>
-    <view class="slogan">考考你的恐龙知识，看你认识多少种恐龙</view>
+    <view class="name" data-text="猜电视">猜电视</view>
+    <view class="slogan">那些年全家人坐在一起看电视的快乐时光，你还记得吗？</view>
   </view>
 
   <view class="menu">
