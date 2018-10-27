@@ -1,10 +1,22 @@
 /**app.wxss**/
 
+/* 清除默认样式 */
 page {
   width: 100%;
   height: 100%;
 }
+button {
+  font-size: 14px;
+  background: transparent;
+}
+button::after {
+  content: none;
+}
+.button-hover {
+  background: transparent;
+}
 
+/* 主背景 */
 .container {
   display: block;
   position: fixed;
@@ -13,27 +25,56 @@ page {
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: #2e2e2e;
+  background-color: #484f58;
   background-size: 60px 60px;
   background-position: 0 0, 30px 30px;
-  background-image: -webkit-linear-gradient(45deg, #343434 25%, transparent 25%, transparent 75%, #343434 75%, #343434), 
-                    -webkit-linear-gradient(45deg, #343434 25%, transparent 25%, transparent 75%, #343434 75%, #343434);
+  background-image: -webkit-linear-gradient(45deg, #464c55 25%, transparent 25%, transparent 75%, #464c55 75%, #464c55), 
+                    -webkit-linear-gradient(45deg, #464c55 25%, transparent 25%, transparent 75%, #464c55 75%, #464c55);
   -webkit-overflow-scrolling: touch;
 }
 
-button {
-  font-size: 14px;
-  background: transparent;
+/* 按钮样式 */
+.menu .button {
+  display: block;
+  height: 14vw;
+  color: rgba(255,255,255,.9);
+  font-size: 14pt;
+  font-weight: bold;
+  line-height: 12vw;
+  margin-bottom: 5vw;
+  border: 3px solid rgba(0,0,0,0.25);
+  border-top-width: 1px;
+  border-top-color: rgba(255,255,255,0.25);
+  border-left-width: 1px;
+  border-left-color: rgba(255,255,255,0.25);
+  border-radius: 7vw;
+  background: #318bf9;
+  text-shadow: -1px -1px 0px rgba(0,0,0,.5);
+  box-shadow: 0px 0px 12px rgba(0,0,0,.5);
 }
-
-button::after {
-  content: none;
+.menu .button:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 16px;
+  margin-top: 7px;
+  margin-left: -7px;
+  border-radius: 50% / 50%;
+  background: rgba(255,255,255,.25);
+  transform: rotate(-30deg);
 }
-
-.button-hover {
-  background: transparent;
+.menu .button:last-child {
+  margin-bottom: 8vw;
 }
-
-.placeholder {
-  color: #cccccc;
+.menu .button.submit {
+  background: #ff9903;
+}
+.menu .button.disabled {
+  color: #969696;
+  border-color: #969696;
+  background: #bbbbbb;
+}
+.menu .button small {
+  font-size: 9pt;
 }

@@ -1,50 +1,46 @@
 /* pages/index/index.wxss */
 
 .main {
-  padding-top: 64px;
+  padding-top: 10vw;
 }
 .main .logo {
   display: block;
-  width: 160px;
-  height: 160px;
+  width: 50vw;
+  height: 50vw;
   margin: 0px auto;
-  border-radius: 50%;
-  background: rgba(0,0,0,.25);
 }
 .main .logo image {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
 }
 .main .name {
   display: block;
-  height: 36px;
-  color: #d54f44;
-  font-size: 36px;
+  color: #ffffff;
+  font-size: 10vw;
   font-weight: bold;
   text-align: center;
-  line-height: 36px;
-  letter-spacing: 3px;
-  padding-top: 24px;
-  -webkit-text-stroke: 1px #d54f44;
+  line-height: 10vw;
+  letter-spacing: 3vw;
+  margin-top: -2vw;
   z-index: 1;
 }
 .main .name:before {
   content: attr(data-text);
   position: absolute;
-  text-shadow: 0px 0px 6px #000000;
-  -webkit-text-stroke: 5px #ffffff;
+  text-shadow: 0px 0px 2px rgba(255,255,255,.75),
+    -2px -2px 6px rgba(0,0,0,.25),
+    4px 4px 12px rgba(0,0,0,.5);
   z-index: -1;
 } 
 .main .slogan {
   display: block;
   color: rgba(255,255,255,0.5);
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 12pt;
+  line-height: 7vw;
   text-align: center;
-  padding: 20px 25px 0px 25px;
-  text-shadow: 0px 0px 3px #000000;
+  padding: 5vw 10vw 0px 10vw;
+  text-shadow: 0px 0px 3px rgba(0,0,0,.75);
 }
 
 .menu {
@@ -53,52 +49,7 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  padding: 25px;
-}
-.menu .button {
-  display: block;
-  height: 55px;
-  color: rgba(255,255,255,.9);
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 48px;
-  margin-bottom: 20px;
-  border: 5px solid #376b81;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  border-radius: 27px;
-  background: #5088a0;
-  text-shadow: -1px -1px 0px #376b81;
-  box-shadow: 0px 0px 7px #000000;
-}
-.menu .button:before {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 24px;
-  height: 16px;
-  margin-top: 7px;
-  margin-left: -7px;
-  border-radius: 50% / 50%;
-  background: rgba(255,255,255,.25);
-  transform: rotate(-30deg);
-}
-.menu .button.submit {
-  font-size: 21px;
-  border: 5px solid #c1483d;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  background: #d54f44;
-  text-shadow: -1px -1px 0px #c1483d;
-}
-.menu .button.disabled {
-  color: #969696;
-  border-color: #BBBBBB;
-  background: #cccccc;
-  text-shadow: -1px -1px 0px rgba(0,0,0,.75);
-}
-.menu .button small {
-  font-size: 12px;
+  padding: 0vw 8vw;
 }
 
 .dialog-text {
@@ -186,73 +137,3 @@
   background: #cccccc;
   text-shadow: -1px -1px 0px rgba(0,0,0,.75);
 }
-
-@media screen and (max-width: 321px) {  
-
-  .main {
-    padding-top: 32px;
-  }   
-  .main .logo {
-    width: 120px;
-    height: 120px;
-  }
-  .main .name {
-    height: 32px;
-    font-size: 32px;
-    font-weight: bold;
-    line-height: 32px;
-    padding-top: 20px;
-  }
-  .main .slogan {
-    font-size: 14px;
-    line-height: 20px;
-    padding: 20px 25px 0px 25px;
-  }
-
-  .menu {
-    padding: 25px 25px 10px 25px;
-  }
-  .menu .button {
-    height: 48px;
-    line-height: 41px;
-    margin-bottom: 15px;
-    border-radius: 24px;
-  }
-  .menu .button:before {
-    width: 18px;
-    height: 12px;
-  }
-
-  .dialog-text {
-    font-size: 14px;
-    line-height: 28px;
-    padding: 36px 15px 20px 15px;
-  }
-  .dialog-text .avatar {
-    width: 64px;
-    height: 64px;
-    margin: 20px auto 25px auto;
-  }
-  .dialog-text .content strong {
-    font-size: 16px;
-  }
-  .dialog-text var {
-    display: block;
-    font-size: 12px;
-    line-height: 18px;
-    padding-left: 28px;
-  }
-  .dialog-action {
-    padding: 0px 12px;
-  }
-  .dialog-action .button {
-    height: 44px;
-    line-height: 37px;
-    margin-bottom: 12px;
-    border-radius: 22px;
-  }
-  .dialog-action .button:before {
-    width: 18px;
-    height: 12px;
-  }
-}  

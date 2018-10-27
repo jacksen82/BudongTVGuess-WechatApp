@@ -5,7 +5,8 @@
   <view class="main">
     <view class="logo"><image src="/images/logo.png" /></view>
     <view class="name" data-text="猜电视">猜电视</view>
-    <view class="slogan">那些年全家人坐在一起看电视的快乐时光，你还记得吗？</view>
+    <text class="slogan">那些年全家人坐在一起看的经典电视
+      你还记得吗？</text>
   </view>
 
   <view class="menu">

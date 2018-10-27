@@ -8,10 +8,10 @@
   "window": {
     "onReachBottomDistance": 50,
     "backgroundTextStyle": "light",
-    "backgroundColorTop": "#2e2e2e",
-    "backgroundColorBottom": "#2e2e2e",
+    "backgroundColorTop": "#484f58",
+    "backgroundColorBottom": "#484f58",
     "navigationStyle": "default",
-    "navigationBarBackgroundColor": "#2e2e2e",
+    "navigationBarBackgroundColor": "#484f58",
     "navigationBarTitleText": "猜电视",
     "navigationBarTextStyle": "white"
   }
