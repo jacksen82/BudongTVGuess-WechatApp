@@ -7,14 +7,15 @@ const ajax = require('../utils/ajax.js')
 const game = {
 
   /*
-    说明：获取排行榜
+    说明：获取下一题
   */
-  rank: function (callback) {
+  next: function (callback) {
 
-    ajax.postEx('/client/game/rank.ashx', {
+    ajax.postEx('/client/game/next.ashx', {
 
     }, function (data) {
 
+      store.client = data || {};
       callback(data);
     });
   },
@@ -28,6 +29,7 @@ const game = {
 
     }, function (data) {
 
+      store.client = data || {};
       callback(data);
     });
   },
@@ -35,25 +37,13 @@ const game = {
   /*
     说明：继续游戏
   */
-  _continue: function (callback) {
+  revive: function (callback) {
 
-    ajax.postEx('/client/game/continue.ashx', {
-
-    }, function (data) {
-
-      callback(data);
-    });
-  },
-
-  /*
-    说明：获取下一题
-  */
-  assign: function (callback) {
-
-    ajax.postEx('/client/game/assign.ashx', {
+    ajax.postEx('/client/game/revive.ashx', {
 
     }, function (data) {
 
+      store.client = data || {};
       callback(data);
     });
   },
@@ -61,11 +51,25 @@ const game = {
   /*
     说明：答题结束
   */
-  answer: function (dinosaurId, result, callback) {
+  answer: function (questionId, result, callback) {
 
     ajax.postEx('/client/game/answer.ashx', {
-      dinosaurId: dinosaurId,
+      questionId: questionId,
       result: result
+    }, function (data) {
+
+      store.client = data || {};
+      callback(data);
+    });
+  },
+
+  /*
+    说明：获取排行榜
+  */
+  rank: function (callback) {
+
+    ajax.postEx('/client/game/rank.ashx', {
+
     }, function (data) {
 
       callback(data);

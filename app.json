@@ -3,15 +3,15 @@
     "pages/index/index",
     "pages/game/index",
     "pages/rank/index",
-    "pages/card/index"
+    "pages/live/index"
   ],
   "window": {
     "onReachBottomDistance": 50,
     "backgroundTextStyle": "light",
-    "backgroundColorTop": "#484f58",
-    "backgroundColorBottom": "#484f58",
+    "backgroundColorTop": "#22293b",
+    "backgroundColorBottom": "#22293b",
     "navigationStyle": "default",
-    "navigationBarBackgroundColor": "#484f58",
+    "navigationBarBackgroundColor": "#22293b",
     "navigationBarTitleText": "猜电视",
     "navigationBarTextStyle": "white"
   }

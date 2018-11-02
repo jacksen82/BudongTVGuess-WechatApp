@@ -9,28 +9,32 @@ const mine = require('mine.js')
 const client = {
 
   /*
-    说明：客户端授权调起
+    说明：客户端授权
   */
   authorize: function (callback) {
 
-    //  重新登录 
-    var relogin = function(){
+    //  接口请求成功回调
+    var _success = function(data){
+
+      //  初始化变量
+      store.client = data || {}
+      store.clientId = data.clientId
+      store.session3rd = data.session3rd
+
+      //  写入三方标识
+      wx.setStorageSync('session3rd', store.session3rd)
+
+      //  执行回调
+      callback(data);
+    }
+
+    //  客户端登录方法
+    var _login = function(){
 
       wx.login({
         success: function (res) {
-          
-          ajax.postEx('/client/login.ashx', {
-            code: res.code
-          }, function (data) {
-            
-            data = data || {}
-            store.client = data
-            store.session3rd = data.session3rd
 
-            wx.setStorageSync('session3rd', store.session3rd)
-
-            callback(data);
-          });
+          ajax.postEx('/client/login.ashx', { code: res.code }, _success);
         },
         fail: function (res) {
 
@@ -41,70 +45,61 @@ const client = {
         }
       });
     }
+
+    //  请求 token 接口
+    var _token = function(){
+
+      ajax.postEx('/client/token.ashx', {}, _success, _login);
+    }
     
-    //  效验用户登录态
+    //  当有三方标识时
     if (store.session3rd) {
-      
       wx.checkSession({
-        success: function (res) {
-          
-          ajax.postEx('/client/token.ashx', {}, function (data) {
-
-            data = data || {}
-            store.client = data
-            store.session3rd = data.session3rd
-            
-            wx.setStorageSync('session3rd', store.session3rd)
-
-            callback(data);
-          }, relogin);
-        },
-        fail: relogin
+        success: _token,
+        fail: _login
       });
     } else {
-      relogin();
+      _login();
     }
-
-    //  标记为已触发授权
-    store.authorized = true;
   },
 
   /*
-    说明：识别访问来源
+    说明：获取分享信息
   */
-  setShareInfo: function(){
+  shareInfo: function(){
 
-    //  绑定客户端关系
-    var relate = function (encryptedData, iv){
+    //  建立关联关系
+    var _relate = function (res){
 
-      ajax.postEx('/client/relate.ashx', {
+      ajax.postEx('/client/relation.ashx', {
         fromClientId: store.fromClientId || 0,
-        encryptedData: encryptedData || '',
-        iv: iv || ''
+        encryptedData: (res || {}).encryptedData || '',
+        iv: (res || {}).iv || ''
       }, function (data) {
-        
+
+        //  初始化来源客户端信息
         store.fromClient = data.fromClient || {};
         store.fromOpenGId = data.openGId;
-        store.related = true;
       });
     }
     
-    //  获取来源信息
-    if (store.fromClientId) {
+    //  当来源客户端不为空，并且不等于当前客户端时
+    if (store.fromClientId && store.fromClientId != store.clientId) {
+      
+      //  如果有群标识
       if (store.shareTicket) {
+
+        //  获取群标识
         wx.getShareInfo({
           shareTicket: store.shareTicket,
-          success: function (res) {
-            
-            relate(res.encryptedData, res.iv);
-          },
-          fail: relate
+          success: _relate,
+          fail: _relate
         });
       } else {
-        relate();
+        _relate();
       }
     } else {
-      store.related = true;
+      store.fromClient = {};
     }
   },
 
@@ -115,14 +110,14 @@ const client = {
 
     data = data || {};
 
-    var title = '测一测你认识多少种恐龙，看你对恐龙了解多少';
-    var imageUrl = 'https://wechat.duomijuan.com/dinosaur/share.jpg';
-    var path = '/pages/index/index?scene=cid-' + (store.client.clientId || 0);
+    var title = '那些年全家人坐在一起看的经典电视，你还记得吗？';
+    var imageUrl = 'https://wechat.duomijuan.com/guess/statics/share.jpg';
+    var path = '/pages/index/index?scene=cid-' + (store.clientId || 0);
 
-    if (res.from == 'button' && res.target && res.target.dataset && res.target.dataset.action == 'save'){
-      title = '求助！我正在做恐龙知识竞猜，需要一张复活卡';
-      imageUrl = 'https://wechat.duomijuan.com/dinosaur/saveme.jpg';
-      path = '/pages/index/index?scene=cid-' + (store.client.clientId || 0) + ',sm-1';
+    if (res.from == 'button' && res.target && res.target.dataset && res.target.dataset.action == 'saveme'){
+      title = '求助！我正在玩儿【猜电视】游戏，需要一张复活卡';
+      imageUrl = 'https://wechat.duomijuan.com/guess/statics/saveme.jpg';
+      path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
     }
     
     return {
@@ -131,8 +126,10 @@ const client = {
       path: path,
       success: function (_res) {
         
+        //  请求分享成功接口
         ajax.postEx('/client/share.ashx', {
-          shareFrom: res.from
+          shareFrom: res.from,
+          shareAction: res.target.dataset.action
         }, function (data) {
 
           callback(data);

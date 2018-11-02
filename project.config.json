@@ -20,25 +20,29 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
-					"name": "来自关卡分享",
+					"name": "来自好友分享",
 					"pathName": "pages/index/index",
-					"query": "mid=37&cid=10",
+					"query": "scene=cid-1000000002",
 					"scene": "1007"
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "来自求助好友",
 					"pathName": "pages/index/index",
-					"query": "cid=10&mid=554&sid=219",
+					"query": "scene=cid-1000000002,sm-1",
 					"scene": "1007"
 				}
 			]

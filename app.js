@@ -12,9 +12,12 @@ App ({
   */
   onLaunch: function(options){
 
-    store.fromScene = options.scene || 0;
+    //  初始化三方标识
+    store.client = null;
+    store.clientId = 0;
     store.session3rd = wx.getStorageSync('session3rd') || '';
 
+    //  允许分享至群
     wx.showShareMenu({
       withShareTicket: true
     });
@@ -25,16 +28,18 @@ App ({
   */
   onShow: function (options) {
 
-    store.related = false;
+    //  初始化参数集合
     store.fromScene = options.scene || 0;
-    store.fromClient = {};
+    store.fromClient = null;
     store.fromClientId = utils.getScene(options.query || {}, 'cid') || 0;
-    store.forSaved = utils.getScene(options.query || {}, 'sm') || 0;
+    store.shareSave = utils.getScene(options.query || {}, 'sm') || 0;
     store.shareTicket = options.shareTicket || '';
   
+    //  请求授权
     client.authorize(function () {
 
-      client.setShareInfo();
+      //  建立好友关系
+      client.shareInfo();
     });
   },
 })

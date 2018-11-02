@@ -2,7 +2,7 @@
 
 .ad {
   display: block;
-  margin: 12px;
+  margin: 10px 15px 15px 15px;
   border-radius: 7px;
   background: rgba(0,0,0,.25);
 }
@@ -48,15 +48,18 @@
   display: block;
   width: 24px;
   height: 24px;
-  color: #ffffff;
+  color: #f0356a;
   font-size: 16px;
+  font-weight: bold;
   line-height: 24px;
   text-align: center;
   border-radius: 3px;
-  background: #5088a0;
+  background: #fefefc;
 }
 .list .item .index.top {
-  background: #ef5152;
+  color: #fefefc;
+  background: #f0356a;
+  background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
 }
 .list .item .avatar {
   float: left;
@@ -79,7 +82,7 @@
   float: right;
   display: block;
   height: 24px;
-  color: #ffcc00;
+  color: #fff55b;
   font-size: 14px;
   font-weight: bold;
   line-height: 24px;

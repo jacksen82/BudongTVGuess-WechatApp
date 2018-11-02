@@ -1,4 +1,4 @@
-// pages/card/index.js
+// pages/live/index.js
 
 const app = getApp()
 const utils = require('../../utils/utils.js')
@@ -12,7 +12,7 @@ Page({
     说明：页面的初始数据
   */
   data: {
-    cardItems: []
+    liveItems: []
   },
 
   /*
@@ -22,10 +22,10 @@ Page({
 
     var wp = this;
 
-    client.mine.saves(function (data) {
+    client.mine.lives(function (data) {
 
       wp.setData({
-        cardItems: data.data || []
+        liveItems: data.data || []
       });
     });
   },

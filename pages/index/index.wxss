@@ -16,7 +16,7 @@
 }
 .main .name {
   display: block;
-  color: #ffffff;
+  color: #fefefc;
   font-size: 10vw;
   font-weight: bold;
   text-align: center;
@@ -29,8 +29,8 @@
   content: attr(data-text);
   position: absolute;
   text-shadow: 0px 0px 2px rgba(255,255,255,.75),
-    -2px -2px 6px rgba(0,0,0,.25),
-    4px 4px 12px rgba(0,0,0,.5);
+    -2px -2px 4px rgba(0,0,0,.25),
+    4px 4px 6px rgba(0,0,0,.5);
   z-index: -1;
 } 
 .main .slogan {
@@ -40,7 +40,7 @@
   line-height: 7vw;
   text-align: center;
   padding: 5vw 10vw 0px 10vw;
-  text-shadow: 0px 0px 3px rgba(0,0,0,.75);
+  text-shadow: 0px 0px 3px #000000;
 }
 
 .menu {
@@ -52,88 +52,26 @@
   padding: 0vw 8vw;
 }
 
-.dialog-text {
+.dialog-content {
   display: block;
-  color: #5b1d18;
-  font-size: 16px;
-  line-height: 32px;
-  padding: 40px 15px 20px 15px;
+  padding: 25px;
 }
-.dialog-text .avatar {
+.dialog-content .avatar {
   display: block;
   width: 96px;
   height: 96px;
-  margin: 20px auto 25px auto;
+  margin: 0px auto;
   border-radius: 50%;
 }
-.dialog-text .content {
+.dialog-content .info {
   display: block;
+  line-height: 20pt;
+  padding: 25px 15px 0px 15px;
 }
-.dialog-text .content strong {
-  color: #c1483d;
-  font-size: 18px;
+.dialog-content .info em {
+  font-size: 12pt;
+}
+.dialog-content .info strong {
+  color: #d23878;
   font-weight: bold;
-}
-.dialog-text .choice {
-  display: block;
-}
-.dialog-text .choice strong {
-  color: #d54f44;
-  font-weight: bold;
-}
-.dialog-text var {
-  display: block;
-  font-size: 12px;
-  line-height: 18px;
-  padding-left: 28px;
-}
-.dialog-action {
-  display: block;
-  padding: 0px 15px;
-}
-.dialog-action .button {
-  display: block;
-  height: 51px;
-  color: rgba(255,255,255,.9);
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 44px;
-  margin-bottom: 15px;
-  border: 5px solid #376b81;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  border-radius: 27px;
-  background: #5088a0;
-  text-shadow: -1px -1px 0px #376b81;
-  box-shadow: 0px 0px 7px #ffffff;
-}
-.dialog-action .button:before {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 24px;
-  height: 16px;
-  margin-top: 7px;
-  margin-left: -7px;
-  border-radius: 50% / 50%;
-  background: rgba(255,255,255,.25);
-  transform: rotate(-30deg);
-}
-.dialog-action .button.submit {
-  font-size: 21px;
-  border: 5px solid #c1483d;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  background: #d54f44;
-  text-shadow: -1px -1px 0px #c1483d;
-}
-.dialog-action .button small {
-  color: rgba(255,255,255,.5);
-  font-size: 12px;
-}
-.dialog-action .button.disabled {
-  color: #969696;
-  border-color: #BBBBBB;
-  background: #cccccc;
-  text-shadow: -1px -1px 0px rgba(0,0,0,.75);
 }

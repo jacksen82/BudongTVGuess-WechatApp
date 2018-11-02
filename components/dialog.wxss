@@ -26,28 +26,6 @@
   right: 25px;
   word-break: break-all;
   padding: 0px;
-  border: 7px solid #d54f44;
-  border-radius: 16px;
-  box-shadow: 0px 0px 12px #000000;
-}
-.modal .panel .caption {
-  display: block;
-  position: relative;
-  width: 160px;
-  height: 48px;
-  color: #ffffff;
-  font-size: 21px;
-  font-weight: bold;
-  line-height: 48px;
-  text-align: center;
-  margin: -27px auto 0px auto;
-  border-radius: 24px;
-  background: #d54f44;
-}
-.modal .panel .body {
-  display: block;
-  margin-top: -21px;
-  border: 1px solid #ffffff;
-  border-radius: 8px;
-  background: #ffebe9;
+  border-radius: 7px;
+  background: #fefefc;
 }

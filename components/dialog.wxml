@@ -2,9 +2,6 @@
 
 <view id="dialogModal" class="modal {{modalFade}}" catchtap="onModalTap" data-name="parent" wx:if="{{modalVisible}}">
   <view id="dialogPanel" class="panel" catchtap="onPanelTap" style="top: {{panelTop}}px; ">
-    <text id="dialogCaption" class="caption">操作提示</text>
-    <view id="dialogBody" class="body">
-      <slot></slot>
-    </view>
+    <slot></slot>
   </view>
 </view>

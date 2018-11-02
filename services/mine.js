@@ -26,9 +26,9 @@ const mine = {
   /*
     说明：赠送复活卡
   */
-  saves: function (callback) {
+  lives: function (callback) {
 
-    ajax.postEx('/client/mine/saves.ashx', {
+    ajax.postEx('/client/mine/lives.ashx', {
       
     }, function (data) {
 

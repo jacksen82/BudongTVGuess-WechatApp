@@ -1,15 +1,15 @@
-<!--pages/card/index.wxml-->
+<!--pages/live/index.wxml-->
 
 <wxs src="../../filters/filter.wxs" module="filter" />
 
 <view class="container">
 
-  <view class="ad"><ad unit-id="adunit-7ae041f7c3aa6a6b"></ad></view>
+  <view class="ad"><ad unit-id="adunit-b1281666635d3455"></ad></view>
   
   <view class="caption">复活卡激活记录</view>
 
   <view class="list">
-    <view class="item" wx:for="{{cardItems}}" wx:key="item">
+    <view class="item" wx:for="{{liveItems}}" wx:key="item">
       <image src="{{item.avatarUrl}}" class="avatar" />
       <span class="info">
         <em class="nick">

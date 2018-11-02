@@ -12,17 +12,18 @@ Page({
     说明：页面的初始数据
   */
   data: {
-    dinosaurId: 0,
-    name: '',
-    descirbe: '',
-    imageUrl: '',
-    options: [],
-    present: 0,
-    position: 0,
-    duration: 0,
-    length: 0,
-    cards: 0,
-    score: 0
+    questionId: 0,
+    questionTitle: '',
+    questionOptionValue: '',
+    questionOptions: [],
+    questionImageUrl: '',
+    questionAnswered: 0,
+    questionAmount: 0,
+    clientRankPosition: 0,
+    clientDurationPresent: 0,
+    clientScore: 0,
+    clientLives: 0,
+    clientStatus: 0,
   },
 
   /*
@@ -30,48 +31,53 @@ Page({
   */
   onLoad: function(){
 
-    this.onAssign();
+    this.onNext();
   },
 
   /*
-    说明：查看激活卡记录事件
+    说明：更新数据
   */
-  onCardRecord: function () {
+  onReset: function(data){
 
-    wx.navigateTo({
-      url: '/pages/card/index',
-    })
+    this.setData({
+      clientRankPosition: data.rankPosition,
+      clientRankIndex: data.rankIndex,
+      clientDurationPresent: Math.floor((data.questionAnswered + 1) / data.questionAmount * 100),
+      clientScore: data.score,
+      clientLives: data.lives,
+      clientStatus: data.status,
+      questionCorrect: data.questionCorrect,
+      questionAnswered: data.questionAnswered,
+      questionAmount: data.questionAmount
+    });
+    if (data.question){
+      this.setData({
+        questionId: data.question.questionId,
+        questionTitle: data.question.title,
+        questionOptionValue: data.question.optionValue,
+        questionOptionItems: (data.question.optionItems || '').split(';'),
+        questionImageUrl: data.question.imageUrl,
+      });
+    }
   },
 
   /*
     说明：下一题事件
   */
-  onAssign: function () {
+  onNext: function () {
 
     var wp = this;
 
-    client.game.assign(function (data) {
+    client.game.next(function (data) {
 
-      wp.setData({
-        present: Math.floor((data.duration + 1) / data.length * 100),
-        duration: data.duration,
-        length: data.length,
-        cards: data.cards,
-        score: data.score,
-        position: data.position,
-        status: data.status
-      });
+      wp.onReset(data);
 
-      if (data.dinosaurId) {
-        wp.setData({
-          dinosaurId: data.dinosaurId,
-          name: data.name,
-          describe: data.describe,
-          imageUrl: data.imageUrl,
-          options: data.options
-        });
+      if (wp.data.clientStatus == 200) {
+        wp.selectComponent('#incorrect').show();
       } else {
-        wp.selectComponent('#dialogDone').show();
+        if (!wp.data.questionId) {
+          //  wp.selectComponent('#complete').show();
+        }
       }
     });
   },
@@ -82,78 +88,46 @@ Page({
   onSelect: function(e){
 
     var wp = this;
-    var result = 2;
-    if (this.data.name == e.currentTarget.dataset.item) {
-      result = 1;
-    }
-    client.game.answer(this.data.dinosaurId, result, function(data){
+    var result = ( this.data.questionOptionValue == e.currentTarget.dataset.item ? 1 : 2 );
 
-      store.client = data || {};
-      
-      wp.setData({
-        score: data.score,
-        position: data.position,
-        status: data.status
-      });
+    client.game.answer(this.data.questionId, result, function(data){
+
+      wp.onReset(data);
 
       if (result == 1){
-        if (wp.data.duration >= wp.data.length - 1) {
-          wp.selectComponent('#dialogDone').show();
+        if (wp.data.questionAnswered >= wp.data.questionAmount) {
+          wp.selectComponent('#complete').show();
         } else {
-          wp.selectComponent('#dialogRight').show();
+          wp.selectComponent('#correct').show();
         }
       } else {
-        wp.selectComponent('#dialogWrong').show();
+        wp.selectComponent('#incorrect').show();
       }
     });
   },
 
   /*
-    说明：使用复活卡事件
-  */
-  onContinue: function () {
-
-    var wp = this;
-
-    if (this.data.cards) {
-      client.game._continue(function (data) {
-
-        store.client = data || {};
-
-        wp.selectComponent('#dialogWrong') && wp.selectComponent('#dialogWrong').close();
-        wp.onAssign();
-      });
-    } else {
-      wx.showToast({
-        title: '没有复活卡',
-      })
-    }
-  },
-
-  /*
     说明：重新开始事件
   */
-  onRestart: function(){
+  onRestart: function () {
 
     var wp = this;
-    var callback = function (data){
+    var callback = function (data) {
 
-      store.client = data || {};
-
-      wp.selectComponent('#dialogWrong') && wp.selectComponent('#dialogWrong').close();
-      wp.selectComponent('#dialogDone') && wp.selectComponent('#dialogDone').close();
-      wp.onAssign();
+      wp.selectComponent('#incorrect') && wp.selectComponent('#incorrect').close();
+      wp.selectComponent('#complete') && wp.selectComponent('#complete').close();
+      wp.onNext();
     }
 
-    if (this.data.duration < 2) {
+    if (this.data.questionAnswered < 2) {
       client.game.restart(callback);
     } else {
       wx.showModal({
         title: '操作提示',
         content: '重新开始会清除之前的成绩，确定要重新开始吗？',
-        success: function(res){
+        success: function (res) {
 
-          if (res.confirm){
+          if (res.confirm) {
             client.game.restart(callback);
           }
         }
@@ -164,10 +138,40 @@ Page({
   /*
     说明：继续下一题
   */
-  onNext: function(){
+  onContinue: function(){
+    
+    this.selectComponent('#correct') && this.selectComponent('#correct').close();
+    this.onNext();
+  },
 
-    this.selectComponent('#dialogRight') && this.selectComponent('#dialogRight').close();
-    this.onAssign();
+  /*
+    说明：使用复活卡事件
+  */
+  onRevive: function () {
+
+    var wp = this;
+
+    if (this.data.clientLives) {
+      client.game.revive(function (data) {
+
+        wp.selectComponent('#incorrect') && wp.selectComponent('#incorrect').close();
+        wp.onNext();
+      });
+    } else {
+      wx.showToast({
+        title: '没有复活卡',
+      })
+    }
+  },
+
+  /*
+    说明：查看激活卡记录事件
+  */
+  onLiveRecord: function () {
+
+    wx.navigateTo({
+      url: '/pages/live/index',
+    })
   },
 
   /*
