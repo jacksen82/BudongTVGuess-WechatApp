@@ -23,12 +23,18 @@ Page({
 
     var wp = this;
 
+    //  加载排行榜
     client.game.rank(function(data){
 
       wp.setData({
         globalItems: data.global,
         friendItems: data.friend
       });
+    });
+
+    //  允许分享至群
+    wx.showShareMenu({
+      withShareTicket: true
     });
   },
 

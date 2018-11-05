@@ -54,7 +54,7 @@
 
 .dialog-content {
   display: block;
-  padding: 25px;
+  padding: 7vw 5vw 5vw 5vw;
 }
 .dialog-content .avatar {
   display: block;
@@ -66,7 +66,7 @@
 .dialog-content .info {
   display: block;
   line-height: 20pt;
-  padding: 25px 15px 0px 15px;
+  padding-top: 5vw;
 }
 .dialog-content .info em {
   font-size: 12pt;

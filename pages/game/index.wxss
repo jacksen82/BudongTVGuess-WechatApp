@@ -9,22 +9,23 @@
 .headbar .duration {
   float: left;
   height: inherit;
-}
+} 
 .headbar .duration .process {
   float: left;
   display: block;
-  width: 80px;
+  overflow:hidden;
+  width: 100px;
   height: 16px;
   margin: 10px 0px;
   border-radius: 7px;
-  background: #000000;
+  background: rgba(255,255,255,.1);
 }
 .headbar .duration .process ins {
   display: block;
   height: 16px;
   border-radius: 8px;
-  background: #d54f44;
-  background: linear-gradient(45deg, #a93886, #a93886 0, #a93886 50%, #f0356a 0, #f0356a 75%, #a93886 0);
+  background: #f0356a;
+  background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
   background-size: 20px 20px;
   box-shadow:rgba(68, 18, 18, 0.25) 0px -3px 4px inset;
 }
@@ -50,43 +51,57 @@
 .headbar .indicate .numeric {
   float: left;
   display: block;
-  height: 20px;
-  color: #ffffff;
+  height: 22px;
+  color: #fefefc;
   font-size: 12pt;
   font-weight: bold;
-  line-height: 20px;
-  padding: 0px 7px;
-  margin: 6px;
+  line-height: 22px;
+  padding: 0px 6px;
+  margin: 5px;
   border-radius: 12px;
   background: rgba(0,0,0,.25);
 }
 
 .question {
   display: block;
-  padding: 5vw 5vw 0vw 5vw;
+  padding: 0vw 5vw;
+}
+.question .preview {
+  display: block;
+  text-align: center;
+  padding: 10vw 0vw;
+}
+.question .preview .link {
+  display: inline-block;
+  height: 10vw;
+  color: #fefefc;
+  font-size: 10pt;
+  text-align: center;
+  line-height: 10vw;
+  vertical-align: middle;
+  padding: 0px 7px;
+  margin: 0px;
+  border-radius: 5vw;
+  background: #f0356a;
+  background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
+}
+.question .preview .link.share { margin-right: 5vw; }
+.question .preview .link.skip { margin-left: 5vw; }
+.question .preview .image {
+  display: inline-block;
+  width: 50vw;
+  vertical-align: middle;
+  background: rgba(0,0,0,.25);
 }
 .question .title {
   display: block;
   color: #ffffff;
   font-size: 12pt;
-  line-height: 15pt;
-}
-.question .preview {
-  display: block;
-  width: 60vw;
-  max-height: 60vw;
-  padding: 10px;
-  margin: 5vw auto;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px;
-  background: rgba(0,0,0,.25);
-}
-.question .preview image {
-  width: 100%;
-  border-radius: 6px;
+  line-height: 16pt;
 }
 .question .options {
   display: block;
+  padding: 7vw 0px 0vw 0px;
 }
 .question .options::after {
   content: '';
@@ -99,22 +114,21 @@
   float: left;
   display: block;
   width: 42vw;
-  height: 12vw;
-  margin-bottom: 3vw;
+  height: 10vw;
+  margin-bottom: 5vw;
 }
 .question .options .item.r {
   margin-left: 5vw;
 }
 .question .options .item .link {
   display: block;
-  height: 12vw;
+  height: inherit;
   text-align: left;
   padding: 0px;
   margin: 0px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 7vw;
-  background: rgba(0,0,0,.25);
-  text-shadow: -1px -1px 0px rgba(0,0,0,.2);
+  border: none;
+  border-radius: 6vw;
+  box-shadow: 0px 0px 1px #fefefc;
 }
 .question .options .item .link:before {
   content: '';
@@ -122,27 +136,27 @@
   position: absolute;
   width: 4vw;
   height: 4vw;
-  margin-top: 3.6vw;
+  margin-top: 3vw;
   margin-left: 3vw;
   border-radius: 2vw;
-  background: rgba(255,255,255,.25);
-  box-shadow: -1px -1px 0px rgba(0,0,0,.2);
+  background: #fefefc;
 }
 .question .options .item .link dfn {
-  display: inline-block;
-  height: 12vw;
-  color: rgba(255,255,255,.75);
-  font-size: 11pt;
-  line-height: 11vw;
+  display: block;
+  height: inherit;
+  color: #fefefc;
+  font-size: 10pt;
+  line-height: 10vw;
   padding: 0px 12px 0px 10vw;
 }
 .question .options .item .link.hover {
-  color: rgba(255,255,255,.9);
-  background: #d54f44;
-  box-shadow: 0px 0px 7px rgba(0,0,0,.5);
+  color: #fefefc;
+  background: #f0356a;
+  background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
+  box-shadow: none;
 }
 .question .options .item .link.hover:before {
-  background: rgba(255,255,255,.9);
+  background: #fefefc;
 }
 
 .ad {
@@ -154,3 +168,50 @@
   border-radius: 7px;
   background: rgba(0,0,0,.25);
 }
+
+.dialog-content {
+  display: block;
+  padding: 7vw 5vw 5vw 5vw;
+}
+.dialog-content .caption {
+  display: block;
+  font-size: 18pt;
+  font-weight: bold;
+  text-align: center;
+}
+.dialog-content .describe {
+  display: block;
+  color: #22293b;
+  font-size: 12pt;
+  line-height: 18pt;
+  padding: 5vw 0px;
+}
+.dialog-content .describe strong {
+  color: #f0356a;
+  font-weight: bold;
+}
+.dialog-content .describe .item {
+  display: block;
+  width: 160pt;
+  line-height: 18pt;
+  margin: 0px auto;
+}
+.dialog-content .describe .item em {
+  float: left;
+  display: block;
+  width: 48px;
+}
+.dialog-content .describe .item dfn {
+  display: block;
+  margin-left: 48px;
+}
+.dialog-content .tip {
+  display: block;
+  color: #727272;
+  font-size: 9pt;
+  line-height: 14pt;
+  text-align: center;
+}
+.dialog-content .caption.correct { color:#3CB371; }
+.dialog-content .caption.incorrect { color:#f0356a; }
+.dialog-content .caption.complete { color: #EE9A00; }

@@ -17,11 +17,13 @@
   </view>
 
   <view class="question">
+    <view class="preview">
+      <button open-type="share" class="link share" hover-class="hover">求助</button>
+      <image src="{{questionImageUrl}}" mode="widthFix" class="image" bindtap="onPreview" data-image-url="{{questionImageUrl}}" />
+      <button bindtap="onSkip" class="link skip" hover-class="hover">跳过</button>
+    </view>
     <view class="title">
       {{questionAnswered}}. {{questionTitle}}
-    </view>
-    <view class="preview">
-      <image src="{{questionImageUrl}}" mode="widthFix" />
     </view>
     <view class="options">
       <span class="item {{index%2==0?'l':'r'}}" wx:for="{{questionOptionItems}}" wx:key="item" >
@@ -30,46 +32,55 @@
     </view>
   </view>
   
-  <view class="ad"><ad unit-id="adunit-c89c4f12ffa3a9b8"></ad></view>
+  <view class="ad"><ad unit-id="adunit-9e181cba5daccc71"></ad></view>
 </view>
 
+<!-- 回答错误 -->
 <dialog id="incorrect">
-  <view class="dialog-content result">
+
+  <view class="dialog-content">
     <em class="caption incorrect">很遗憾！你答错了</em>
-    <dfn class="describe">你已经答对了 <strong>{{questionAnswered}}</strong> 道题，打败了全国 <strong>{{clientRankPosition}}%</strong> 的人，现在你可以：</dfn>
-    <dfn class="choice">A：使用复活卡，保留得分【继续答题】 <var>你有 <strong>{{clientLives}}</strong> 张复活卡</var></dfn>
-    <dfn class="choice">B：清空得分【重新开始】</dfn>
+    <dfn class="describe">本轮游戏你共答对了 <strong>{{questionCorrect}}</strong> 道题，打败了全国 <strong>{{clientRankPosition}}%</strong> 的人</dfn>
+    <text class="tip">使用复活卡【继续答题】重新选择
+    【重新开始】将会清空得分</text>
   </view>
+
   <view class="dialog-action">
-    <button bindtap="onRevive" class="button submit {{clientLives > 0 ? '' : 'disabled'}}" hover-class="hover" >继续答题</button>
+    <button bindtap="onRevive" class="button submit {{clientLives ? '' : 'disabled'}}" hover-class="hover" >继续答题 <small>复活卡 -1</small></button>
     <button bindtap="onRestart" class="button" hover-class="hover">重新开始</button>
-    <button open-type="share" bindtap="onShare" class="button" hover-class="hover" data-action="saveme">求助好友 <small>复活卡 +1</small></button>
+    <button open-type="share" class="button" hover-class="hover" data-action="saveme">求助好友 <small>复活卡 +1</small></button>
   </view>
 </dialog>
 
+<!-- 回答正确 -->
 <dialog id="correct">
+
   <view class="dialog-content result">
     <em class="caption correct">很棒哦！答对了</em>
-    <dfn class="describe">你已经答对了 <strong>{{questionAnswered}}</strong> 道题，打败了全国 <strong>{{clientRankPosition}}%</strong> 的人，继续加油吧。</dfn>
+    <dfn class="describe">你已经答对了 <strong>{{questionCorrect}}</strong> 道题，打败了全国 <strong>{{clientRankPosition}}%</strong> 的人，继续加油吧。</dfn>
   </view>
+
   <view class="dialog-action">
     <button bindtap="onContinue" class="button submit" hover-class="hover">继续下一题</button>
-    <button open-type="share" bindtap="onShare" class="button" hover-class="hover">PK 好友</button>
+    <button open-type="share" class="button" hover-class="hover">PK 好友</button>
   </view>
 </dialog>
 
+<!-- 回答完毕 -->
 <dialog id="complete">
+
   <view class="dialog-content result">
     <em class="caption complete">太棒了！你全答对了</em>
     <span class="describe">
-      <span class="line"><em>答对：</em> <dfn>{{clientQuestionCorrect}} 道题</dfn></span>
-      <span class="line"><em>得分：</em> <dfn>{{clientScore}} 分</dfn></span>
-      <span class="line"><em>排名：</em> <dfn>第 {{clientRankIndex}} 位，战胜了全国 <strong>{{clientRankPosition}}%</strong> 的人</dfn></span>
+      <span class="item"><em>答对：</em> <dfn><strong>{{questionCorrect}}</strong> / {{questionAmount}} 道题</dfn></span>
+      <span class="item"><em>得分：</em> <dfn><strong>{{clientScore}}</strong> 分</dfn></span>
+      <span class="item"><em>排名：</em> <dfn>第 <strong>{{clientRankIndex+1}}</strong> 位，战胜了全国 <strong>{{clientRankPosition}}%</strong> 的人</dfn></span>
     </span>
     <dfn class="tip">题目持续更新中，有新题目后可以继续游戏</dfn>
   </view>
+
   <view class="dialog-action">
-    <button open-type="share" bindtap="onShare" class="button" hover-class="hover">PK 好友</button>
-    <button bindtap="onRestart" class="button" hover-class="hover">再玩一次</button>
+    <button open-type="share" class="button" hover-class="hover">PK 好友</button>
+    <button bindtap="onRestart" class="button" hover-class="hover">再答一次</button>
   </view>
 </dialog>

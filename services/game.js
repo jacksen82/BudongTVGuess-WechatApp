@@ -21,6 +21,35 @@ const game = {
   },
 
   /*
+    说明：答题结束
+  */
+  answer: function (questionId, result, callback) {
+
+    ajax.postEx('/client/game/answer.ashx', {
+      questionId: questionId,
+      result: result
+    }, function (data) {
+
+      store.client = data || {};
+      callback(data);
+    });
+  },
+
+  /*
+    说明：跳过题目
+  */
+  skip: function (questionId, callback) {
+
+    ajax.postEx('/client/game/skip.ashx', {
+      questionId: questionId
+    }, function (data) {
+
+      store.client = data || {};
+      callback(data);
+    });
+  },
+
+  /*
     说明：重新开始
   */
   restart: function (callback) {
@@ -37,25 +66,10 @@ const game = {
   /*
     说明：继续游戏
   */
-  revive: function (callback) {
+  revive: function (questionId, callback) {
 
     ajax.postEx('/client/game/revive.ashx', {
-
-    }, function (data) {
-
-      store.client = data || {};
-      callback(data);
-    });
-  },
-
-  /*
-    说明：答题结束
-  */
-  answer: function (questionId, result, callback) {
-
-    ajax.postEx('/client/game/answer.ashx', {
-      questionId: questionId,
-      result: result
+      questionId: questionId
     }, function (data) {
 
       store.client = data || {};
@@ -79,10 +93,10 @@ const game = {
   /*
     说明：赠送复活卡
   */
-  saved: function(fromClientId, openGId, callback){
+  activate: function(toClientId, openGId, callback){
 
-    ajax.postEx('/client/game/saved.ashx', {
-      fromClientId: fromClientId,
+    ajax.postEx('/client/game/activate.ashx', {
+      toClientId: toClientId,
       openGId: openGId
     }, function (data) {
 

@@ -18,7 +18,9 @@ Page({
     questionOptions: [],
     questionImageUrl: '',
     questionAnswered: 0,
+    questionCorrect: 0,
     questionAmount: 0,
+    clientRankIndex: 0,
     clientRankPosition: 0,
     clientDurationPresent: 0,
     clientScore: 0,
@@ -32,6 +34,11 @@ Page({
   onLoad: function(){
 
     this.onNext();
+
+    //  允许分享至群
+    wx.showShareMenu({
+      withShareTicket: true
+    });
   },
 
   /*
@@ -40,7 +47,7 @@ Page({
   onReset: function(data){
 
     this.setData({
-      clientRankPosition: data.rankPosition,
+      clientRankPosition: Math.floor(data.rankPosition),
       clientRankIndex: data.rankIndex,
       clientDurationPresent: Math.floor((data.questionAnswered + 1) / data.questionAmount * 100),
       clientScore: data.score,
@@ -55,8 +62,8 @@ Page({
         questionId: data.question.questionId,
         questionTitle: data.question.title,
         questionOptionValue: data.question.optionValue,
-        questionOptionItems: (data.question.optionItems || '').split(';'),
-        questionImageUrl: data.question.imageUrl,
+        questionOptionItems: utils.getOptions((data.question.optionItems || '').split(';')),
+        questionImageUrl: constants.HTTP_CDN + data.question.imageUrl,
       });
     }
   },
@@ -71,15 +78,28 @@ Page({
     client.game.next(function (data) {
 
       wp.onReset(data);
-
       if (wp.data.clientStatus == 200) {
-        wp.selectComponent('#incorrect').show();
+        if (wp.data.questionCorrect < 1) {
+          client.game.restart(wp.onNext);
+        } else {
+          wp.selectComponent('#incorrect').show();
+        }
       } else {
         if (!wp.data.questionId) {
-          //  wp.selectComponent('#complete').show();
+          wp.selectComponent('#complete').show();
         }
       }
     });
+  },
+
+  /*
+    说明：预览图片事件
+  */
+  onPreview: function (e) {
+
+    wx.previewImage({
+      urls: [e.currentTarget.dataset.imageUrl],
+    })
   },
 
   /*
@@ -107,6 +127,19 @@ Page({
   },
 
   /*
+    说明：跳过这一题事件
+  */
+  onSkip: function(){
+
+    var wp = this;
+
+    client.game.skip(this.data.questionId, function (data) {
+
+      wp.onNext();
+    });
+  },
+
+  /*
     说明：重新开始事件
   */
   onRestart: function () {
@@ -119,7 +152,7 @@ Page({
       wp.onNext();
     }
 
-    if (this.data.questionAnswered < 2) {
+    if (this.data.questionCorrect < 1) {
       client.game.restart(callback);
     } else {
       wx.showModal({
@@ -152,7 +185,7 @@ Page({
     var wp = this;
 
     if (this.data.clientLives) {
-      client.game.revive(function (data) {
+      client.game.revive(this.data.questionId, function (data) {
 
         wp.selectComponent('#incorrect') && wp.selectComponent('#incorrect').close();
         wp.onNext();
@@ -179,6 +212,15 @@ Page({
   */
   onShareAppMessage: function (res) {
 
-    return client.shareAppMessage(res, {}, function () { });
+    var data = {};
+
+    if (this.data.clientStatus == 0 && this.data.questionId) {
+      data = {
+        title: this.data.questionTitle,
+        imageUrl: this.data.questionImageUrl
+      };
+    }
+
+    return client.shareAppMessage(res, data, function () { });
   }
 })

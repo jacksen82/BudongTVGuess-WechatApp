@@ -28,26 +28,31 @@ Page({
 
     var wp = this;
 
+    //  初始化菜单
     store.waitForAuthorize(function(){
 
-      wx.navigateTo({
-        url: '/pages/game/index',
-      })
+      store.client = store.client || {};
+
       wp.setData({
-        score: store.client.score,
-        lives: store.client.lives,
-        actived: store.client.actived,
+        score: store.client.score || 0,
+        lives: store.client.lives || 0,
+        actived: store.client.actived || 0,
         disabled: ''
       }); 
       
-      if (store.shareSave == 1) {
+      if (store.shareSave == 1 && store.fromClientId!=store.clientId) {
         wp.setData({
           fromClientAvatar: store.fromClient.avatarUrl,
           fromClientNick: store.fromClient.nick || '',
           fromOpenGId: store.fromClient.fromOpenGId || ''
         }); 
-        wp.selectComponent('#saveme').show();
+        wp.selectComponent('#activate').show();
       }
+    });
+
+    //  允许分享至群
+    wx.showShareMenu({
+      withShareTicket: true
     });
   },
 
@@ -96,9 +101,9 @@ Page({
 
     var wp = this;
 
-    client.game.saved(store.fromClientId, store.fromOpenGId, function(data){
+    client.game.activate(store.fromClientId, store.fromOpenGId, function(data){
 
-      wp.selectComponent('#saveme').close();
+      wp.selectComponent('#activate').close();
       wx.showToast({
         title: '激活成功',
       })
@@ -110,7 +115,7 @@ Page({
   */
   onAbort: function(){
 
-    this.selectComponent('#saveme').close();
+    this.selectComponent('#activate').close();
   },
 
   /*

@@ -3,7 +3,7 @@
 //  常量定义
 module.exports = {
   HTTP_API: 'https://wechat.duomijuan.com/guess/api',
-  HTTP_CDN: 'https://file.duomijuan.com/uploads',
+  HTTP_CDN: 'https://file.duomijuan.com',
   AJAX_PAGESIZE: 12,
   AJAX_TIMESTAMP_NORMAL: 6000,
   AJAX_CODE_TYPE: {

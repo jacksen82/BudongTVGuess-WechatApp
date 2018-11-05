@@ -22,4 +22,7 @@
       </span>
     </view>
   </view>
+  <view class="saveme">
+    <button open-type="share" class="button" hover-class="hover" data-action="saveme">求助好友获得复活卡</button>
+  </view>
 </view>

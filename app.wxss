@@ -38,21 +38,24 @@ button::after {
   font-weight: bold;
   line-height: 14vw;
   margin-bottom: 5vw;
-  border: 1px solid #d23878;
   border-radius: 7vw;
   background: transparent;
+  box-shadow: 0px 0px 2px #d23878;
 }
 .button:last-child {
   margin-bottom: 8vw;
 }
-.button:hover {
-  margin-top: 1px;
+.button.hover {
+  background: rgba(255,255,255,.05);
 }
 .button.submit {
   color: #fefefc;
-  border: 0px;
   background: #f0356a;
   background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
+  box-shadow: none;
+}
+.button.submit.hover {
+  background: #a93886;
 }
 .button.disabled {
   color: #969696;
@@ -72,14 +75,33 @@ button::after {
   padding: 0px 5vw;
 }
 .dialog-action .button {
+  height: 13vw;
   color: #d23878;
+  line-height: 13vw;
   margin-bottom: 5vw;
-  border: 1px solid #d23878;
   background: transparent;
+  box-shadow: 0px 0px 2px #d23878;
+}
+.dialog-action .button.hover {
+  background: rgba(0,0,0,.1);
+}
+.dialog-action .button small {
+  color: #3a4354;
 }
 .dialog-action .button.submit {
   color: #fefefc;
-  border: 0px;
   background: #f0356a;
   background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
+  box-shadow: none;
+}
+.dialog-action .button.submit.hover {
+  background: #a93886;
+}
+.dialog-action .button.submit small {
+  color: rgba(255,255,255,.75);
+}
+.dialog-action .button.disabled {
+  color: #969696;
+  border-color: #969696;
+  background: #cccccc;
 }

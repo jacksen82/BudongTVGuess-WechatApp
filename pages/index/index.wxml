@@ -18,7 +18,8 @@
 
 </view>
 
-<dialog id="saveme">
+<!-- 激活复活卡 -->
+<dialog id="activate">
 
   <view class="dialog-content">
     <image src="{{fromClientAvatar}}" class="avatar" />

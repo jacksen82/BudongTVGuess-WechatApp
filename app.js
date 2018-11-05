@@ -16,11 +16,6 @@ App ({
     store.client = null;
     store.clientId = 0;
     store.session3rd = wx.getStorageSync('session3rd') || '';
-
-    //  允许分享至群
-    wx.showShareMenu({
-      withShareTicket: true
-    });
   },
   
   /*

@@ -22,11 +22,17 @@ Page({
 
     var wp = this;
 
+    //  加载激活记录
     client.mine.lives(function (data) {
 
       wp.setData({
         liveItems: data.data || []
       });
+    });
+
+    //  允许分享至群
+    wx.showShareMenu({
+      withShareTicket: true
     });
   },
 

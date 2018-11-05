@@ -83,20 +83,23 @@ const client = {
       });
     }
     
-    //  当来源客户端不为空，并且不等于当前客户端时
-    if (store.fromClientId && store.fromClientId != store.clientId) {
+    //  来源客户端不为空
+    if (store.fromClientId) {
       
-      //  如果有群标识
       if (store.shareTicket) {
 
-        //  获取群标识
+        //  如果有群标识，获取群标识
         wx.getShareInfo({
           shareTicket: store.shareTicket,
           success: _relate,
           fail: _relate
         });
       } else {
-        _relate();
+
+        //  没有群标识，并且不等于当前客户端
+        if (store.fromClientId != store.clientId){
+          _relate();
+        }
       }
     } else {
       store.fromClient = {};
@@ -113,11 +116,19 @@ const client = {
     var title = '那些年全家人坐在一起看的经典电视，你还记得吗？';
     var imageUrl = 'https://wechat.duomijuan.com/guess/statics/share.jpg';
     var path = '/pages/index/index?scene=cid-' + (store.clientId || 0);
+    var action = '';
+
+    if (data.title && data.imageUrl){
+      title = '你知道“' + data.title + '”吗';
+      imageUrl = data.imageUrl;
+      path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
+    }
 
     if (res.from == 'button' && res.target && res.target.dataset && res.target.dataset.action == 'saveme'){
-      title = '求助！我正在玩儿【猜电视】游戏，需要一张复活卡';
+      title = '求助！我正在玩儿【猜电视】游戏，请帮我激活一张复活卡';
       imageUrl = 'https://wechat.duomijuan.com/guess/statics/saveme.jpg';
       path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
+      action = 'saveme';
     }
     
     return {
@@ -129,7 +140,7 @@ const client = {
         //  请求分享成功接口
         ajax.postEx('/client/share.ashx', {
           shareFrom: res.from,
-          shareAction: res.target.dataset.action
+          shareAction: action
         }, function (data) {
 
           callback(data);
