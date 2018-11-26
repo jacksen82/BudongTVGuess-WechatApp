@@ -1,8 +1,9 @@
 <!--pages/game/index.wxml-->
 
 <view class="container">
-
-  <view class="headbar">
+  <view class="dddddd">
+  </view>
+  <view id="headbar" class="headbar">
     <span class="duration">
       <var class="process"><ins style="width:{{clientDurationPresent < 100 ? clientDurationPresent : 100}}%"></ins></var>
     </span>
@@ -16,12 +17,14 @@
     </span>
   </view>
 
-  <view class="question">
+  <view id="preview" class="question" style="padding-top: {{previewPaddingTop}}px">
     <view class="preview">
-      <button open-type="share" class="link share" hover-class="hover">求助</button>
       <image src="{{questionImageUrl}}" mode="widthFix" class="image" bindtap="onPreview" data-image-url="{{questionImageUrl}}" />
-      <button bindtap="onSkip" class="link skip" hover-class="hover">跳过</button>
+      <button open-type="share" class="link skip" hover-class="hover" data-action="skip"> 跳过此题 <small>转给好友/群友</small> </button>
     </view>
+  </view>
+
+  <view id="controls" class="controls">
     <view class="title">
       {{questionAnswered}}. {{questionTitle}}
     </view>
@@ -30,9 +33,10 @@
         <button class="link" hover-class="hover" bindtap="onSelect" data-item="{{item}}"><dfn>{{item}}</dfn></button>
       </span>
     </view>
+    <view class="ad">
+      <ad unit-id="adunit-9e181cba5daccc71"></ad>
+    </view>
   </view>
-  
-  <view class="ad"><ad unit-id="adunit-9e181cba5daccc71"></ad></view>
 </view>
 
 <!-- 回答错误 -->
@@ -42,13 +46,14 @@
     <em class="caption incorrect">很遗憾！你答错了</em>
     <dfn class="describe">本轮游戏你共答对了 <strong>{{questionCorrect}}</strong> 道题，打败了全国 <strong>{{clientRankPosition}}%</strong> 的人</dfn>
     <text class="tip">使用复活卡【继续答题】重新选择
+    把这道题转给好友/群友，【跳过】此题
     【重新开始】将会清空得分</text>
   </view>
 
   <view class="dialog-action">
     <button bindtap="onRevive" class="button submit {{clientLives ? '' : 'disabled'}}" hover-class="hover" >继续答题 <small>复活卡 -1</small></button>
+    <button open-type="share" class="button" hover-class="hover" data-action="skip">跳过</button>
     <button bindtap="onRestart" class="button" hover-class="hover">重新开始</button>
-    <button open-type="share" class="button" hover-class="hover" data-action="saveme">求助好友 <small>复活卡 +1</small></button>
   </view>
 </dialog>
 
@@ -62,7 +67,7 @@
 
   <view class="dialog-action">
     <button bindtap="onContinue" class="button submit" hover-class="hover">继续下一题</button>
-    <button open-type="share" class="button" hover-class="hover">PK 好友</button>
+    <button open-type="share" class="button" hover-class="hover">查看好友/群友得分</button>
   </view>
 </dialog>
 
@@ -70,7 +75,7 @@
 <dialog id="complete">
 
   <view class="dialog-content result">
-    <em class="caption complete">太棒了！你全答对了</em>
+    <em class="caption complete">{{questionCorrect == questionAmount ? '太棒了！你全答对了' : '全部题目答完了'}}</em>
     <span class="describe">
       <span class="item"><em>答对：</em> <dfn><strong>{{questionCorrect}}</strong> / {{questionAmount}} 道题</dfn></span>
       <span class="item"><em>得分：</em> <dfn><strong>{{clientScore}}</strong> 分</dfn></span>
@@ -80,7 +85,7 @@
   </view>
 
   <view class="dialog-action">
-    <button open-type="share" class="button" hover-class="hover">PK 好友</button>
     <button bindtap="onRestart" class="button" hover-class="hover">再答一次</button>
+    <button open-type="share" class="button" hover-class="hover">查看好友/群友得分</button>
   </view>
 </dialog>

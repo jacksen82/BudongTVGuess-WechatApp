@@ -27,6 +27,7 @@ App ({
     store.fromScene = options.scene || 0;
     store.fromClient = null;
     store.fromClientId = utils.getScene(options.query || {}, 'cid') || 0;
+    store.shareQuestionId = utils.getScene(options.query || {}, 'qid') || 0;
     store.shareSave = utils.getScene(options.query || {}, 'sm') || 0;
     store.shareTicket = options.shareTicket || '';
   

@@ -12,6 +12,7 @@ Page({
     说明：页面的初始数据
   */
   data: {
+    previewPaddingTop: 0,
     questionId: 0,
     questionTitle: '',
     questionOptionValue: '',
@@ -33,12 +34,13 @@ Page({
   */
   onLoad: function(){
 
-    this.onNext();
-
     //  允许分享至群
     wx.showShareMenu({
       withShareTicket: true
     });
+    
+    this.onNext();
+
   },
 
   /*
@@ -71,7 +73,7 @@ Page({
   /*
     说明：下一题事件
   */
-  onNext: function () {
+  onNext: function (skip) {
 
     var wp = this;
 
@@ -85,8 +87,17 @@ Page({
           wp.selectComponent('#incorrect').show();
         }
       } else {
-        if (!wp.data.questionId) {
-          wp.selectComponent('#complete').show();
+        if (data.question){
+
+        } else {
+          if (skip == true){
+            wx.showToast({
+              icon: 'none',
+              title: '已经是最后一题了，不能跳过',
+            })
+          } else {
+            wp.selectComponent('#complete').show();
+          }
         }
       }
     });
@@ -135,7 +146,7 @@ Page({
 
     client.game.skip(this.data.questionId, function (data) {
 
-      wp.onNext();
+      wp.onNext(true);
     });
   },
 
@@ -212,15 +223,25 @@ Page({
   */
   onShareAppMessage: function (res) {
 
+    var wp = this;
     var data = {};
 
     if (this.data.clientStatus == 0 && this.data.questionId) {
       data = {
+        questionId: this.data.questionId,
         title: this.data.questionTitle,
         imageUrl: this.data.questionImageUrl
       };
     }
 
-    return client.shareAppMessage(res, data, function () { });
+    return client.shareAppMessage(res, data, function (_data) {
+      
+      if (res.from == 'button' && res.target && res.target.dataset) {
+        if (res.target.dataset.action == 'skip'){
+          wp.selectComponent('#incorrect') && wp.selectComponent('#incorrect').close();
+          wp.onSkip();
+        }
+      }
+    });
   }
 })

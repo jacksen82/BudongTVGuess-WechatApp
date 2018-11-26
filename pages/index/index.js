@@ -16,6 +16,7 @@ Page({
     score: 0,
     actived: 0,
     disabled: 'disabled',
+    tipQuestionTime: '',
     fromClientAvatar: '',
     fromClientNick: '',
     fromOpenGId: ''
@@ -37,7 +38,8 @@ Page({
         score: store.client.score || 0,
         lives: store.client.lives || 0,
         actived: store.client.actived || 0,
-        disabled: ''
+        disabled: '',
+        questionTime: store.pageQuestionUpdate
       }); 
       
       if (store.shareSave == 1 && store.fromClientId!=store.clientId) {

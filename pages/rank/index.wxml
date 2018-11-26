@@ -4,30 +4,30 @@
 
   <view class="ad"><ad unit-id="adunit-5f6443b1981d63c7"></ad></view>
   
-  <view class="caption">全国总排行 <small>Top 10</small></view>
-
-  <view class="list">
-    <view class="item" wx:for="{{globalItems}}" wx:key="item">
-      <text class="index {{index > 2 ? '' : 'top'}}">{{index + 1}}</text>
-      <image src="{{item.avatarUrl}}" class="avatar" />
-      <span class="nick">{{item.nick}}</span>
-      <span class="score">{{item.score}}</span>
-    </view>
-  </view>
-  
   <view class="caption">好友排行</view>
 
   <view class="list">
     <view class="item" wx:for="{{friendItems}}" wx:key="item">
       <text class="index {{index > 2 ? '' : 'top'}}">{{index + 1}}</text>
       <image src="{{item.avatarUrl}}" class="avatar" />
+      <span class="score">{{item.score}}</span>
       <span class="nick">
         {{item.nick}} 
-        <dfn wx:if="{{item.openGId}}"> 来自群：
+        <dfn wx:if="{{item.openGId}}"> 群:
           <open-data type="groupName" open-gid="{{item.openGId}}"></open-data>
         </dfn>
       </span>
+    </view>
+  </view>
+  
+  <view class="caption">全国总排行</view>
+
+  <view class="list">
+    <view class="item" wx:for="{{globalItems}}" wx:key="item">
+      <text class="index {{index > 2 ? '' : 'top'}}">{{ index > 98 ? 'N+' : index + 1}}</text>
+      <image src="{{item.avatarUrl}}" class="avatar" />
       <span class="score">{{item.score}}</span>
+      <span class="nick">{{item.nick}}</span>
     </view>
   </view>
 </view>

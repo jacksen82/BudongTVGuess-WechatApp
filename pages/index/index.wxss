@@ -36,7 +36,7 @@
 .main .slogan {
   display: block;
   color: rgba(255,255,255,0.5);
-  font-size: 12pt;
+  font-size: 10pt;
   line-height: 7vw;
   text-align: center;
   padding: 5vw 10vw 0px 10vw;
@@ -50,6 +50,13 @@
   right: 0px;
   bottom: 0px;
   padding: 0vw 8vw;
+}
+.menu .tip {
+  display: block;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .dialog-content {

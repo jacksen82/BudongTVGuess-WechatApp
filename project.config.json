@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -43,6 +43,13 @@
 					"name": "来自求助好友",
 					"pathName": "pages/index/index",
 					"query": "scene=cid-1000000002,sm-1",
+					"scene": "1007"
+				},
+				{
+					"id": 2,
+					"name": "来自好友的转让题目",
+					"pathName": "pages/index/index",
+					"query": "scene=cid-1000000002,qid-100001",
 					"scene": "1007"
 				}
 			]

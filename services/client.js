@@ -20,6 +20,10 @@ const client = {
       store.client = data || {}
       store.clientId = data.clientId
       store.session3rd = data.session3rd
+      
+      for (var item in store.client){
+        /^page/i.test(item) && (store[item] = store.client[item]);
+      }
 
       //  写入三方标识
       wx.setStorageSync('session3rd', store.session3rd)
@@ -73,6 +77,7 @@ const client = {
 
       ajax.postEx('/client/relation.ashx', {
         fromClientId: store.fromClientId || 0,
+        shareQuestionId: store.shareQuestionId || 0,
         encryptedData: (res || {}).encryptedData || '',
         iv: (res || {}).iv || ''
       }, function (data) {
@@ -96,8 +101,10 @@ const client = {
         });
       } else {
 
-        //  没有群标识，并且不等于当前客户端
-        if (store.fromClientId != store.clientId){
+        //  没有群标识，并且等于当前客户端，则什么都不做，否则建立关联
+        if (store.fromClientId == store.clientId) {
+          store.fromClient = {};
+        } else {
           _relate();
         }
       }
@@ -113,24 +120,32 @@ const client = {
 
     data = data || {};
 
-    var title = '那些年全家人坐在一起看的经典电视，你还记得吗？';
-    var imageUrl = 'https://wechat.duomijuan.com/guess/statics/share.jpg';
+    var title = store.pageShareTitle || '那些年全家人坐在一起看的经典电视，你还记得吗？';
+    var imageUrl = store.pageShareUrl || 'https://wechat.duomijuan.com/guess/statics/share.jpg';
     var path = '/pages/index/index?scene=cid-' + (store.clientId || 0);
     var action = '';
 
     if (data.title && data.imageUrl){
       title = '你知道“' + data.title + '”吗';
       imageUrl = data.imageUrl;
-      path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
+      path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',qid-' + data.questionId;
     }
 
-    if (res.from == 'button' && res.target && res.target.dataset && res.target.dataset.action == 'saveme'){
-      title = '求助！我正在玩儿【猜电视】游戏，请帮我激活一张复活卡';
-      imageUrl = 'https://wechat.duomijuan.com/guess/statics/saveme.jpg';
-      path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
-      action = 'saveme';
+    if (res.from == 'button' && res.target && res.target.dataset){
+      if (res.target.dataset.action == 'saveme'){
+        title = store.pageShareTitleHelp || '求助！我正在玩儿【猜电视】游戏，请帮我激活一张复活卡';
+        imageUrl = store.pageShareUrlHelp || 'https://wechat.duomijuan.com/guess/statics/saveme.jpg';
+        path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',sm-1';
+        action = 'saveme';
+      }
+      if (res.target.dataset.action == 'skip') {
+        title = '这题我答不出来，靠你了【' + data.title + '】';
+        imageUrl = data.imageUrl;
+        path = '/pages/index/index?scene=cid-' + (store.clientId || 0) + ',qid-' + data.questionId;
+        action = 'skip';
+      } 
     }
-    
+
     return {
       title: title,
       imageUrl: imageUrl,
@@ -142,12 +157,12 @@ const client = {
           shareFrom: res.from,
           shareAction: action
         }, function (data) {
-
+          
           callback(data);
         });
       },
       fail: function (res) {
-
+        
         wx.showToast({
           icon: 'none',
           title: '邀请失败'

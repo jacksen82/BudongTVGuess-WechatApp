@@ -12,6 +12,7 @@ Page({
     说明：页面的初始数据
   */
   data: {
+    globalExpand: false,
     globalItems: [ ],
     friendItems: [ ]
   },
@@ -35,6 +36,16 @@ Page({
     //  允许分享至群
     wx.showShareMenu({
       withShareTicket: true
+    });
+  },
+
+  /*
+    说明：展开更多事件
+  */
+  onMore: function(){
+
+    this.setData({
+      globalExpand: true
     });
   },
 

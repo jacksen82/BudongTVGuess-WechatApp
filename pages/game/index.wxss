@@ -69,58 +69,68 @@
 .question .preview {
   display: block;
   text-align: center;
-  padding: 10vw 0vw;
+  padding-top: 7vw;
+}
+.question .preview .image {
+  display: block;
+  width: 56vw;
+  margin: 0px auto;
+  background: rgba(0,0,0,.25);
 }
 .question .preview .link {
   display: inline-block;
   height: 10vw;
   color: #fefefc;
   font-size: 10pt;
-  text-align: center;
   line-height: 10vw;
-  vertical-align: middle;
-  padding: 0px 7px;
-  margin: 0px;
+  text-align: center;
+  margin-top: 5vw;
   border-radius: 5vw;
   background: #f0356a;
   background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
 }
-.question .preview .link.share { margin-right: 5vw; }
-.question .preview .link.skip { margin-left: 5vw; }
-.question .preview .image {
-  display: inline-block;
-  width: 50vw;
-  vertical-align: middle;
-  background: rgba(0,0,0,.25);
+.question .preview .link small {
+  color: rgba(255,255,255,.75);
+  font-size: 8pt;
 }
-.question .title {
+
+.controls {
+  display: block;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+.controls .title {
   display: block;
   color: #ffffff;
   font-size: 12pt;
   line-height: 16pt;
+  padding-left: 5vw;
+  padding-bottom: 5vw;
 }
-.question .options {
+.controls .options {
   display: block;
-  padding: 7vw 0px 0vw 0px;
+  padding: 0px 5vw;
 }
-.question .options::after {
+.controls .options::after {
   content: '';
   display: block;
   clear: both;
   width: 1px;
   height: 1px;
 }
-.question .options .item {
+.controls .options .item {
   float: left;
   display: block;
   width: 42vw;
   height: 10vw;
   margin-bottom: 5vw;
 }
-.question .options .item.r {
+.controls .options .item.r {
   margin-left: 5vw;
 }
-.question .options .item .link {
+.controls .options .item .link {
   display: block;
   height: inherit;
   text-align: left;
@@ -130,7 +140,7 @@
   border-radius: 6vw;
   box-shadow: 0px 0px 1px #fefefc;
 }
-.question .options .item .link:before {
+.controls .options .item .link:before {
   content: '';
   display: block;
   position: absolute;
@@ -141,7 +151,7 @@
   border-radius: 2vw;
   background: #fefefc;
 }
-.question .options .item .link dfn {
+.controls .options .item .link dfn {
   display: block;
   height: inherit;
   color: #fefefc;
@@ -149,24 +159,18 @@
   line-height: 10vw;
   padding: 0px 12px 0px 10vw;
 }
-.question .options .item .link.hover {
+.controls .options .item .link.hover {
   color: #fefefc;
   background: #f0356a;
   background-image: -webkit-linear-gradient(45deg, #a93886, #f0356a);
   box-shadow: none;
 }
-.question .options .item .link.hover:before {
+.controls .options .item .link.hover:before {
   background: #fefefc;
 }
-
-.ad {
+.controls .ad {
   display: block;
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  border-radius: 7px;
-  background: rgba(0,0,0,.25);
+  padding: 0px 15px 15px 15px;
 }
 
 .dialog-content {
