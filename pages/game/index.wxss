@@ -172,6 +172,11 @@
   display: block;
   padding: 0px 15px 15px 15px;
 }
+.controls .ad .preview {
+  display: block;
+  width: 100%;
+  background: #ff00ff;
+}
 
 .dialog-content {
   display: block;

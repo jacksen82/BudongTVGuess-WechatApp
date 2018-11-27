@@ -33,8 +33,8 @@
         <button class="link" hover-class="hover" bindtap="onSelect" data-item="{{item}}"><dfn>{{item}}</dfn></button>
       </span>
     </view>
-    <view class="ad">
-      <ad unit-id="adunit-9e181cba5daccc71"></ad>
+    <view class="ad" bindtap="onBanner">
+      <image src="/images/banner_pinduoduo.png" mode="widthFix" class="preview" />
     </view>
   </view>
 </view>
