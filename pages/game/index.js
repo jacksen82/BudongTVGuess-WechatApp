@@ -219,16 +219,6 @@ Page({
   },
 
   /*
-    说明：点击广告图片事件
-  */
-  onBanner: function(){
-
-    wx.navigateTo({
-      url: '/pages/pdd/index',
-    })
-  },
-
-  /*
     说明：分享回调事件
   */
   onShareAppMessage: function (res) {

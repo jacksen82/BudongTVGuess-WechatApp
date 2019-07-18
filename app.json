@@ -3,8 +3,7 @@
     "pages/index/index",
     "pages/game/index",
     "pages/rank/index",
-    "pages/live/index",
-    "pages/pdd/index"
+    "pages/live/index"
   ],
   "window": {
     "onReachBottomDistance": 50,
