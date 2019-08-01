@@ -219,6 +219,18 @@ Page({
   },
 
   /*
+    说明：放弃激活事件
+  */
+  onCapsule: function () {
+
+    wx.navigateToMiniProgram({
+      appId: 'wxf11687703fa32720',
+      success: function (res) { },
+      fail: function (res) { }
+    })
+  },
+
+  /*
     说明：分享回调事件
   */
   onShareAppMessage: function (res) {

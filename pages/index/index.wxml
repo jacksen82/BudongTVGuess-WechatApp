@@ -13,7 +13,7 @@
     <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="button submit {{disabled}}" hover-class="hover" wx:if="{{actived != 1}}">开始游戏 <small>授权</small></button>
     <button bindtap="onStart" class="button submit {{disabled}}" hover-class="hover" wx:if="{{actived == 1}}">开始游戏</button>
     <button bindtap="onRank" class="button {{disabled}}" hover-class="hover">排行榜</button>
-    <button open-type="share" class="button" hover-class="hover">查看好友/群友得分</button>
+    <button bindtap="onCapsule" class="button capsule" hover-class="hover">挖个胶囊/聊聊天/交交友</button>
     <text class="tip">{{questionTime}}</text>
   </view>
 

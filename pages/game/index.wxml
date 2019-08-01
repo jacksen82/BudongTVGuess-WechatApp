@@ -33,8 +33,11 @@
         <button class="link" hover-class="hover" bindtap="onSelect" data-item="{{item}}"><dfn>{{item}}</dfn></button>
       </span>
     </view>
-    <view class="ad">
+    <!-- <view class="ad">
       <ad unit-id="adunit-9e181cba5daccc71"></ad>
+    </view> -->
+    <view class="capsule">
+      <image bindtap="onCapsule" class="button" src="/images/capsule_banner.png" mode="widthFix" />
     </view>
   </view>
 </view>

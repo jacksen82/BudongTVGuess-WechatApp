@@ -58,6 +58,9 @@
   text-align: center;
   margin-bottom: 15px;
 }
+.menu .capsule {
+  animation: blink 750ms infinite;
+}
 
 .dialog-content {
   display: block;
@@ -81,4 +84,10 @@
 .dialog-content .info strong {
   color: #d23878;
   font-weight: bold;
+}
+
+@keyframes blink {
+  0% { color: #d23878; }
+  50% { color: #fff55b; }
+  100% { color: #d23878; }
 }

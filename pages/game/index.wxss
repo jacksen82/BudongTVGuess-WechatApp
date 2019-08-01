@@ -177,6 +177,14 @@
   width: 100%;
   background: #ff00ff;
 }
+.controls .capsule {
+  display: block;
+  padding: 0 15px 15px 15px;
+}
+.controls .capsule .button {
+  display: block;
+  width: 100%;
+}
 
 .dialog-content {
   display: block;

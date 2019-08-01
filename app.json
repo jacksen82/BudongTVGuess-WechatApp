@@ -14,5 +14,8 @@
     "navigationBarBackgroundColor": "#22293b",
     "navigationBarTitleText": "猜电视",
     "navigationBarTextStyle": "white"
-  }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxf11687703fa32720"
+  ]
 }
